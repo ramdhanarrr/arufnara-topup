@@ -15,13 +15,13 @@ const bgStyle = {
 const Hero = () => {
   return (
     <div style={bgStyle}>
-      <div className="dark:bg-black/70 bg-white/80 backdrop-blur-sm dark:text-white duration-300 h-[520px] flex">
+      <div className="dark:bg-black/70 bg-white/50 backdrop-blur-sm dark:text-white duration-300 h-[520px] flex">
         <div className="container grid grid-cols-1 place-items-center">
           {/* text content section */}
           <div className="text-center text-bold space-y-5 py-14">
             <p
               data-aos="fade-up"
-              className="text-secondary dark:text-secondary text-3xl font-semibold uppercase"
+              className="text-primary dark:text-secondary text-3xl font-semibold uppercase"
             >
               Beli Diamond Sekarang!
             </p>

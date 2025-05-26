@@ -49,7 +49,7 @@ const Layanan = () => {
                   key={id}
                   data-aos="fade-up"
                   data-aos-delay={aosDelay}
-                  className="group rounded-2xl bg-white dark:bg-black hover:!bg-secondary shadow-xl duration-200 max-w-[300px] relative"
+                  className="group rounded-2xl bg-white dark:bg-black hover:!bg-primary shadow-xl duration-200 max-w-[300px] relative"
                 >
                   {/* image section */}
                   <div className="h-[110px]">

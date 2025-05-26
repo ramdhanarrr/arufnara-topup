@@ -1,8 +1,10 @@
 import React from "react";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // Import CSS for carousel
 
 const Contact = () => {
   return (
-    <div className="bg-secondary text-black sm:min-h-[600px] sm:grid sm:place-items-center duration-300 pt-24 pb-10 sm:pb-0">
+    <div className="bg-primary text-black sm:min-h-[600px] sm:grid sm:place-items-center duration-300 pt-24 pb-10 sm:pb-0">
       <div className="container">
         <div className="grid grid-cols-1 sm:grid-cols-2 place-items-center">
           {/* Left text content section */}
@@ -21,7 +23,26 @@ const Contact = () => {
             </p>
           </div>
           {/* Right text content section */}
-          <div></div>
+          <div data-aos="zoom-in" className="p-6 w-full max-w-md max-h-[400px]">
+            <Carousel
+              autoPlay
+              infiniteLoop
+              showThumbs={false}
+              showStatus={false}
+              interval={3000}
+            >
+              <div>
+                <img src="/ml-logo.png" alt="ML Logo 1" />
+              </div>
+              <div>
+                <img src="/ml-hero1.png" alt="Hero ML 1" />
+              </div>
+              <div>
+                <img src="/ml-hero2.png" alt="Hero ML 2" />
+              </div>
+              {/* Tambahkan gambar sesuai kebutuhan */}
+            </Carousel>
+          </div>
         </div>
       </div>
     </div>

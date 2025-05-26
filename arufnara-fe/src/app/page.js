@@ -24,7 +24,7 @@ const Page = () => {
   return (
     <div className="dark:bg-dark dark:text-white">
       <Hero />
-      <Contact/>
+      <Contact />
       <Layanan />
     </div>
   );
