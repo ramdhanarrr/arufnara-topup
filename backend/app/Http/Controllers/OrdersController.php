@@ -3,70 +3,73 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\TopupOption;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class OrdersController extends Controller
 {
     // Menampilkan semua data orders
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::with(['user', 'topupOption'])->get();
-        return response()->json($orders);
+        $orders = $request->user()->orders()
+            ->with(['topupOption', 'payment'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $orders
+        ]);
     }
 
-    // Menyimpan data order baru
-    public function store(Request $request)
+     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
+        $validator = Validator::make($request->all(), [
             'topup_option_id' => 'required|exists:topup_options,id',
-            'server_id' => 'required|string',
-            'payment_method' => 'required|string',
-            'ml_user_id' => 'required|string',
-            'status' => 'in:pending,paid,failed'
+            'ml_user_id' => 'required|string|max:50',
+            'server_id' => 'required|string|max:10',
+            'payment_method' => 'required|string|max:50',
         ]);
 
-        $order = Order::create($validated);
-        return response()->json($order, 201);
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation Error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $topupOption = TopupOption::findOrFail($request->topup_option_id);
+
+        $order = Order::create([
+            'user_id' => $request->user()->id,
+            'topup_option_id' => $request->topup_option_id,
+            'ml_user_id' => $request->ml_user_id,
+            'server_id' => $request->server_id,
+            'payment_method' => $request->payment_method,
+            'status' => 'pending',
+        ]);
+
+        $order->load(['topupOption', 'user']);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Order created successfully',
+            'data' => $order
+        ], 201);
     }
 
     // Menampilkan detail order berdasarkan ID
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $order = Order::with(['user', 'topupOption'])->find($id);
-        if (!$order) {
-            return response()->json(['message' => 'Order not found'], 404);
-        }
-        return response()->json($order);
-    }
+        $order = $request->user()->orders()
+            ->with(['topupOption', 'payment'])
+            ->findOrFail($id);
 
-    // Mengupdate data order berdasarkan ID
-    public function update(Request $request, $id)
-    {
-        $order = Order::find($id);
-        if (!$order) {
-            return response()->json(['message' => 'Order not found'], 404);
-        }
-
-        $validated = $request->validate([
-            'server_id' => 'sometimes|required|string',
-            'payment_method' => 'sometimes|required|string',
-            'status' => 'in:pending,paid,failed'
+        return response()->json([
+            'success' => true,
+            'data' => $order
         ]);
-
-        $order->update($validated);
-        return response()->json($order);
-    }
-
-    // Menghapus data order berdasarkan ID
-    public function destroy($id)
-    {
-        $order = Order::find($id);
-        if (!$order) {
-            return response()->json(['message' => 'Order not found'], 404);
-        }
-
-        $order->delete();
-        return response()->json(['message' => 'Order deleted']);
     }
 }

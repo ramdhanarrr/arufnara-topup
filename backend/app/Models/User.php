@@ -25,6 +25,11 @@ class User extends Authenticatable
         'password',
     ];
 
+    public function isAdmin()
+    {
+        return $this->role === 'admin'; // sesuaikan dengan struktur database Anda
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
