@@ -15,7 +15,7 @@ const Footer = () => {
   return (
     <div className="bg-white text-black dark:bg-dark dark:text-white">
       {/* upper section banner */}
-      <div className="bg-secondary ">
+      <div className="bg-primary ">
         <div className="container text-black text-center py-10 lg:py-14 text-2xl font-bold space-y-4">
           <p>WE READY TO TAKE YOUT CALL 24 HOURS, 7 DAYS!</p>
           <h1 className="text-3xl md:text-5xl font-bold">+123 456 789 </h1>
@@ -26,7 +26,7 @@ const Footer = () => {
         {/* First Col  Section */}
         <div className="space-y-6">
           {/* Heading */}
-          <h1 className="text-2xl py-3 font-bold uppercase border-b-8 border-secondary">
+          <h1 className="text-2xl py-3 font-bold uppercase border-b-8 border-primary">
             About Arufnara
           </h1>
           <p>
@@ -36,7 +36,7 @@ const Footer = () => {
             doloremque eligendi minima ad! Iure?
           </p>
           {/* Social Links */}
-          <div className="flex items-center text-secondary gap-3 text-2xl">
+          <div className="flex items-center text-primary gap-3 text-2xl">
             <FaFacebook />
             <FaInstagram />
             <FaTwitter />
@@ -46,7 +46,7 @@ const Footer = () => {
 
         {/* Second Col Section */}
         <div className="space-y-6">
-          <h1 className="text-2xl py-3 font-bold uppercase border-b-8 border-secondary">
+          <h1 className="text-2xl py-3 font-bold uppercase border-b-8 border-primary">
             Download
           </h1>
           <p>
@@ -56,13 +56,13 @@ const Footer = () => {
             repudiandae fugiat ad architecto.
           </p>
           <div className="flex items-center gap-8">
-            <div className="text-secondary text-xl font-semibold flex items-center gap-2">
+            <div className="text-primary text-xl font-semibold flex items-center gap-2">
               Android user
               <span>
                 <FaAndroid className="text-2xl text-black dark:text-white" />
               </span>
             </div>
-            <div className="text-secondary text-xl font-semibold flex items-center gap-2">
+            <div className="text-primary text-xl font-semibold flex items-center gap-2">
               Ios user
               <span>
                 <FaAppStoreIos className="text-2xl text-black dark:text-white" />
@@ -74,7 +74,7 @@ const Footer = () => {
         {/* Third Col Section */}
         <div className="space-y-6">
           {/* Heading */}
-          <h1 className="text-2xl py-3 font-bold uppercase border-b-8 border-secondary">
+          <h1 className="text-2xl py-3 font-bold uppercase border-b-8 border-primary">
             Contact
           </h1>
           <div className="flex items-center gap-4">

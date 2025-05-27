@@ -7,10 +7,10 @@ import ResponsiveMenu from "./ResponsiveMenu";
 
 export const Navlinks = [
   { id: 1, name: "Home", link: "/" },
-  { id: 2, name: "About", link: "/about" },
-  { id: 3, name: "Features", link: "/features" },
-  { id: 4, name: "Blog", link: "/blog" },
-  { id: 5, name: "Contact", link: "/contact" },
+  { id: 2, name: "Top Up", link: "/about" },
+  { id: 3, name: "Promo", link: "/features" },
+  { id: 4, name: "Contact", link: "/contact" },
+  { id: 5, name: "Login", link: "/login" },
 ];
 
 const Navbar = () => {
@@ -44,7 +44,7 @@ const Navbar = () => {
                   <li key={id} className="py-4">
                     <Link
                       href={link}
-                      className={`text-lg font-medium text-black dark:text-white py-2 px-4 rounded-full hover:bg-secondary hover:text-white duration-300`}
+                      className={`text-lg font-medium text-black dark:text-white py-2 px-4 rounded-full hover:bg-primary hover:text-white duration-300`}
                     >
                       {name}
                     </Link>
