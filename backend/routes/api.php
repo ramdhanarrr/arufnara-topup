@@ -21,10 +21,16 @@ Route::middleware('auth:sanctum')->group(function () {
     
     // User management routes
     Route::prefix('user')->group(function () {
+<<<<<<< HEAD
     Route::get('/profile', [UsersController::class, 'profile']);
     Route::put('/profile', [UsersController::class, 'updateProfile']);
 });
 
+=======
+        Route::get('/profile', [UsersController::class, 'profile']);
+        Route::put('/profile', [UsersController::class, 'updateProfile']);
+    });
+>>>>>>> 75a76fd5da3fc6884b1243f9d93523528befa2d8
     
     // Order management routes
     Route::prefix('orders')->group(function () {
@@ -35,13 +41,20 @@ Route::middleware('auth:sanctum')->group(function () {
     
     // Payment routes
     Route::prefix('payments')->group(function () {
+<<<<<<< HEAD
     Route::post('/', [PaymentsController::class, 'processPayment']);
     Route::get('/{id}', [PaymentsController::class, 'getPaymentStatus']);
 });
    
+=======
+        Route::post('/', [PaymentsController::class, 'processPayment']);
+        Route::get('/{id}', [PaymentsController::class, 'getPaymentStatus']);
+    });
+>>>>>>> 75a76fd5da3fc6884b1243f9d93523528befa2d8
     
     //Point Management
     Route::prefix('points')->group(function () {
+<<<<<<< HEAD
     Route::get('/', [PointsController::class, 'index']);
     Route::post('/use', [PointsController::class, 'usePoints']);
     Route::get('/history', [PointsController::class, 'history']);
@@ -50,6 +63,15 @@ Route::middleware('auth:sanctum')->group(function () {
     // Transaction routes (alias for orders with payments)
     Route::prefix('transactions')->group(function () {
         Route::get('/', [OrdersController::class, 'index']); // Same as orders but filtered
+=======
+        Route::get('/', [PointsController::class, 'index']);
+        Route::post('/use', [PointsController::class, 'usePoints']);
+    });
+    
+    // Transaction routes (alias for orders with payments)
+    Route::prefix('transactions')->group(function () {
+        Route::get('/', [OrdersController::class, 'index']);
+>>>>>>> 75a76fd5da3fc6884b1243f9d93523528befa2d8
         Route::get('/{id}', [OrdersController::class, 'show']);
     });
 });
