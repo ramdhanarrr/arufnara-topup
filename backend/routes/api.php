@@ -21,9 +21,10 @@ Route::middleware('auth:sanctum')->group(function () {
     
     // User management routes
     Route::prefix('user')->group(function () {
-        Route::get('/profile', [UserController::class, 'profile']);
-        Route::put('/profile', [UserController::class, 'updateProfile']);
-    });
+    Route::get('/profile', [UsersController::class, 'profile']);
+    Route::put('/profile', [UsersController::class, 'updateProfile']);
+});
+
     
     // Order management routes
     Route::prefix('orders')->group(function () {
@@ -34,20 +35,22 @@ Route::middleware('auth:sanctum')->group(function () {
     
     // Payment routes
     Route::prefix('payments')->group(function () {
-        Route::post('/', [PaymentController::class, 'processPayment']);
-        Route::get('/{id}', [PaymentController::class, 'getPaymentStatus']);
-    });
+    Route::post('/', [PaymentsController::class, 'processPayment']);
+    Route::get('/{id}', [PaymentsController::class, 'getPaymentStatus']);
+});
+   
     
-    // Points management routes
+    //Point Management
     Route::prefix('points')->group(function () {
-        Route::get('/', [PointController::class, 'index']);
-        Route::post('/use', [PointController::class, 'usePoints']);
-    });
+    Route::get('/', [PointsController::class, 'index']);
+    Route::post('/use', [PointsController::class, 'usePoints']);
+    Route::get('/history', [PointsController::class, 'history']);
+});
     
     // Transaction routes (alias for orders with payments)
     Route::prefix('transactions')->group(function () {
-        Route::get('/', [OrderController::class, 'index']); // Same as orders but filtered
-        Route::get('/{id}', [OrderController::class, 'show']);
+        Route::get('/', [OrdersController::class, 'index']); // Same as orders but filtered
+        Route::get('/{id}', [OrdersController::class, 'show']);
     });
 });
 

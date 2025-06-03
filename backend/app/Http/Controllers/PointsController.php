@@ -2,65 +2,62 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Point;
 use Illuminate\Http\Request;
+use App\Models\Point;
+use Illuminate\Support\Facades\Auth;
+use App\Models\PointsHistory;
 
 class PointsController extends Controller
 {
-    // GET /points
+    // Ambil total poin user yang sedang login
     public function index()
     {
-        $points = Point::with('user')->get();
-        return response()->json($points);
+        $user = Auth::user();
+
+        $point = Point::where('user_id', $user->id)->first();
+
+        if (!$point) {
+            return response()->json(['total_points' => 0]);
+        }
+
+        return response()->json(['total_points' => $point->total_points]);
     }
 
-    // POST /points
-    public function store(Request $request)
+    // Gunakan poin untuk diskon/transaksi
+    public function usePoints(Request $request)
     {
-        $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'total_points' => 'required|integer'
+        $request->validate([
+            'amount' => 'required|integer|min:1'
         ]);
 
-        $point = Point::create($validated);
-        return response()->json($point, 201);
-    }
+        $user = Auth::user();
+        $point = Point::where('user_id', $user->id)->first();
 
-    // GET /points/{id}
-    public function show($id)
-    {
-        $point = Point::with('user')->find($id);
-        if (!$point) {
-            return response()->json(['message' => 'Points not found'], 404);
-        }
-        return response()->json($point);
-    }
-
-    // PUT /points/{id}
-    public function update(Request $request, $id)
-    {
-        $point = Point::find($id);
-        if (!$point) {
-            return response()->json(['message' => 'Points not found'], 404);
+        if (!$point || $point->total_points < $request->amount) {
+            return response()->json(['message' => 'Not enough points.'], 400);
         }
 
-        $validated = $request->validate([
-            'total_points' => 'sometimes|required|integer'
-        ]);
+        $point->total_points -= $request->amount;
+        $point->last_updated = now();
+        $point->save();
 
-        $point->update($validated);
-        return response()->json($point);
+        return response()->json(['message' => 'Points used successfully', 'remaining_points' => $point->total_points]);
     }
 
-    // DELETE /points/{id}
-    public function destroy($id)
-    {
-        $point = Point::find($id);
-        if (!$point) {
-            return response()->json(['message' => 'Points not found'], 404);
-        }
+   public function history()
+{
+    $user = Auth::user();
 
-        $point->delete();
-        return response()->json(['message' => 'Points deleted']);
-    }
+    $histories = \App\Models\Point::where('user_id', $user->id)
+        // ->orderBy('created_at', 'desc')
+        ->get();
+
+    return response()->json([
+        'point_history' => $histories
+    ]);
+}
+
+
+
+
 }
