@@ -16,10 +16,8 @@ const Contact = () => {
               TERLARIS SEPANJANG MASA
             </h1>
             <p data-aos="fade-up" className="leading-8 tracking-wide">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Debitis
-              accusamus facilis nobis vitae reprehenderit quam! A eaque quis ab
-              dolore dolorem quia, sunt expedita sed quod id inventore officia
-              veritatis?
+              Arufnara Store, sebuah platform digital untuk pembelian dan top-up 
+              voucher game secara cepat, aman, dan efisien.
             </p>
           </div>
           {/* Right text content section */}

@@ -1,12 +1,18 @@
 import React from "react";
-import Img2 from "../../assets/car2.png";
+import Img1 from "../../assets/bonus.png";
+import Img2 from "../../assets/aot.png";
+import Img3 from "../../assets/cashback.png";
+import Img4 from "../../assets/colector.png";
+import Img5 from "../../assets/luckyspin.png";
+import Img6 from "../../assets/allstar.png";
+import Img7 from "../../assets/starlight.png";
 import Image from "next/image";
 import Link from "next/link";
 
 const TopupCard = [
   {
     id: 1,
-    img: Img2,
+    img: Img1,
     name: "🎉 Event Diamond Bonus ML",
     desc: "Top up dan dapetin bonus hingga 50% diamond lebih banyak. Cuma berlaku 3 hari, buruan serbu!",
     button: "Ikut Sekarang",
@@ -22,7 +28,7 @@ const TopupCard = [
   },
   {
     id: 3,
-    img: Img2,
+    img: Img3,
     name: "🔥 Weekend Cashback Diamond",
     desc: "Top up minimal 100k, cashback langsung masuk 15%! Weekend doang ya!",
     button: "Top Up Sekarang",
@@ -30,7 +36,7 @@ const TopupCard = [
   },
   {
     id: 4,
-    img: Img2,
+    img: Img4,
     name: "💥 Skin Collector Flash Event",
     desc: "Skin collector dengan harga miring cuma seminggu ini. Jangan sampai kehabisan!",
     button: "Ambil Skin",
@@ -38,7 +44,7 @@ const TopupCard = [
   },
   {
     id: 5,
-    img: Img2,
+    img: Img5,
     name: "🎁 Lucky Spin Gratis 1x",
     desc: "Top up berapa aja, dapet tiket Lucky Spin gratis. Hadiahnya skin epic permanen!",
     button: "Spin Sekarang",
@@ -46,7 +52,7 @@ const TopupCard = [
   },
   {
     id: 6,
-    img: Img2,
+    img: Img6,
     name: "👑 MLBB All Star 2025",
     desc: "Event terbesar tahun ini! Top up untuk vote idolamu dan dapatkan hadiah eksklusif.",
     button: "Join Event",
@@ -54,7 +60,7 @@ const TopupCard = [
   },
   {
     id: 7,
-    img: Img2,
+    img: Img7,
     name: "🔮 Pre-Order Skin Starlight",
     desc: "Pre-order skin starlight bulan depan dengan diskon khusus pengguna baru!",
     button: "Pesan Sekarang",

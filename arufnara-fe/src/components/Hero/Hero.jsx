@@ -37,7 +37,7 @@ const Hero = () => {
               data-aos-delay="1000"
               className="tracking-[8px] text-base sm:text-xl font-semibold"
             >
-              www.domain.com
+              www.arufnara.com
             </p>
           </div>
 

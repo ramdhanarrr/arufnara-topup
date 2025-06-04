@@ -1,13 +1,15 @@
 import React from "react";
-import Img2 from "../../assets/car2.png";
+import Img1 from "../../assets/Event-01.png";
+import Img2 from "../../assets/Event-03.png";
+import Img3 from "../../assets/Event-02.png";
 import Image from "next/image";
 import Link from "next/link";
 
 const LayananCard = [
   {
     id: 1,
-    img: Img2,
-    name: "💎 Paket Diamond Gede",
+    img: Img1,
+    name: "💎 Big Diamond",
     desc: "Mau top up 86 sampe 1000 diamond? Tinggal klik, langsung masuk! Mau push rank? Diamond dulu, jago belakangan.",
     button: "Cek Promo!",
     aosDelay: "300",
@@ -22,7 +24,7 @@ const LayananCard = [
   },
   {
     id: 3,
-    img: Img2,
+    img: Img3,
     name: "🔥 Promo Auto Untung",
     desc: "Diamond lagi diskon! Cashback, harga miring, pokoknya ini dia momen paling cuan buat top up!",
     button: "Cek Promo!",

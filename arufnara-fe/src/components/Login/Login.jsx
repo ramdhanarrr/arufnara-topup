@@ -4,6 +4,7 @@ import { Eye, EyeOff, Mail, Lock, User, ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 
+
 const Login = () => {
     const [isLogin, setIsLogin] = useState(true);
     const [showPassword, setShowPassword] = useState(false);
@@ -61,9 +62,9 @@ const Login = () => {
                 {/* Logo/Brand */}
                 <div className="text-center mb-8">
                     <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 backdrop-blur-lg rounded-full mb-4">
-                        <span className="text-3xl">🎮</span>
+                        <img src="/logo.png" alt="logo" className="w-10 h-10 object-contain" />
                     </div>
-                    <h1 className="text-3xl font-bold text-white mb-2">GameStore</h1>
+                    <h1 className="text-3xl font-bold text-white mb-2">ARUFNARA</h1>
                     <p className="text-indigo-200">Top up game favoritmu dengan mudah</p>
                 </div>
 
@@ -198,11 +199,11 @@ const Login = () => {
 
                             <div className="mt-4 grid grid-cols-2 gap-3">
                                 <button className="flex items-center justify-center px-4 py-2 bg-white/10 border border-white/20 rounded-xl text-white hover:bg-white/20 transition-colors">
-                                    <span className="mr-2">📱</span>
+                                    <span className="mr-2"><img src="/sosmed-01.png" alt="" /></span>
                                     Google
                                 </button>
                                 <button className="flex items-center justify-center px-4 py-2 bg-white/10 border border-white/20 rounded-xl text-white hover:bg-white/20 transition-colors">
-                                    <span className="mr-2">📘</span>
+                                    <span className="mr-2"><img src="/sosmed-02.png" alt="" /></span>
                                     Facebook
                                 </button>
                             </div>
