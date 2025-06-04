@@ -1,24 +1,44 @@
 import React from "react";
-import {
-  FaAndroid,
-  FaAppStoreIos,
-  FaFacebook,
-  FaGoogle,
-  FaInstagram,
-  FaMapMarker,
-  FaMousePointer,
-  FaTwitter,
-} from "react-icons/fa";
-import { MdEmail, MdCall } from "react-icons/md";
+import { FaFacebook, FaInstagram, FaTwitter, FaWhatsapp } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
+  const socialLinks = [
+    { label: "Facebook", icon: FaFacebook, href: "#" },
+    { label: "Instagram", icon: FaInstagram, href: "#" },
+    { label: "Twitter", icon: FaTwitter, href: "#" },
+    {
+      label: "WhatsApp",
+      icon: FaWhatsapp,
+      href: "https://wa.me/6281234567890",
+    },
+  ];
+
+  const navLinks = [
+    { label: "Syarat & Ketentuan", href: "/syarat-ketentuan" },
+    { label: "Kebijakan Privasi", href: "/kebijakan-privasi" },
+    { label: "FAQ", href: "/faq" },
+  ];
+
   return (
-    <div className="bg-white text-black dark:bg-dark dark:text-white">
-      {/* upper section banner */}
-      <div className="bg-primary ">
-        <div className="container text-black text-center py-10 lg:py-14 text-2xl font-bold space-y-4">
-          <p>WE READY TO TAKE YOUT CALL 24 HOURS, 7 DAYS!</p>
-          <h1 className="text-3xl md:text-5xl font-bold">+123 456 789 </h1>
+    <footer className="bg-gray-900 text-gray-400 py-10">
+      <div className="container mx-auto px-6 text-center">
+        {/* Social Media Icons */}
+        <div className="flex justify-center space-x-6 mb-6">
+          {socialLinks.map((social) => (
+            <a
+              key={social.label}
+              href={social.href}
+              aria-label={social.label}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-sky-400 transition-colors duration-300"
+            >
+              <social.icon size={22} />
+            </a>
+          ))}
         </div>
       </div>
       {/* Bottom Footer section */}
@@ -30,8 +50,10 @@ const Footer = () => {
             About Arufnara
           </h1>
           <p>
-            Arufnara Store, sebuah platform digital untuk pembelian dan top-up 
-            voucher game secara cepat, aman, dan efisien.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto
+            sit perspiciatis, nulla deserunt tempora aperiam, perferendis,
+            repellat facere dolore iure dolor exercitationem. Et commodi ducimus
+            doloremque eligendi minima ad! Iure?
           </p>
           {/* Social Links */}
           <div className="flex items-center text-primary gap-3 text-2xl">
@@ -48,7 +70,10 @@ const Footer = () => {
             Download
           </h1>
           <p>
-            Arufnara Store tersedia di Playstore dan App Store, Download sekarang juga!
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum,
+            dicta perspiciatis aliquid nisi quos quasi nihil. Reprehenderit vero
+            placeat omnis quod praesentium nam perferendis, ab, exercitationem
+            repudiandae fugiat ad architecto.
           </p>
           <div className="flex items-center gap-8">
             <div className="text-primary text-xl font-semibold flex items-center gap-2">
@@ -58,7 +83,7 @@ const Footer = () => {
               </span>
             </div>
             <div className="text-primary text-xl font-semibold flex items-center gap-2">
-              IOS user
+              Ios user
               <span>
                 <FaAppStoreIos className="text-2xl text-black dark:text-white" />
               </span>
@@ -74,7 +99,7 @@ const Footer = () => {
           </h1>
           <div className="flex items-center gap-4">
             <FaMapMarker />
-            Jakarta City, Indonesia
+            123 Street, New York, USA
           </div>
           <div className="flex items-center gap-4">
             <MdCall />
@@ -90,10 +115,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <p className="text-center py-4 text-sm">
-        Copyright © 2025. All rights reserved
-      </p>
-    </div>
+    </footer>
   );
 };
 
