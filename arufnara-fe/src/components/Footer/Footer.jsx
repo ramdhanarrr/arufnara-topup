@@ -1,117 +1,85 @@
 import React from "react";
-import { FaFacebook, FaInstagram, FaTwitter, FaWhatsapp } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaTwitter,
+  FaWhatsapp,
+  FaAndroid,
+  FaAppStoreIos,
+} from "react-icons/fa";
+import { MdCall, MdEmail } from "react-icons/md";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
-  const socialLinks = [
-    { label: "Facebook", icon: FaFacebook, href: "#" },
-    { label: "Instagram", icon: FaInstagram, href: "#" },
-    { label: "Twitter", icon: FaTwitter, href: "#" },
-    {
-      label: "WhatsApp",
-      icon: FaWhatsapp,
-      href: "https://wa.me/6281234567890",
-    },
-  ];
-
-  const navLinks = [
-    { label: "Syarat & Ketentuan", href: "/syarat-ketentuan" },
-    { label: "Kebijakan Privasi", href: "/kebijakan-privasi" },
-    { label: "FAQ", href: "/faq" },
-  ];
-
   return (
-    <footer className="bg-gray-900 text-gray-400 py-10">
-      <div className="container mx-auto px-6 text-center">
-        {/* Social Media Icons */}
-        <div className="flex justify-center space-x-6 mb-6">
-          {socialLinks.map((social) => (
-            <a
-              key={social.label}
-              href={social.href}
-              aria-label={social.label}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-400 hover:text-sky-400 transition-colors duration-300"
-            >
-              <social.icon size={22} />
-            </a>
-          ))}
-        </div>
-      </div>
-      {/* Bottom Footer section */}
-      <div className="container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 md:gap-21 py-12">
-        {/* First Col  Section */}
-        <div className="space-y-6">
-          {/* Heading */}
-          <h1 className="text-2xl py-3 font-bold uppercase border-b-8 border-primary">
-            About Arufnara
-          </h1>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto
-            sit perspiciatis, nulla deserunt tempora aperiam, perferendis,
-            repellat facere dolore iure dolor exercitationem. Et commodi ducimus
-            doloremque eligendi minima ad! Iure?
-          </p>
-          {/* Social Links */}
-          <div className="flex items-center text-primary gap-3 text-2xl">
-            <FaFacebook />
-            <FaInstagram />
-            <FaTwitter />
-            <FaGoogle />
+    <footer className="py-10 text-gray-300 bg-gray-900">
+      <div className="container px-4 mx-auto">
+        <div className="grid gap-10 text-sm md:grid-cols-3">
+          {/* About */}
+          <div>
+            <h2 className="mb-4 text-lg font-semibold text-white">Arufnara Store</h2>
+            <p className="leading-relaxed">
+              Arufnara Store adalah platform digital yang menyediakan layanan top up
+              game, pembelian voucher, dan berbagai produk digital lainnya dengan cepat,
+              aman, dan terpercaya.
+            </p>
+          </div>
+
+          {/* Download */}
+          <div>
+            <h2 className="mb-4 text-lg font-semibold text-white">Download Aplikasi</h2>
+            <p className="mb-3">Tersedia di:</p>
+            <div className="flex items-center gap-4">
+              <a
+                href="#"
+                className="flex items-center gap-2 transition-colors hover:text-white"
+              >
+                <FaAndroid className="text-xl" />
+                Android
+              </a>
+              <a
+                href="#"
+                className="flex items-center gap-2 transition-colors hover:text-white"
+              >
+                <FaAppStoreIos className="text-xl" />
+                iOS
+              </a>
+            </div>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h2 className="mb-4 text-lg font-semibold text-white">Kontak Kami</h2>
+            <ul className="space-y-2">
+              <li className="flex items-center gap-2">
+                <MdCall className="text-lg" />
+                +62 812 3456 7890
+              </li>
+              <li className="flex items-center gap-2">
+                <MdEmail className="text-lg" />
+                support@arufnara.store
+              </li>
+              <li className="flex items-center gap-2">
+                <FaWhatsapp className="text-lg" />
+                <a href="https://wa.me/6281234567890" target="_blank" rel="noreferrer">
+                  Chat via WhatsApp
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
-        {/* Second Col Section */}
-        <div className="space-y-6">
-          <h1 className="text-2xl py-3 font-bold uppercase border-b-8 border-primary">
-            Download
-          </h1>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum,
-            dicta perspiciatis aliquid nisi quos quasi nihil. Reprehenderit vero
-            placeat omnis quod praesentium nam perferendis, ab, exercitationem
-            repudiandae fugiat ad architecto.
-          </p>
-          <div className="flex items-center gap-8">
-            <div className="text-primary text-xl font-semibold flex items-center gap-2">
-              Android user
-              <span>
-                <FaAndroid className="text-2xl text-black dark:text-white" />
-              </span>
-            </div>
-            <div className="text-primary text-xl font-semibold flex items-center gap-2">
-              Ios user
-              <span>
-                <FaAppStoreIos className="text-2xl text-black dark:text-white" />
-              </span>
-            </div>
-          </div>
-        </div>
+        {/* Divider */}
+        <div className="my-6 border-t border-gray-700" />
 
-        {/* Third Col Section */}
-        <div className="space-y-6">
-          {/* Heading */}
-          <h1 className="text-2xl py-3 font-bold uppercase border-b-8 border-primary">
-            Contact
-          </h1>
-          <div className="flex items-center gap-4">
-            <FaMapMarker />
-            123 Street, New York, USA
-          </div>
-          <div className="flex items-center gap-4">
-            <MdCall />
-            +123 456 789
-          </div>
-          <div className="flex items-center gap-4">
-            <MdEmail />
-            arufnara@gmail.com
-          </div>
-          <div className="flex items-center gap-4">
-            <FaMousePointer />
-            www.arufnara.com
+        {/* Bottom Footer */}
+        <div className="flex flex-col items-center justify-between text-xs text-gray-500 md:flex-row">
+          <p>&copy; {currentYear} Arufnara Store. All rights reserved.</p>
+          <div className="flex mt-3 space-x-4 md:mt-0">
+            <a href="#" className="hover:text-white">Syarat & Ketentuan</a>
+            <a href="#" className="hover:text-white">Privasi</a>
+            <a href="#" className="hover:text-white">FAQ</a>
           </div>
         </div>
       </div>

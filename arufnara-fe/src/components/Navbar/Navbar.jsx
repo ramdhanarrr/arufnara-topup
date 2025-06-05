@@ -18,64 +18,65 @@ const Navbar = () => {
   const toogleMenu = () => {
     setShowMenu(!showMenu);
   };
+
   return (
-    <nav className="relative z-10 shadow-md w-full dark:bg-dark dark:text-white duration-300">
+    <nav className="sticky top-0 z-50 w-full duration-300 bg-white shadow-md dark:bg-dark dark:text-white backdrop-blur">
       <div className="container py-2 md:py-0">
         <div className="flex items-center justify-between">
-          {/* logo section */}
+          {/* Logo Section */}
           <Link href="/">
+          <picture>
             <img
               src="/arufnara-black.png"
               alt="Logo"
-              className="h-12 block dark:hidden"
+              className="block h-12 dark:hidden"
             />
             <img
               src="/arufnara-white.png"
               alt="Logo"
-              className="h-12 hidden dark:block"
+              className="hidden h-12 dark:block"
             />
+          </picture>
           </Link>
 
           {/* Desktop Menu Section */}
           <div className="hidden md:block">
             <ul className="flex items-center gap-6">
-              {Navlinks.map(({ id, name, link }) => {
-                return (
-                  <li key={id} className="py-4">
-                    <Link
-                      href={link}
-                      className={`text-lg font-medium text-black dark:text-white py-2 px-4 rounded-full hover:bg-primary hover:text-white duration-300`}
-                    >
-                      {name}
-                    </Link>
-                  </li>
-                );
-              })}
-
-              {/* Darkmode feature */}
+              {Navlinks.map(({ id, name, link }) => (
+                <li key={id} className="py-4">
+                  <Link
+                    href={link}
+                    className="px-4 py-2 text-lg font-medium text-black duration-300 rounded-full dark:text-white hover:bg-primary hover:text-white"
+                  >
+                    {name}
+                  </Link>
+                </li>
+              ))}
               <DarkMode />
             </ul>
           </div>
 
           {/* Mobile Menu Section */}
-          <div className="md:hidden flex items-center gap-4 ">
+          <div className="flex items-center gap-4 md:hidden">
             <DarkMode />
             {showMenu ? (
               <HiMenuAlt1
                 onClick={toogleMenu}
-                className="cursor-pointer transition-all"
-                sixe={30}
+                className="transition-all cursor-pointer"
+                size={30}
               />
             ) : (
               <HiMenuAlt3
                 onClick={toogleMenu}
-                className="cursor-pointer transition-all"
-                sixe={30}
+                className="transition-all cursor-pointer"
+                size={30}
               />
             )}
           </div>
         </div>
       </div>
+
+      {/* Mobile Menu */}
       <ResponsiveMenu
         showMenu={showMenu}
         toogleMenu={toogleMenu}

@@ -9,8 +9,9 @@ import "slick-carousel/slick/slick-theme.css";
 import Admin from "@/components/Admin/Admin";
 import Hero from "@/components/Hero/Hero";
 import Layanan from "@/components/Layanan/Layanan";
-import Contact from "@/components/Contact/Contact";
+import Contact from "@/components/Profil/Profil";
 import Testimonial from "@/components/Testimonial/Testimonial";
+import Profil from "@/components/Profil/Profil";
 
 function Page() {
   useEffect(() => {
@@ -26,10 +27,9 @@ function Page() {
   return (
     <div className="dark:bg-dark dark:text-white">
       <Hero />
-      <Contact />
+      <Profil />
       <Layanan />
       <Testimonial />
-      
     </div>
   );
 }

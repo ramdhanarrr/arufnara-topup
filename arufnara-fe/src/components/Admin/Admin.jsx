@@ -4,32 +4,32 @@ import React from 'react';
 
 const Dashboard = () => {
   return (
-    <div className="py-10 bg-white dark:bg-dark text-black dark:text-white">
+    <div className="py-10 text-black bg-white dark:bg-dark dark:text-white">
     
     <div className="p-4 xl:ml-80">
-      <nav className="block w-full max-w-full bg-transparent text-white shadow-none rounded-xl transition-all px-0 py-1">
+      <nav className="block w-full max-w-full px-0 py-1 text-white transition-all bg-transparent shadow-none rounded-xl">
         <div className="flex flex-col-reverse justify-between gap-6 md:flex-row md:items-center">
           <div className="capitalize">
             <nav aria-label="breadcrumb" className="w-max">
-              <ol className="flex flex-wrap items-center w-full bg-opacity-60 rounded-md bg-transparent p-0 transition-all">
-                <li className="flex items-center text-blue-gray-900 antialiased font-sans text-sm font-normal leading-normal cursor-pointer transition-colors duration-300 hover:text-light-blue-500">
+              <ol className="flex flex-wrap items-center w-full p-0 transition-all bg-transparent rounded-md bg-opacity-60">
+                <li className="flex items-center font-sans text-sm antialiased font-normal leading-normal transition-colors duration-300 cursor-pointer text-blue-gray-900 hover:text-light-blue-500">
                   <a href="#">
-                    <p className="block antialiased font-sans text-sm leading-normal text-blue-900 font-normal opacity-50 transition-all hover:text-blue-500 hover:opacity-100 text-gray-800 dark:text-white">
+                    <p className="block font-sans text-sm antialiased font-normal leading-normal text-blue-900 transition-all opacity-50 hover:text-blue-500 hover:opacity-100 dark:text-white">
                       dashboard
                     </p>
                   </a>
-                  <span className="text-gray-500 text-sm antialiased font-sans font-normal leading-normal mx-2 pointer-events-none select-none">
+                  <span className="mx-2 font-sans text-sm antialiased font-normal leading-normal text-gray-500 pointer-events-none select-none">
                     /
                   </span>
                 </li>
-                <li className="flex items-center text-blue-900 antialiased font-sans text-sm font-normal leading-normal cursor-pointer transition-colors duration-300 hover:text-blue-500">
-                  <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal text-gray-800 dark:text-white">
+                <li className="flex items-center font-sans text-sm antialiased font-normal leading-normal text-blue-900 transition-colors duration-300 cursor-pointer hover:text-blue-500">
+                  <p className="block font-sans text-sm antialiased font-normal leading-normal text-gray-800 text-blue-gray-900 dark:text-white">
                     home
                   </p>
                 </li>
               </ol>
             </nav>
-            <h6 className="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-gray-900 text-gray-800 dark:text-white">
+            <h6 className="block font-sans text-base antialiased font-semibold leading-relaxed tracking-normal text-gray-800 dark:text-white">
               home
             </h6>
           </div>
@@ -49,14 +49,14 @@ const Dashboard = () => {
               className="relative middle none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 grid xl:hidden"
               type="button"
             >
-              <span className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
+              <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                   aria-hidden="true"
                   strokeWidth={3}
-                  className="h-6 w-6 text-blue-gray-500"
+                  className="w-6 h-6 text-blue-gray-500"
                 >
                   <path
                     fillRule="evenodd"
@@ -71,13 +71,13 @@ const Dashboard = () => {
               className="relative middle none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30"
               type="button"
             >
-              <span className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
+              <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                   aria-hidden="true"
-                  className="h-5 w-5 text-blue-gray-500"
+                  className="w-5 h-5 text-blue-gray-500"
                 >
                   <path
                     fillRule="evenodd"
@@ -94,13 +94,13 @@ const Dashboard = () => {
               className="relative middle none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30"
               type="button"
             >
-              <span className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
+              <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                   aria-hidden="true"
-                  className="h-5 w-5 text-blue-gray-500"
+                  className="w-5 h-5 text-blue-gray-500"
                 >
                   <path
                     fillRule="evenodd"
@@ -114,9 +114,9 @@ const Dashboard = () => {
         </div>
       </nav>
       <div className="mt-12">
-        <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
-          <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
-            <div className="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-blue-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
+        <div className="grid mb-12 gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
+          <div className="relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl">
+            <div className="absolute grid w-16 h-16 mx-4 -mt-4 overflow-hidden text-white shadow-lg bg-clip-border rounded-xl bg-gradient-to-tr from-blue-600 to-blue-400 shadow-blue-500/40 place-items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -134,22 +134,22 @@ const Dashboard = () => {
               </svg>
             </div>
             <div className="p-4 text-right">
-              <p className="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">
-                Today's Money
+              <p className="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-600">
+                Todays Money
               </p>
-              <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
+              <h4 className="block font-sans text-2xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
                 $53k
               </h4>
             </div>
-            <div className="border-t border-blue-gray-50 p-4">
-              <p className="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
+            <div className="p-4 border-t border-blue-gray-50">
+              <p className="block font-sans text-base antialiased font-normal leading-relaxed text-blue-gray-600">
                 <strong className="text-green-500">+55%</strong>&nbsp;than last
                 week
               </p>
             </div>
           </div>
-          <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
-            <div className="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-pink-600 to-pink-400 text-white shadow-pink-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
+          <div className="relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl">
+            <div className="absolute grid w-16 h-16 mx-4 -mt-4 overflow-hidden text-white shadow-lg bg-clip-border rounded-xl bg-gradient-to-tr from-pink-600 to-pink-400 shadow-pink-500/40 place-items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -165,22 +165,22 @@ const Dashboard = () => {
               </svg>
             </div>
             <div className="p-4 text-right">
-              <p className="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">
-                Today's Users
+              <p className="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-600">
+                Todays Users
               </p>
-              <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
+              <h4 className="block font-sans text-2xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
                 2,300
               </h4>
             </div>
-            <div className="border-t border-blue-gray-50 p-4">
-              <p className="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
+            <div className="p-4 border-t border-blue-gray-50">
+              <p className="block font-sans text-base antialiased font-normal leading-relaxed text-blue-gray-600">
                 <strong className="text-green-500">+3%</strong>&nbsp;than last
                 month
               </p>
             </div>
           </div>
-          <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
-            <div className="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-green-600 to-green-400 text-white shadow-green-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
+          <div className="relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl">
+            <div className="absolute grid w-16 h-16 mx-4 -mt-4 overflow-hidden text-white shadow-lg bg-clip-border rounded-xl bg-gradient-to-tr from-green-600 to-green-400 shadow-green-500/40 place-items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -192,22 +192,22 @@ const Dashboard = () => {
               </svg>
             </div>
             <div className="p-4 text-right">
-              <p className="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">
+              <p className="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-600">
                 New Clients
               </p>
-              <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
+              <h4 className="block font-sans text-2xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
                 3,462
               </h4>
             </div>
-            <div className="border-t border-blue-gray-50 p-4">
-              <p className="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
+            <div className="p-4 border-t border-blue-gray-50">
+              <p className="block font-sans text-base antialiased font-normal leading-relaxed text-blue-gray-600">
                 <strong className="text-red-500">-2%</strong>&nbsp;than
                 yesterday
               </p>
             </div>
           </div>
-          <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
-            <div className="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-orange-600 to-orange-400 text-white shadow-orange-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
+          <div className="relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl">
+            <div className="absolute grid w-16 h-16 mx-4 -mt-4 overflow-hidden text-white shadow-lg bg-clip-border rounded-xl bg-gradient-to-tr from-orange-600 to-orange-400 shadow-orange-500/40 place-items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -219,29 +219,29 @@ const Dashboard = () => {
               </svg>
             </div>
             <div className="p-4 text-right">
-              <p className="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">
+              <p className="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-600">
                 Sales
               </p>
-              <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
+              <h4 className="block font-sans text-2xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
                 $103,430
               </h4>
             </div>
-            <div className="border-t border-blue-gray-50 p-4">
-              <p className="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
+            <div className="p-4 border-t border-blue-gray-50">
+              <p className="block font-sans text-base antialiased font-normal leading-relaxed text-blue-gray-600">
                 <strong className="text-green-500">+5%</strong>&nbsp;than
                 yesterday
               </p>
             </div>
           </div>
         </div>
-        <div className="mb-4 grid grid-cols-1 gap-6 xl:grid-cols-3">
-          <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2">
-            <div className="relative bg-clip-border rounded-xl overflow-hidden bg-transparent text-gray-700 shadow-none m-0 flex items-center justify-between p-6">
+        <div className="grid grid-cols-1 gap-6 mb-4 xl:grid-cols-3">
+          <div className="relative flex flex-col overflow-hidden text-gray-700 bg-white shadow-md bg-clip-border rounded-xl xl:col-span-2">
+            <div className="relative flex items-center justify-between p-6 m-0 overflow-hidden text-gray-700 bg-transparent shadow-none bg-clip-border rounded-xl">
               <div>
-                <h6 className="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-blue-gray-900 mb-1">
+                <h6 className="block mb-1 font-sans text-base antialiased font-semibold leading-relaxed tracking-normal text-blue-gray-900">
                   Projects
                 </h6>
-                <p className="antialiased font-sans text-sm leading-normal flex items-center gap-1 font-normal text-blue-gray-600">
+                <p className="flex items-center gap-1 font-sans text-sm antialiased font-normal leading-normal text-blue-gray-600">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -249,7 +249,7 @@ const Dashboard = () => {
                     strokeWidth={3}
                     stroke="currentColor"
                     aria-hidden="true"
-                    className="h-4 w-4 text-blue-500"
+                    className="w-4 h-4 text-blue-500"
                   >
                     <path
                       strokeLinecap="round"
@@ -267,7 +267,7 @@ const Dashboard = () => {
                 className="relative middle none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-8 max-w-[32px] h-8 max-h-[32px] rounded-lg text-xs text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30"
                 type="button"
               >
-                <span className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
+                <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currenColor"
@@ -275,7 +275,7 @@ const Dashboard = () => {
                     strokeWidth={3}
                     stroke="currentColor"
                     aria-hidden="true"
-                    className="h-6 w-6"
+                    className="w-6 h-6"
                   >
                     <path
                       strokeLinecap="round"
@@ -286,21 +286,21 @@ const Dashboard = () => {
                 </span>
               </button>
             </div>
-            <div className="p-6 overflow-x-scroll px-0 pt-0 pb-2">
+            <div className="p-6 px-0 pt-0 pb-2 overflow-x-scroll">
               <table className="w-full min-w-[640px] table-auto">
                 <thead>
                   <tr>
-                    <th className="border-b border-blue-gray-50 py-3 px-6 text-left">
+                    <th className="px-6 py-3 text-left border-b border-blue-gray-50">
                       <p className="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
                         companies
                       </p>
                     </th>
-                    <th className="border-b border-blue-gray-50 py-3 px-6 text-left">
+                    <th className="px-6 py-3 text-left border-b border-blue-gray-50">
                       <p className="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
                         budget
                       </p>
                     </th>
-                    <th className="border-b border-blue-gray-50 py-3 px-6 text-left">
+                    <th className="px-6 py-3 text-left border-b border-blue-gray-50">
                       <p className="block antialiased font-sans text-[11px] font-medium uppercase text-blue-gray-400">
                         completion
                       </p>
@@ -309,26 +309,26 @@ const Dashboard = () => {
                 </thead>
                 <tbody>
                   <tr>
-                    <td className="py-3 px-5 border-b border-blue-gray-50">
+                    <td className="px-5 py-3 border-b border-blue-gray-50">
                       <div className="flex items-center gap-4">
-                        <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-bold">
+                        <p className="block font-sans text-sm antialiased font-bold leading-normal text-blue-gray-900">
                           Material XD Version
                         </p>
                       </div>
                     </td>
-                    <td className="py-3 px-5 border-b border-blue-gray-50">
-                      <p className="block antialiased font-sans text-xs font-medium text-blue-gray-600">
+                    <td className="px-5 py-3 border-b border-blue-gray-50">
+                      <p className="block font-sans text-xs antialiased font-medium text-blue-gray-600">
                         $14,000
                       </p>
                     </td>
-                    <td className="py-3 px-5 border-b border-blue-gray-50">
+                    <td className="px-5 py-3 border-b border-blue-gray-50">
                       <div className="w-10/12">
-                        <p className="antialiased font-sans mb-1 block text-xs font-medium text-blue-gray-600">
+                        <p className="block mb-1 font-sans text-xs antialiased font-medium text-blue-gray-600">
                           60%
                         </p>
-                        <div className="flex flex-start bg-blue-gray-50 overflow-hidden w-full rounded-sm font-sans text-xs font-medium h-1">
+                        <div className="flex w-full h-1 overflow-hidden font-sans text-xs font-medium rounded-sm flex-start bg-blue-gray-50">
                           <div
-                            className="flex justify-center items-center h-full bg-gradient-to-tr from-blue-600 to-blue-400 text-white"
+                            className="flex items-center justify-center h-full text-white bg-gradient-to-tr from-blue-600 to-blue-400"
                             style={{ width: "60%" }}
                           />
                         </div>
@@ -336,26 +336,26 @@ const Dashboard = () => {
                     </td>
                   </tr>
                   <tr>
-                    <td className="py-3 px-5 border-b border-blue-gray-50">
+                    <td className="px-5 py-3 border-b border-blue-gray-50">
                       <div className="flex items-center gap-4">
-                        <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-bold">
+                        <p className="block font-sans text-sm antialiased font-bold leading-normal text-blue-gray-900">
                           Add Progress Track
                         </p>
                       </div>
                     </td>
-                    <td className="py-3 px-5 border-b border-blue-gray-50">
-                      <p className="block antialiased font-sans text-xs font-medium text-blue-gray-600">
+                    <td className="px-5 py-3 border-b border-blue-gray-50">
+                      <p className="block font-sans text-xs antialiased font-medium text-blue-gray-600">
                         $3,000
                       </p>
                     </td>
-                    <td className="py-3 px-5 border-b border-blue-gray-50">
+                    <td className="px-5 py-3 border-b border-blue-gray-50">
                       <div className="w-10/12">
-                        <p className="antialiased font-sans mb-1 block text-xs font-medium text-blue-gray-600">
+                        <p className="block mb-1 font-sans text-xs antialiased font-medium text-blue-gray-600">
                           10%
                         </p>
-                        <div className="flex flex-start bg-blue-gray-50 overflow-hidden w-full rounded-sm font-sans text-xs font-medium h-1">
+                        <div className="flex w-full h-1 overflow-hidden font-sans text-xs font-medium rounded-sm flex-start bg-blue-gray-50">
                           <div
-                            className="flex justify-center items-center h-full bg-gradient-to-tr from-blue-600 to-blue-400 text-white"
+                            className="flex items-center justify-center h-full text-white bg-gradient-to-tr from-blue-600 to-blue-400"
                             style={{ width: "10%" }}
                           />
                         </div>
@@ -363,26 +363,26 @@ const Dashboard = () => {
                     </td>
                   </tr>
                   <tr>
-                    <td className="py-3 px-5 border-b border-blue-gray-50">
+                    <td className="px-5 py-3 border-b border-blue-gray-50">
                       <div className="flex items-center gap-4">
-                        <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-bold">
+                        <p className="block font-sans text-sm antialiased font-bold leading-normal text-blue-gray-900">
                           Fix Platform Errors
                         </p>
                       </div>
                     </td>
-                    <td className="py-3 px-5 border-b border-blue-gray-50">
-                      <p className="block antialiased font-sans text-xs font-medium text-blue-gray-600">
+                    <td className="px-5 py-3 border-b border-blue-gray-50">
+                      <p className="block font-sans text-xs antialiased font-medium text-blue-gray-600">
                         Not set
                       </p>
                     </td>
-                    <td className="py-3 px-5 border-b border-blue-gray-50">
+                    <td className="px-5 py-3 border-b border-blue-gray-50">
                       <div className="w-10/12">
-                        <p className="antialiased font-sans mb-1 block text-xs font-medium text-blue-gray-600">
+                        <p className="block mb-1 font-sans text-xs antialiased font-medium text-blue-gray-600">
                           100%
                         </p>
-                        <div className="flex flex-start bg-blue-gray-50 overflow-hidden w-full rounded-sm font-sans text-xs font-medium h-1">
+                        <div className="flex w-full h-1 overflow-hidden font-sans text-xs font-medium rounded-sm flex-start bg-blue-gray-50">
                           <div
-                            className="flex justify-center items-center h-full bg-gradient-to-tr from-green-600 to-green-400 text-white"
+                            className="flex items-center justify-center h-full text-white bg-gradient-to-tr from-green-600 to-green-400"
                             style={{ width: "100%" }}
                           />
                         </div>
@@ -390,26 +390,26 @@ const Dashboard = () => {
                     </td>
                   </tr>
                   <tr>
-                    <td className="py-3 px-5 border-b border-blue-gray-50">
+                    <td className="px-5 py-3 border-b border-blue-gray-50">
                       <div className="flex items-center gap-4">
-                        <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-bold">
+                        <p className="block font-sans text-sm antialiased font-bold leading-normal text-blue-gray-900">
                           Launch our Mobile App
                         </p>
                       </div>
                     </td>
-                    <td className="py-3 px-5 border-b border-blue-gray-50">
-                      <p className="block antialiased font-sans text-xs font-medium text-blue-gray-600">
+                    <td className="px-5 py-3 border-b border-blue-gray-50">
+                      <p className="block font-sans text-xs antialiased font-medium text-blue-gray-600">
                         $20,500
                       </p>
                     </td>
-                    <td className="py-3 px-5 border-b border-blue-gray-50">
+                    <td className="px-5 py-3 border-b border-blue-gray-50">
                       <div className="w-10/12">
-                        <p className="antialiased font-sans mb-1 block text-xs font-medium text-blue-gray-600">
+                        <p className="block mb-1 font-sans text-xs antialiased font-medium text-blue-gray-600">
                           100%
                         </p>
-                        <div className="flex flex-start bg-blue-gray-50 overflow-hidden w-full rounded-sm font-sans text-xs font-medium h-1">
+                        <div className="flex w-full h-1 overflow-hidden font-sans text-xs font-medium rounded-sm flex-start bg-blue-gray-50">
                           <div
-                            className="flex justify-center items-center h-full bg-gradient-to-tr from-green-600 to-green-400 text-white"
+                            className="flex items-center justify-center h-full text-white bg-gradient-to-tr from-green-600 to-green-400"
                             style={{ width: "100%" }}
                           />
                         </div>
@@ -417,26 +417,26 @@ const Dashboard = () => {
                     </td>
                   </tr>
                   <tr>
-                    <td className="py-3 px-5 border-b border-blue-gray-50">
+                    <td className="px-5 py-3 border-b border-blue-gray-50">
                       <div className="flex items-center gap-4">
-                        <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-bold">
+                        <p className="block font-sans text-sm antialiased font-bold leading-normal text-blue-gray-900">
                           Add the New Pricing Page
                         </p>
                       </div>
                     </td>
-                    <td className="py-3 px-5 border-b border-blue-gray-50">
-                      <p className="block antialiased font-sans text-xs font-medium text-blue-gray-600">
+                    <td className="px-5 py-3 border-b border-blue-gray-50">
+                      <p className="block font-sans text-xs antialiased font-medium text-blue-gray-600">
                         $500
                       </p>
                     </td>
-                    <td className="py-3 px-5 border-b border-blue-gray-50">
+                    <td className="px-5 py-3 border-b border-blue-gray-50">
                       <div className="w-10/12">
-                        <p className="antialiased font-sans mb-1 block text-xs font-medium text-blue-gray-600">
+                        <p className="block mb-1 font-sans text-xs antialiased font-medium text-blue-gray-600">
                           25%
                         </p>
-                        <div className="flex flex-start bg-blue-gray-50 overflow-hidden w-full rounded-sm font-sans text-xs font-medium h-1">
+                        <div className="flex w-full h-1 overflow-hidden font-sans text-xs font-medium rounded-sm flex-start bg-blue-gray-50">
                           <div
-                            className="flex justify-center items-center h-full bg-gradient-to-tr from-blue-600 to-blue-400 text-white"
+                            className="flex items-center justify-center h-full text-white bg-gradient-to-tr from-blue-600 to-blue-400"
                             style={{ width: "25%" }}
                           />
                         </div>
@@ -451,8 +451,8 @@ const Dashboard = () => {
       </div>
       <div className="text-blue-gray-600">
         <footer className="py-2">
-          <div className="flex w-full flex-wrap items-center justify-center gap-6 px-2 md:justify-between">
-            <p className="block antialiased font-sans text-sm leading-normal font-normal text-inherit">
+          <div className="flex flex-wrap items-center justify-center w-full gap-6 px-2 md:justify-between">
+            <p className="block font-sans text-sm antialiased font-normal leading-normal text-inherit">
               © 2023, made with{" "}
               <svg
                 xmlns="http://www.w3.org/2000/svg"

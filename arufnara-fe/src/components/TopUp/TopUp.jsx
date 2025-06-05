@@ -71,9 +71,9 @@ const TopupCard = [
 const TopUp = () => {
   return (
     <div>
-      <div className="py-10 bg-white dark:bg-dark text-black dark:text-white">
+      <div className="py-10 text-black bg-white dark:bg-dark dark:text-white">
         <div className="container">
-          <div data-aos="fade-up" className="text-center mb-20">
+          <div data-aos="fade-up" className="mb-20 text-center">
             <h1 className="text-4xl font-bold text-gray-800 dark:text-white ">
               Event Top Up MLBB Paling Gacor!
             </h1>
@@ -95,13 +95,13 @@ const TopUp = () => {
                       className="max-w-[200px] block mx-auto transform -translate-y-20 group-hover:scale-110 group-hover:translate-x-4 duration-300"
                     />
                   </div>
-                  <div className="p-4 text-center space-y-4">
+                  <div className="p-4 space-y-4 text-center">
                     <h1 className="text-xl font-bold">{name}</h1>
-                    <p className="text-gray-600 group-hover:text-black duration-300 text-sm line-clamp-2">
+                    <p className="text-sm text-gray-600 duration-300 group-hover:text-black line-clamp-2">
                       {desc}
                     </p>
                     <Link href="/login">
-                      <button className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors duration-300">
+                      <button className="px-4 py-2 text-white transition-colors duration-300 bg-black rounded-lg hover:bg-gray-800">
                         {button}
                       </button>
                     </Link>
