@@ -7,7 +7,7 @@ const Admin = ({ children }) => {
 
        {/* Header */}
 
-      <header className="bg-gray-800 text-white p-4 flex items-center justify-start md:justify-center">
+      <header className="bg-gray-800 text-white p-4 flex items-center justify-start md:justify-center sticky top-0 z-50 w-full duration-300">
         <div className="flex items-center">
           <img className="w-7 h-7 md:w-10 md:h-10 mr-2 rounded-md overflow-hidden" src="/logo.png"/>
           <span className="text-lg font-semibold"> Admin Control </span>
@@ -28,7 +28,7 @@ const Admin = ({ children }) => {
             <div className='block w-px h-6'></div>
           </li>
           <li>
-            <a href="" className='flex items-center mr-4 hover:text-blue-100'>
+            <a href="/" className='flex items-center mr-4 hover:text-blue-100'>
               <span className='inline-flex mr-1'>
                 <svg className='w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'/>
                 <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
@@ -127,6 +127,8 @@ const Admin = ({ children }) => {
             </div>
           </div>
         </aside>
+
+        {/* isi content */}
         <main className="flex-1 p-6">{children}</main>
       </div>
     </div>
