@@ -6,12 +6,14 @@ import "aos/dist/aos.css";
 // Import css files
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Admin from "@/components/Admin/Admin";
 import Hero from "@/components/Hero/Hero";
 import Layanan from "@/components/Layanan/Layanan";
-import Contact from "@/components/Contact/Contact";
+import Contact from "@/components/Profil/Profil";
 import Testimonial from "@/components/Testimonial/Testimonial";
+import Profil from "@/components/Profil/Profil";
 
-const Page = () => {
+function Page() {
   useEffect(() => {
     AOS.init({
       offset: 100,
@@ -25,11 +27,11 @@ const Page = () => {
   return (
     <div className="dark:bg-dark dark:text-white">
       <Hero />
-      <Contact />
+      <Profil />
       <Layanan />
       <Testimonial />
     </div>
   );
-};
+}
 
 export default Page;

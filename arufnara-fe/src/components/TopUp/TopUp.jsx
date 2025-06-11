@@ -1,12 +1,18 @@
 import React from "react";
-import Img2 from "../../assets/car2.png";
+import Img1 from "../../assets/bonus.png";
+import Img2 from "../../assets/aot.png";
+import Img3 from "../../assets/cashback.png";
+import Img4 from "../../assets/colector.png";
+import Img5 from "../../assets/luckyspin.png";
+import Img6 from "../../assets/allstar.png";
+import Img7 from "../../assets/starlight.png";
 import Image from "next/image";
 import Link from "next/link";
 
 const TopupCard = [
   {
     id: 1,
-    img: Img2,
+    img: Img1,
     name: "🎉 Event Diamond Bonus ML",
     desc: "Top up dan dapetin bonus hingga 50% diamond lebih banyak. Cuma berlaku 3 hari, buruan serbu!",
     button: "Ikut Sekarang",
@@ -22,7 +28,7 @@ const TopupCard = [
   },
   {
     id: 3,
-    img: Img2,
+    img: Img3,
     name: "🔥 Weekend Cashback Diamond",
     desc: "Top up minimal 100k, cashback langsung masuk 15%! Weekend doang ya!",
     button: "Top Up Sekarang",
@@ -30,7 +36,7 @@ const TopupCard = [
   },
   {
     id: 4,
-    img: Img2,
+    img: Img4,
     name: "💥 Skin Collector Flash Event",
     desc: "Skin collector dengan harga miring cuma seminggu ini. Jangan sampai kehabisan!",
     button: "Ambil Skin",
@@ -38,7 +44,7 @@ const TopupCard = [
   },
   {
     id: 5,
-    img: Img2,
+    img: Img5,
     name: "🎁 Lucky Spin Gratis 1x",
     desc: "Top up berapa aja, dapet tiket Lucky Spin gratis. Hadiahnya skin epic permanen!",
     button: "Spin Sekarang",
@@ -46,7 +52,7 @@ const TopupCard = [
   },
   {
     id: 6,
-    img: Img2,
+    img: Img6,
     name: "👑 MLBB All Star 2025",
     desc: "Event terbesar tahun ini! Top up untuk vote idolamu dan dapatkan hadiah eksklusif.",
     button: "Join Event",
@@ -54,7 +60,7 @@ const TopupCard = [
   },
   {
     id: 7,
-    img: Img2,
+    img: Img7,
     name: "🔮 Pre-Order Skin Starlight",
     desc: "Pre-order skin starlight bulan depan dengan diskon khusus pengguna baru!",
     button: "Pesan Sekarang",
@@ -65,9 +71,9 @@ const TopupCard = [
 const TopUp = () => {
   return (
     <div>
-      <div className="py-10 bg-white dark:bg-dark text-black dark:text-white">
+      <div className="py-10 text-black bg-white dark:bg-dark dark:text-white">
         <div className="container">
-          <div data-aos="fade-up" className="text-center mb-20">
+          <div data-aos="fade-up" className="mb-20 text-center">
             <h1 className="text-4xl font-bold text-gray-800 dark:text-white ">
               Event Top Up MLBB Paling Gacor!
             </h1>
@@ -89,13 +95,13 @@ const TopUp = () => {
                       className="max-w-[200px] block mx-auto transform -translate-y-20 group-hover:scale-110 group-hover:translate-x-4 duration-300"
                     />
                   </div>
-                  <div className="p-4 text-center space-y-4">
+                  <div className="p-4 space-y-4 text-center">
                     <h1 className="text-xl font-bold">{name}</h1>
-                    <p className="text-gray-600 group-hover:text-black duration-300 text-sm line-clamp-2">
+                    <p className="text-sm text-gray-600 duration-300 group-hover:text-black line-clamp-2">
                       {desc}
                     </p>
                     <Link href="/login">
-                      <button className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors duration-300">
+                      <button className="px-4 py-2 text-white transition-colors duration-300 bg-black rounded-lg hover:bg-gray-800">
                         {button}
                       </button>
                     </Link>
