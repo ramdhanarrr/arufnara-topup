@@ -16,7 +16,6 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-// Protected routes (require authentication)
 Route::middleware('auth:sanctum')->group(function () {
     
     // User management routes
