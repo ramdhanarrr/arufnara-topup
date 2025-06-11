@@ -1,22 +1,22 @@
-"use client";
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Diamond, User, Mail, Phone, CreditCard, Check, ArrowLeft, Zap } from 'lucide-react';
+"use client"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { Diamond, User, CreditCard, Check, ArrowLeft, Zap } from "lucide-react"
 
-const Form = () => {
-    const router = useRouter();
-    const [selectedPackage, setSelectedPackage] = useState(null);
-    const [paymentMethod, setPaymentMethod] = useState('');
+export default function OrderPage() {
+    const router = useRouter()
+    const [selectedPackage, setSelectedPackage] = useState(null)
+    const [paymentMethod, setPaymentMethod] = useState("")
     const [formData, setFormData] = useState({
-        userId: '',
-        zoneId: '',
-        email: '',
-        whatsapp: '',
-        customerName: ''
-    });
-    const [showConfirmation, setShowConfirmation] = useState(false);
-    const [vaNumber, setVaNumber] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
+        userId: "",
+        zoneId: "",
+        email: "",
+        whatsapp: "",
+        customerName: "",
+    })
+    const [showConfirmation, setShowConfirmation] = useState(false)
+    const [vaNumber, setVaNumber] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
 
     // Data paket diamond ML
     const diamondPackages = [
@@ -31,100 +31,106 @@ const Form = () => {
         { id: 9, diamond: 878, price: 200000, popular: false, bonus: 90 },
         { id: 10, diamond: 963, price: 220000, popular: false, bonus: 100 },
         { id: 11, diamond: 1412, price: 320000, popular: false, bonus: 150 },
-        { id: 12, diamond: 2195, price: 500000, popular: false, bonus: 250 }
-    ];
+        { id: 12, diamond: 2195, price: 500000, popular: false, bonus: 250 },
+    ]
 
     // Metode pembayaran
     const paymentMethods = [
-        { id: 'dana', name: 'DANA', icon: '💳', fee: 0 },
-        { id: 'ovo', name: 'OVO', icon: '🟣', fee: 0 },
-        { id: 'gopay', name: 'GoPay', icon: '🟢', fee: 0 },
-        { id: 'shopeepay', name: 'ShopeePay', icon: '🟠', fee: 0 },
-        { id: 'bca', name: 'BCA Virtual Account', icon: '🏦', fee: 4000 },
-        { id: 'bni', name: 'BNI Virtual Account', icon: '🏦', fee: 4000 },
-        { id: 'bri', name: 'BRI Virtual Account', icon: '🏦', fee: 4000 },
-        { id: 'mandiri', name: 'Mandiri Virtual Account', icon: '🏦', fee: 4000 }
-    ];
+        { id: "dana", name: "DANA", icon: "💳", fee: 0 },
+        { id: "ovo", name: "OVO", icon: "🟣", fee: 0 },
+        { id: "gopay", name: "GoPay", icon: "🟢", fee: 0 },
+        { id: "shopeepay", name: "ShopeePay", icon: "🟠", fee: 0 },
+        { id: "bca", name: "BCA Virtual Account", icon: "🏦", fee: 4000 },
+        { id: "bni", name: "BNI Virtual Account", icon: "🏦", fee: 4000 },
+        { id: "bri", name: "BRI Virtual Account", icon: "🏦", fee: 4000 },
+        { id: "mandiri", name: "Mandiri Virtual Account", icon: "🏦", fee: 4000 },
+    ]
 
     const formatPrice = (price) => {
-        return new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-            minimumFractionDigits: 0
-        }).format(price);
-    };
+        return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 0,
+        }).format(price)
+    }
 
     const handleInputChange = (e) => {
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
-        });
-    };
+            [e.target.name]: e.target.value,
+        })
+    }
 
     const getTotalPrice = () => {
-        if (!selectedPackage) return 0;
-        const method = paymentMethods.find(p => p.id === paymentMethod);
-        return selectedPackage.price + (method ? method.fee : 0);
-    };
+        if (!selectedPackage) return 0
+        const method = paymentMethods.find((p) => p.id === paymentMethod)
+        return selectedPackage.price + (method ? method.fee : 0)
+    }
 
     const handleSubmit = () => {
         // Validasi form
         if (!selectedPackage) {
-            alert('Pilih paket diamond terlebih dahulu!');
-            return;
+            alert("Pilih paket diamond terlebih dahulu!")
+            return
         }
         if (!formData.userId || !formData.zoneId) {
-            alert('User ID dan Zone ID harus diisi!');
-            return;
+            alert("User ID dan Zone ID harus diisi!")
+            return
         }
         if (!formData.email || !formData.whatsapp) {
-            alert('Email dan WhatsApp harus diisi!');
-            return;
+            alert("Email dan WhatsApp harus diisi!")
+            return
         }
         if (!paymentMethod) {
-            alert('Pilih metode pembayaran!');
-            return;
+            alert("Pilih metode pembayaran!")
+            return
         }
         if (!formData.customerName) {
-            alert('username harus diisi!');
-            return;
+            alert("Username harus diisi!")
+            return
         }
 
-        setIsLoading(true);
+        setIsLoading(true)
 
         setTimeout(() => {
-            setIsLoading(false);
+            setIsLoading(false)
 
             const orderData = {
                 package: selectedPackage,
                 userInfo: formData,
-                payment: paymentMethods.find(p => p.id === paymentMethod),
+                payment: paymentMethods.find((p) => p.id === paymentMethod),
                 total: getTotalPrice(),
-                orderId: 'ML' + Date.now()
-            };
-
-            alert(`Pesanan berhasil dibuat!\n\nOrder ID: ${orderData.orderId}\nDiamond: ${selectedPackage.diamond}\nTotal: ${formatPrice(getTotalPrice())}\n\nSilakan lakukan pembayaran.`);
-
-            if (['bca', 'bni', 'bri', 'mandiri'].includes(paymentMethod)) {
-                setVaNumber('88' + Math.floor(1000000000 + Math.random() * 9000000000));
+                orderId: "ML" + Date.now(),
             }
 
-            setShowConfirmation(true);
+            alert(
+                `Pesanan berhasil dibuat!\n\nOrder ID: ${orderData.orderId}\nDiamond: ${selectedPackage.diamond}\nTotal: ${formatPrice(
+                    getTotalPrice(),
+                )}\n\nSilakan lakukan pembayaran.`,
+            )
+
+            if (["bca", "bni", "bri", "mandiri"].includes(paymentMethod)) {
+                setVaNumber("88" + Math.floor(1000000000 + Math.random() * 9000000000))
+            }
+
+            setShowConfirmation(true)
 
             setTimeout(() => {
-                alert('Pembayaran berhasil. Kamu akan diarahkan ke halaman user.');
-                router.push('/user');
-            }, 4000);
-
-        }, 2000);
-    };
+                alert("Pembayaran berhasil. Kamu akan diarahkan ke halaman user.")
+                router.push("/user")
+            }, 4000)
+        }, 2000)
+    }
 
     return (
         <div className="min-h-screen px-4 py-8 bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-800">
             <div className="max-w-6xl mx-auto">
                 {/* Header */}
                 <div className="mb-8 text-center">
-                    <button className="flex items-center gap-2 mb-4 transition-colors text-white/80 hover:text-white">
+                    <button
+                        onClick={() => router.back()}
+                        className="flex items-center gap-2 mb-4 transition-colors text-white/80 hover:text-white"
+                    >
                         <ArrowLeft className="w-5 h-5" />
                         Kembali
                     </button>
@@ -228,10 +234,12 @@ const Form = () => {
                                         <span className="text-white/80">Harga:</span>
                                         <span className="text-white">{formatPrice(selectedPackage.price)}</span>
                                     </div>
-                                    {paymentMethod && paymentMethods.find(p => p.id === paymentMethod)?.fee > 0 && (
+                                    {paymentMethod && paymentMethods.find((p) => p.id === paymentMethod)?.fee > 0 && (
                                         <div className="flex justify-between">
                                             <span className="text-white/80">Biaya Admin:</span>
-                                            <span className="text-white">{formatPrice(paymentMethods.find(p => p.id === paymentMethod).fee)}</span>
+                                            <span className="text-white">
+                                                {formatPrice(paymentMethods.find((p) => p.id === paymentMethod).fee)}
+                                            </span>
                                         </div>
                                     )}
                                     <hr className="border-white/20" />
@@ -258,20 +266,16 @@ const Form = () => {
                                         key={pkg.id}
                                         onClick={() => setSelectedPackage(pkg)}
                                         className={`p-4 rounded-lg cursor-pointer transition-all border-2 ${selectedPackage?.id === pkg.id
-                                            ? 'bg-indigo-600/50 border-indigo-400'
-                                            : 'bg-white/5 border-white/20 hover:bg-white/10'
-                                            } ${pkg.popular ? 'ring-2 ring-yellow-400/50' : ''}`}
+                                                ? "bg-indigo-600/50 border-indigo-400"
+                                                : "bg-white/5 border-white/20 hover:bg-white/10"
+                                            } ${pkg.popular ? "ring-2 ring-yellow-400/50" : ""}`}
                                     >
                                         <div className="flex items-center justify-between">
                                             <div>
                                                 <div className="flex items-center gap-2">
-                                                    <span className="font-bold text-white">
-                                                        {pkg.diamond} 💎
-                                                    </span>
+                                                    <span className="font-bold text-white">{pkg.diamond} 💎</span>
                                                     {pkg.bonus && (
-                                                        <span className="px-2 py-1 text-xs text-white bg-green-500 rounded-full">
-                                                            +{pkg.bonus}
-                                                        </span>
+                                                        <span className="px-2 py-1 text-xs text-white bg-green-500 rounded-full">+{pkg.bonus}</span>
                                                     )}
                                                     {pkg.popular && (
                                                         <span className="px-2 py-1 text-xs font-bold text-black bg-yellow-500 rounded-full">
@@ -280,18 +284,12 @@ const Form = () => {
                                                     )}
                                                 </div>
                                                 {pkg.bonus && (
-                                                    <div className="text-sm text-white/60">
-                                                        Total: {pkg.diamond + pkg.bonus} Diamond
-                                                    </div>
+                                                    <div className="text-sm text-white/60">Total: {pkg.diamond + pkg.bonus} Diamond</div>
                                                 )}
                                             </div>
                                             <div className="text-right">
-                                                <div className="font-bold text-white">
-                                                    {formatPrice(pkg.price)}
-                                                </div>
-                                                {selectedPackage?.id === pkg.id && (
-                                                    <Check className="w-5 h-5 ml-auto text-green-400" />
-                                                )}
+                                                <div className="font-bold text-white">{formatPrice(pkg.price)}</div>
+                                                {selectedPackage?.id === pkg.id && <Check className="w-5 h-5 ml-auto text-green-400" />}
                                             </div>
                                         </div>
                                     </div>
@@ -314,8 +312,8 @@ const Form = () => {
                                         key={method.id}
                                         onClick={() => setPaymentMethod(method.id)}
                                         className={`p-3 rounded-lg cursor-pointer transition-all border-2 ${paymentMethod === method.id
-                                            ? 'bg-indigo-600/50 border-indigo-400'
-                                            : 'bg-white/5 border-white/20 hover:bg-white/10'
+                                                ? "bg-indigo-600/50 border-indigo-400"
+                                                : "bg-white/5 border-white/20 hover:bg-white/10"
                                             }`}
                                     >
                                         <div className="flex items-center justify-between">
@@ -324,14 +322,8 @@ const Form = () => {
                                                 <span className="font-medium text-white">{method.name}</span>
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                {method.fee > 0 && (
-                                                    <span className="text-sm text-white/60">
-                                                        +{formatPrice(method.fee)}
-                                                    </span>
-                                                )}
-                                                {paymentMethod === method.id && (
-                                                    <Check className="w-5 h-5 text-green-400" />
-                                                )}
+                                                {method.fee > 0 && <span className="text-sm text-white/60">+{formatPrice(method.fee)}</span>}
+                                                {paymentMethod === method.id && <Check className="w-5 h-5 text-green-400" />}
                                             </div>
                                         </div>
                                     </div>
@@ -342,11 +334,11 @@ const Form = () => {
                         {/* Submit Button */}
                         <button
                             onClick={handleSubmit}
-                            disabled={!selectedPackage || !paymentMethod || !formData.userId || !formData.customerName}
+                            disabled={!selectedPackage || !paymentMethod || !formData.userId || !formData.customerName || isLoading}
                             className="flex items-center justify-center w-full gap-2 py-4 text-lg font-bold text-white transition-all duration-300 transform rounded-lg bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                         >
                             <Zap className="w-5 h-5" />
-                            Buat Pesanan Sekarang
+                            {isLoading ? "Memproses..." : "Buat Pesanan Sekarang"}
                         </button>
 
                         {/* Konfirmasi Pembayaran */}
@@ -354,12 +346,10 @@ const Form = () => {
                             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md">
                                 <div className="w-full max-w-md p-8 text-center bg-white shadow-lg rounded-2xl">
                                     <h2 className="mb-4 text-xl font-bold">Pembayaran</h2>
-                                    {['bca', 'bni', 'bri', 'mandiri'].includes(paymentMethod) ? (
+                                    {["bca", "bni", "bri", "mandiri"].includes(paymentMethod) ? (
                                         <div>
                                             <p className="mb-2">Silakan bayar ke nomor VA berikut:</p>
-                                            <div className="p-3 mb-4 font-mono text-lg bg-gray-100 rounded-md">
-                                                {vaNumber}
-                                            </div>
+                                            <div className="p-3 mb-4 font-mono text-lg bg-gray-100 rounded-md">{vaNumber}</div>
                                         </div>
                                     ) : (
                                         <div>
@@ -377,8 +367,5 @@ const Form = () => {
                 </div>
             </div>
         </div>
-
-    );
-};
-
-export default Form;
+    )
+}

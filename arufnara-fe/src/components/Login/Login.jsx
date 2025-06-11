@@ -1,60 +1,62 @@
-"use client";
-import React, { useState } from 'react';
-import { Eye, EyeOff, Mail, Lock, User, ArrowRight } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-
-
+"use client"
+import { useState } from "react"
+import { Eye, EyeOff, Mail, Lock, User, ArrowRight } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 const Login = () => {
-    const [isLogin, setIsLogin] = useState(true);
-    const [showPassword, setShowPassword] = useState(false);
+    const [isLogin, setIsLogin] = useState(true)
+    const [showPassword, setShowPassword] = useState(false)
     const [formData, setFormData] = useState({
-        email: '',
-        password: '',
-        confirmPassword: '',
-        username: ''
-    });
+        email: "",
+        password: "",
+        confirmPassword: "",
+        username: "",
+    })
 
     const handleInputChange = (e) => {
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
-        });
-    };
+            [e.target.name]: e.target.value,
+        })
+    }
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
         if (isLogin) {
             if (formData.email && formData.password) {
-                alert('Login berhasil! Mengarahkan ke halaman top up...');
-                router.push('/form'); // ⬅️ Tambahkan ini
+                alert("Login berhasil! Mengarahkan ke halaman user...")
+                router.push("/user") // Changed from '/form' to '/user'
             } else {
-                alert('Mohon isi email dan password');
+                alert("Mohon isi email dan password")
             }
-        }
-        else {
+        } else {
             // Simulasi register
             if (formData.email && formData.password && formData.confirmPassword && formData.username) {
                 if (formData.password !== formData.confirmPassword) {
-                    alert('Password tidak cocok!');
-                    return;
+                    alert("Password tidak cocok!")
+                    return
                 }
-                alert('Registrasi berhasil! Silakan login.');
-                setIsLogin(true);
-                setFormData({ email: '', password: '', confirmPassword: '', username: '' });
+                alert("Registrasi berhasil! Silakan login.")
+                setIsLogin(true)
+                setFormData({ email: "", password: "", confirmPassword: "", username: "" })
             } else {
-                alert('Mohon lengkapi semua data');
+                alert("Mohon lengkapi semua data")
             }
         }
-    };
+    }
+
+    // Function to handle redirection from /user to /formAttachment
+    const redirectToFormAttachment = () => {
+        router.push("/formAttachment")
+    }
 
     const toggleMode = () => {
-        setIsLogin(!isLogin);
-        setFormData({ email: '', password: '', confirmPassword: '', username: '' });
-    };
+        setIsLogin(!isLogin)
+        setFormData({ email: "", password: "", confirmPassword: "", username: "" })
+    }
 
-    const router = useRouter();
+    const router = useRouter()
 
     return (
         <div className="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-800">
@@ -71,11 +73,9 @@ const Login = () => {
                 {/* Form Container */}
                 <div className="p-8 border shadow-2xl bg-white/10 backdrop-blur-lg rounded-2xl border-white/20">
                     <div className="mb-8 text-center">
-                        <h2 className="mb-2 text-2xl font-bold text-white">
-                            {isLogin ? 'Masuk ke Akun' : 'Buat Akun Baru'}
-                        </h2>
+                        <h2 className="mb-2 text-2xl font-bold text-white">{isLogin ? "Masuk ke Akun" : "Buat Akun Baru"}</h2>
                         <p className="text-indigo-200">
-                            {isLogin ? 'Masuk untuk melanjutkan top up' : 'Daftar untuk mulai top up'}
+                            {isLogin ? "Masuk untuk melanjutkan top up" : "Daftar untuk mulai top up"}
                         </p>
                     </div>
 
@@ -169,20 +169,18 @@ const Login = () => {
                             onClick={handleSubmit}
                             className="flex items-center justify-center w-full gap-2 py-3 text-lg font-bold text-white transition-all duration-300 transform bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl hover:from-indigo-600 hover:to-purple-700 hover:scale-105"
                         >
-                            {isLogin ? 'Masuk' : 'Daftar'}
+                            {isLogin ? "Masuk" : "Daftar"}
                             <ArrowRight className="w-5 h-5" />
                         </button>
 
                         {/* Toggle Mode */}
                         <div className="pt-4 text-center border-t border-white/20">
-                            <p className="mb-2 text-white/80">
-                                {isLogin ? 'Belum punya akun?' : 'Sudah punya akun?'}
-                            </p>
+                            <p className="mb-2 text-white/80">{isLogin ? "Belum punya akun?" : "Sudah punya akun?"}</p>
                             <button
                                 onClick={toggleMode}
                                 className="font-semibold text-indigo-300 transition-colors hover:text-indigo-200"
                             >
-                                {isLogin ? 'Daftar sekarang' : 'Masuk di sini'}
+                                {isLogin ? "Daftar sekarang" : "Masuk di sini"}
                             </button>
                         </div>
 
@@ -201,13 +199,13 @@ const Login = () => {
                                 <button className="flex items-center justify-center px-4 py-2 text-white transition-colors border bg-white/10 border-white/20 rounded-xl hover:bg-white/20">
                                     <span className="mr-2">
                                         <img src="/sosmed-01.png" alt="" />
-                                        </span>
+                                    </span>
                                     Google
                                 </button>
                                 <button className="flex items-center justify-center px-4 py-2 text-white transition-colors border bg-white/10 border-white/20 rounded-xl hover:bg-white/20">
                                     <span className="mr-2">
                                         <img src="/sosmed-02.png" alt="" />
-                                        </span>
+                                    </span>
                                     Facebook
                                 </button>
                             </div>
@@ -226,7 +224,7 @@ const Login = () => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Login;
+export default Login
