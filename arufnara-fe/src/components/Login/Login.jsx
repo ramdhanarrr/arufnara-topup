@@ -20,31 +20,92 @@ const Login = () => {
         })
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    const handleSubmit = async (e) => {
+  e.preventDefault();
 
-        if (isLogin) {
-            if (formData.email && formData.password) {
-                alert("Login berhasil! Mengarahkan ke halaman user...")
-                router.push("/user") // Changed from '/form' to '/user'
-            } else {
-                alert("Mohon isi email dan password")
-            }
-        } else {
-            // Simulasi register
-            if (formData.email && formData.password && formData.confirmPassword && formData.username) {
-                if (formData.password !== formData.confirmPassword) {
-                    alert("Password tidak cocok!")
-                    return
-                }
-                alert("Registrasi berhasil! Silakan login.")
-                setIsLogin(true)
-                setFormData({ email: "", password: "", confirmPassword: "", username: "" })
-            } else {
-                alert("Mohon lengkapi semua data")
-            }
-        }
+  if (isLogin) {
+    // LOGIN
+    if (formData.email && formData.password) {
+  try {
+    const response = await fetch("http://localhost:8000/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: formData.email,
+        password: formData.password,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Login gagal");
     }
+
+    localStorage.setItem("token", data.access_token);
+    localStorage.setItem("user", JSON.stringify(data.user)); // Simpan data user
+
+    alert("Login berhasil!");
+
+    // Redirect berdasarkan role
+    if (data.user.role === "admin") {
+      router.push("/admin");
+    } else if (data.user.role === "user") {
+      router.push("/user");
+    } else {
+      router.push("/");
+    }
+
+  } catch (err) {
+    alert("Error: " + err.message);
+  }
+}
+  } else {
+    // REGISTER
+    if (
+      formData.email &&
+      formData.password &&
+    //   formData.confirmPassword &&
+      formData.username
+    ) {
+    //   if (formData.password !== formData.confirmPassword) {
+    //     alert("Password tidak cocok!");
+    //     return;
+    //   }
+
+      try {
+        const response = await fetch("http://localhost:8000/api/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: formData.email,
+            password: formData.password,
+            username: formData.username,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || "Registrasi gagal");
+        }
+
+        alert("Registrasi berhasil! Silakan login.");
+        setIsLogin(true);
+        setFormData({
+          email: "",
+          password: "",
+          confirmPassword: "",
+          username: "",
+        });
+      } catch (err) {
+        alert("Error: " + err.message);
+      }
+    } else {
+      alert("Mohon lengkapi semua data");
+    }
+  }
+};
 
     // Function to handle redirection from /user to /formAttachment
     const redirectToFormAttachment = () => {
@@ -137,7 +198,7 @@ const Login = () => {
                             </div>
                         </div>
 
-                        {/* Confirm Password (hanya untuk register) */}
+                        {/* Confirm Password (hanya untuk register)
                         {!isLogin && (
                             <div className="space-y-2">
                                 <label className="block font-medium text-white">Konfirmasi Password</label>
@@ -153,7 +214,7 @@ const Login = () => {
                                     />
                                 </div>
                             </div>
-                        )}
+                        )} */}
 
                         {/* Forgot Password (hanya untuk login) */}
                         {isLogin && (

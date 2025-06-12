@@ -57,7 +57,9 @@ export default function UserDashboard() {
 
     const handleLogout = () => {
         if (confirm("Apakah Anda yakin ingin keluar?")) {
-            router.push("/")
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            router.push("/login")
         }
     }
 

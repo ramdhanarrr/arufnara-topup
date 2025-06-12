@@ -18,7 +18,7 @@ const AdminUser = () => {
               </tr>
             </thead>
             <tbody className="bg-white">
-              <tr className="border-t">
+              <tr className="border-t"> 
                 <td className="p-3">1</td>
                 <td className="p-3">johndoe</td>
                 <td className="p-3">johndoe@example.com</td>

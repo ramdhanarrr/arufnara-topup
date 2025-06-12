@@ -1,7 +1,27 @@
+"use client"
 // components/admin/Admin.jsx
-import React from 'react';
+import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react';
 
 const Admin = ({ children }) => {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    router.push("/login");
+  };
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const token = localStorage.getItem("token");
+
+    // Jika tidak login atau bukan admin, arahkan ke /login atau /user
+    if (!token || !user || user.role !== "admin") {
+      router.push(user?.role === "user" ? "/user" : "/login");
+    }
+  }, []);
+
   return (
     <div>
 
@@ -28,13 +48,13 @@ const Admin = ({ children }) => {
             <div className='block w-px h-6'></div>
           </li>
           <li>
-            <a href="/" className='flex items-center mr-4 hover:text-blue-100'>
+            <button onClick={handleLogout} className='flex items-center mr-4 hover:text-blue-100'>
               <span className='inline-flex mr-1'>
                 <svg className='w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'/>
                 <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
               </span>
               Logout
-            </a>
+            </button>
           </li>
         </ul>
       </header>

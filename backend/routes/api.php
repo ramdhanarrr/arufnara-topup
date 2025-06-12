@@ -87,9 +87,10 @@ Route::get('/topup_options/{id}', [TopupOptionsController::class, 'show']);
 
 // Route Auth
 Route::prefix('auth')->group(function () {
-    Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
+    
 });
 
+Route::post('/register', [AuthController::class, 'register']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
