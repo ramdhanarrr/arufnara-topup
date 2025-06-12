@@ -71,10 +71,10 @@ const TopupCard = [
 const TopUp = () => {
   return (
     <div>
-      <div className="py-10 text-black bg-white dark:bg-dark dark:text-white">
+      <div className="py-10 text-white border-b bg-gradient-to-br from-blue-900/70 via-indigo-900/60 to-purple-800/70 backdrop-blur-lg border-white/20">
         <div className="container">
           <div data-aos="fade-up" className="mb-20 text-center">
-            <h1 className="text-4xl font-bold text-gray-800 dark:text-white ">
+            <h1 className="text-4xl font-bold text-white">
               Event Top Up MLBB Paling Gacor!
             </h1>
           </div>
@@ -86,7 +86,7 @@ const TopUp = () => {
                   key={id}
                   data-aos="fade-up"
                   data-aos-delay={aosDelay}
-                  className="group rounded-2xl bg-white dark:bg-black hover:!bg-primary shadow-xl duration-200 max-w-[300px] relative"
+                  className="group rounded-2xl bg-white/20 dark:bg-black/40 hover:!bg-primary/80 shadow-xl border border-white/20 backdrop-blur-md duration-200 max-w-[300px] relative"
                 >
                   <div className="h-[110px]">
                     <Image
@@ -96,12 +96,12 @@ const TopUp = () => {
                     />
                   </div>
                   <div className="p-4 space-y-4 text-center">
-                    <h1 className="text-xl font-bold">{name}</h1>
-                    <p className="text-sm text-gray-600 duration-300 group-hover:text-black line-clamp-2">
+                    <h1 className="text-xl font-bold text-white">{name}</h1>
+                    <p className="mb-6 text-sm duration-300 text-white/80 group-hover:text-white line-clamp-2">
                       {desc}
                     </p>
                     <Link href="/login">
-                      <button className="px-4 py-2 text-white transition-colors duration-300 bg-black rounded-lg hover:bg-gray-800">
+                      <button className="px-4 py-2 text-white transition-colors duration-300 rounded-lg bg-black/80 hover:bg-indigo-800">
                         {button}
                       </button>
                     </Link>

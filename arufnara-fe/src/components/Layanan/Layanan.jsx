@@ -35,11 +35,11 @@ const LayananCard = [
 const Layanan = () => {
   return (
     <div>
-      <div className="py-10 bg-white dark:bg-dark text-black dark:text-white">
+      <div className="py-10 text-white border-b bg-gradient-to-br from-blue-900/70 via-indigo-900/60 to-purple-800/70 backdrop-blur-lg border-white/20">
         <div className="container">
           {/* Header title section */}
-          <div data-aos="fade-up" className="text-center mb-20">
-            <h1 className="text-4xl font-bold text-gray-800 dark:text-white ">
+          <div data-aos="fade-up" className="mb-20 text-center">
+            <h1 className="text-4xl font-bold text-white">
               Top Up Sekarang, Bantai Musuh!
             </h1>
           </div>
@@ -52,7 +52,7 @@ const Layanan = () => {
                   key={id}
                   data-aos="fade-up"
                   data-aos-delay={aosDelay}
-                  className="group rounded-2xl bg-white dark:bg-black hover:!bg-primary shadow-xl duration-200 max-w-[300px] relative"
+                  className="group rounded-2xl bg-white/20 dark:bg-black/40 hover:!bg-primary/80 shadow-xl border border-white/20 backdrop-blur-md duration-200 max-w-[300px] relative"
                 >
                   {/* image section */}
                   <div className="h-[110px]">
@@ -63,13 +63,13 @@ const Layanan = () => {
                     ></Image>
                   </div>
                   {/* text content section */}
-                  <div className="p-4 text-center space-y-4">
-                    <h1 className="text-xl font-bold">{name}</h1>
-                    <p className="text-gray-600 group-hover:text-black-duration-300 text-sm line-clamp-2">
+                  <div className="p-4 space-y-4 text-center">
+                    <h1 className="text-xl font-bold text-white">{name}</h1>
+                    <p className="text-sm text-white/80 group-hover:text-white line-clamp-3">
                       {desc}
                     </p>
                     <Link href="/login">
-                      <button className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors duration-300">
+                      <button className="px-4 py-3 text-white transition-colors duration-300 rounded-lg bg-black/80 hover:bg-indigo-800">
                         {button}
                       </button>
                     </Link>

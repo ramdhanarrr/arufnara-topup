@@ -184,32 +184,6 @@ const Login = () => {
                             </button>
                         </div>
 
-                        {/* Social Login (opsional) */}
-                        <div className="pt-4">
-                            <div className="relative">
-                                <div className="absolute inset-0 flex items-center">
-                                    <div className="w-full border-t border-white/20"></div>
-                                </div>
-                                <div className="relative flex justify-center text-sm">
-                                    <span className="px-2 bg-transparent text-white/70">atau masuk dengan</span>
-                                </div>
-                            </div>
-
-                            <div className="grid grid-cols-2 gap-3 mt-4">
-                                <button className="flex items-center justify-center px-4 py-2 text-white transition-colors border bg-white/10 border-white/20 rounded-xl hover:bg-white/20">
-                                    <span className="mr-2">
-                                        <img src="/sosmed-01.png" alt="" />
-                                    </span>
-                                    Google
-                                </button>
-                                <button className="flex items-center justify-center px-4 py-2 text-white transition-colors border bg-white/10 border-white/20 rounded-xl hover:bg-white/20">
-                                    <span className="mr-2">
-                                        <img src="/sosmed-02.png" alt="" />
-                                    </span>
-                                    Facebook
-                                </button>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
