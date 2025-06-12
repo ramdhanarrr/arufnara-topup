@@ -1,7 +1,6 @@
 import React from "react";
 import Slider from "react-slick";
 import BgImage from "../../assets/testimonial.png";
-import Image from "next/image";
 
 const bgStyle = {
   backgroundImage: `url(${BgImage.src})`,
@@ -85,11 +84,11 @@ const Testimonial = () => {
 
   return (
     <div style={bgStyle}>
-      <div className="bg-white/80 dark:bg-gray-800/90 py-14 dark:text-white">
+      <div className="border shadow-lg py-14 bg-gradient-to-br from-blue-900/70 via-indigo-900/60 to-purple-800/70 backdrop-blur-lg border-white/20 dark:text-white">
         <div className="container">
           {/* header section */}
-          <div data-aos="fade-up" className="text-center mb-10">
-            <h1 className="text-4xl font-bold">Testimonials</h1>
+          <div data-aos="fade-up" className="mb-10 text-center">
+            <h1 className="text-4xl font-bold text-white">Testimonials</h1>
           </div>
 
           {/* Testimonials cards Section */}
@@ -98,23 +97,23 @@ const Testimonial = () => {
               {TestimonialData.map(({ id, name, text, img }) => {
                 return (
                   <div key={id} className="my-6">
-                    <div className="flex flex-col gap-6 shadow-lg py-8 px-6 mx-4 rounded-3xl bg-white dark:bg-dark relative">
+                    <div className="flex flex-col gap-6 px-6 py-8 mx-4 border shadow-lg rounded-3xl bg-white/30 dark:bg-dark/60 border-white/20 backdrop-blur-md">
                       {/* content section */}
                       <div className="flex flex-col items-center gap-4">
-                        <p className="text-xs">{text}</p>
+                        <p className="text-xs text-white">{text}</p>
                       </div>
                       {/* image section */}
                       <div className="flex items-center gap-4">
                         <img
                           src={img}
                           alt={name}
-                          className="rounded-full w-16 h-16"
+                          className="w-16 h-16 border-2 rounded-full border-white/40"
                         />
                         <div className="space-y-2">
-                          <h1 className="text-xl font-bold text-black/60 dark:text-primary font-cursive">
+                          <h1 className="text-xl font-bold text-white font-cursive">
                             {name}
                           </h1>
-                          <p className="text-sm font-bold text-black/45 dark:text-white">
+                          <p className="text-sm font-bold text-white/70">
                             Developer
                           </p>
                         </div>
