@@ -41,7 +41,38 @@ const AdminOrder = () => {
             </tbody>
           </table>
         </div>
+
+        <h2 className="text-xl font-semibold mb-4">Payment Table</h2>
+        <div className="overflow-x-auto">
+          <table className="min-w-full border rounded-lg shadow-md">
+            <thead className="bg-yellow-100 text-left">
+              <tr>
+                <th className="p-3">ID</th>
+                <th className="p-3">Order ID</th>
+                <th className="p-3">Jumlah</th>
+                <th className="p-3">Status Pembayaran</th>
+                <th className="p-3">Tanggal</th>
+                <th className="p-3">Action</th>
+              </tr>
+            </thead>
+            <tbody className="bg-white">
+              <tr className="border-t">
+                <td className="p-3">1</td>
+                <td className="p-3">ORD001</td>
+                <td className="p-3">Rp 150.000</td>
+                <td className="p-3">Succes</td>
+                <td className="p-3">2025-06-11</td>
+                <td className="p-3 space-x-2">
+                  <button className="bg-green-500 text-white px-3 py-1 rounded">Edit</button>
+                  <button className="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+                </td>
+              </tr>
+              {/* Tambah data lainnya di sini */}
+            </tbody>
+          </table>
+        </div>
       </section>
+      
   );
 };
 
