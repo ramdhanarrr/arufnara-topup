@@ -80,17 +80,7 @@ const Admin = ({ children }) => {
                         <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d="M3 7h18M3 12h18M3 17h18" />
                       </svg>
                     </span>
-                    <span className='ml-2 text-sm tracking-wide truncate'>Order</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/admin/payment" className='relative flex flex-row items-center h-11 focus:outline-none'>
-                    <span className='inline-flex justify-center items-center ml-4'>
-                      <svg className='w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
-                        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v2m14 0v2a2 2 0 01-2 2H5a2 2 0 01-2-2V9m16 0h2a2 2 0 012 2v4a2 2 0 01-2 2h-2"/>
-                      </svg>
-                    </span>
-                    <span className='ml-2 text-sm tracking-wide truncate'>Payment</span>
+                    <span className='ml-2 text-sm tracking-wide truncate'>Order & Payment</span>
                   </a>
                 </li>
                 <li>
@@ -100,27 +90,7 @@ const Admin = ({ children }) => {
                         <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d="M5.121 17.804A10.974 10.974 0 0112 15c2.5 0 4.847.797 6.879 2.15M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                       </svg>
                     </span>
-                    <span className='ml-2 text-sm tracking-wide truncate'>User</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/admin/database" className='relative flex flex-row items-center h-11 focus:outline-none'>
-                    <span className='inline-flex justify-center items-center ml-4'>
-                      <svg className='w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
-                        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d="M12 3c-4.418 0-8 1.79-8 4v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7c0-2.21-3.582-4-8-4z" />
-                      </svg>
-                    </span>
-                    <span className='ml-2 text-sm tracking-wide truncate'>Database</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/admin/point" className='relative flex flex-row items-center h-11 focus:outline-none'>
-                    <span className='inline-flex justify-center items-center ml-4'>
-                      <svg className='w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
-                        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d="M12 6v6l4 2"/>
-                      </svg>
-                    </span>
-                    <span className='ml-2 text-sm tracking-wide truncate'>Point</span>
+                    <span className='ml-2 text-sm tracking-wide truncate'>User & Point</span>
                   </a>
                 </li>
               </ul>
