@@ -18,19 +18,19 @@ const Hero = () => {
       <div className="dark:bg-black/70 bg-white/50 backdrop-blur-sm dark:text-white duration-300 h-[520px] flex">
         <div className="container grid grid-cols-1 place-items-center">
           {/* text content section */}
-          <div className="text-center text-bold space-y-5 py-14">
+          <div className="space-y-5 text-center text-bold py-14">
             <p
               data-aos="fade-up"
-              className="text-primary dark:text-secondary text-3xl font-semibold uppercase"
+              className="text-3xl font-semibold uppercase text-primary dark:text-secondary"
             >
               Beli Diamond Sekarang!
             </p>
             <h1
               data-aos="fade-up"
               data-aos-delay="600"
-              className="text-4xl md:text-6xl font-bold"
+              className="text-4xl font-bold md:text-6xl"
             >
-              +892-170857
+              +62 812 3456 7890
             </h1>
             <p
               data-aos="fade-up"

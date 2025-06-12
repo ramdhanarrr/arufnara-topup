@@ -17,93 +17,83 @@ class PaymentsController extends Controller
      * Create a new payment for an order
      */
     public function createPayment(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'order_id' => 'required|exists:orders,id',
-            'amount' => 'required|numeric|min:0',
-            'payment_method' => 'string|max:50'
-        ]);
+{
+    $validator = Validator::make($request->all(), [
+        'order_id' => 'required|exists:orders,id',
+        'amount' => 'required|numeric|min:0',
+        'payment_method' => 'string|max:50',
+        'proof_of_payment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048'
+    ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation error',
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
-        try {
-            // Check if order belongs to authenticated user
-            $order = Order::where('id', $request->order_id)
-                          ->where('user_id', Auth::id())
-                          ->first();
-
-            if (!$order) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Order not found or access denied'
-                ], 404);
-            }
-
-            // Check if order already has a payment
-            $existingPayment = Payment::where('order_id', $request->order_id)->first();
-            if ($existingPayment) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Payment already exists for this order',
-                    'existing_payment' => [
-                        'payment_id' => $existingPayment->id,
-                        'status' => $existingPayment->payment_status
-                    ]
-                ], 400);
-            }
-
-            // Check if order is already paid
-            if ($order->status === 'paid') {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Order is already paid. Cannot create new payment.',
-                    'order_status' => $order->status
-                ], 400);
-            }
-
-            // Verify amount matches order amount
-            $topupOption = $order->topupOption;
-            if ($request->amount != $topupOption->price) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Payment amount does not match order amount'
-                ], 400);
-            }
-
-            // Create payment - only include columns that exist in your table
-            $payment = new Payment();
-            $payment->order_id = $request->order_id;
-            $payment->amount = $request->amount;
-            $payment->payment_status = 'pending';
-            $payment->transaction_date = now();
-            $payment->save();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Payment created successfully',
-                'data' => [
-                    'payment_id' => $payment->id,
-                    'order_id' => $payment->order_id,
-                    'amount' => $payment->amount,
-                    'payment_status' => $payment->payment_status,
-                    'transaction_date' => $payment->transaction_date
-                ]
-            ], 201);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to create payment',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+    if ($validator->fails()) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Validation error',
+            'errors' => $validator->errors()
+        ], 422);
     }
+
+    try {
+        $order = Order::where('id', $request->order_id)
+                      ->where('user_id', Auth::id())
+                      ->first();
+
+        if (!$order) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Order not found or access denied'
+            ], 404);
+        }
+
+        if ($order->status === 'paid') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Order is already paid.'
+            ], 400);
+        }
+
+        $topupOption = $order->topupOption;
+        if ($request->amount != $topupOption->price) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Payment amount does not match order amount'
+            ], 400);
+        }
+
+        $payment = new Payment();
+        $payment->order_id = $request->order_id;
+        $payment->amount = $request->amount;
+        $payment->payment_status = 'pending';
+        $payment->transaction_date = now();
+
+        if ($request->hasFile('proof_of_payment')) {
+            $file = $request->file('proof_of_payment');
+            $filename = 'proof_' . time() . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('public/proof_of_payments', $filename);
+            $payment->proof_of_payment = 'storage/proof_of_payments/' . $filename;
+        }
+
+        $payment->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Payment created successfully',
+            'data' => [
+                'payment_id' => $payment->id,
+                'proof_of_payment' => $payment->proof_of_payment,
+                'amount' => $payment->amount,
+                'status' => $payment->payment_status
+            ]
+        ], 201);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Failed to create payment',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+}
 
     /**
      * Get payment by order ID

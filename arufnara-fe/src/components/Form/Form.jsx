@@ -112,24 +112,24 @@ const Form = () => {
             setShowConfirmation(true);
 
             setTimeout(() => {
-                alert('Pembayaran berhasil. Kamu akan diarahkan ke halaman utama.');
-                router.push('/');
+                alert('Pembayaran berhasil. Kamu akan diarahkan ke halaman user.');
+                router.push('/user');
             }, 4000);
 
         }, 2000);
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-800 py-8 px-4">
+        <div className="min-h-screen px-4 py-8 bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-800">
             <div className="max-w-6xl mx-auto">
                 {/* Header */}
-                <div className="text-center mb-8">
-                    <button className="flex items-center gap-2 text-white/80 hover:text-white mb-4 transition-colors">
+                <div className="mb-8 text-center">
+                    <button className="flex items-center gap-2 mb-4 transition-colors text-white/80 hover:text-white">
                         <ArrowLeft className="w-5 h-5" />
                         Kembali
                     </button>
                     <div className="inline-flex items-center gap-3 mb-4">
-                        <div className="w-16 h-16 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center text-3xl">
+                        <div className="flex items-center justify-center w-16 h-16 text-3xl bg-gradient-to-r from-yellow-400 to-orange-500 rounded-2xl">
                             🎮
                         </div>
                         <div className="text-left">
@@ -139,11 +139,11 @@ const Form = () => {
                     </div>
                 </div>
 
-                <div className="grid lg:grid-cols-3 gap-8">
+                <div className="grid gap-8 lg:grid-cols-3">
                     {/* Form User Data */}
                     <div className="lg:col-span-1">
-                        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 mb-6">
-                            <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                        <div className="p-6 mb-6 border bg-white/10 backdrop-blur-lg rounded-2xl border-white/20">
+                            <h3 className="flex items-center gap-2 mb-4 text-xl font-bold text-white">
                                 <User className="w-5 h-5" />
                                 Data Akun Game
                             </h3>
@@ -151,61 +151,61 @@ const Form = () => {
                             <div className="space-y-4">
                                 <div className="grid grid-cols-2 gap-3">
                                     <div>
-                                        <label className="block text-white/80 text-sm mb-2">User ID</label>
+                                        <label className="block mb-2 text-sm text-white/80">User ID</label>
                                         <input
                                             type="text"
                                             name="userId"
                                             value={formData.userId}
                                             onChange={handleInputChange}
-                                            className="w-full p-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                                            className="w-full p-3 text-white border rounded-lg bg-white/20 border-white/30 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-400"
                                             placeholder="User ID"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-white/80 text-sm mb-2">Zone ID</label>
+                                        <label className="block mb-2 text-sm text-white/80">Zone ID</label>
                                         <input
                                             type="text"
                                             name="zoneId"
                                             value={formData.zoneId}
                                             onChange={handleInputChange}
-                                            className="w-full p-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                                            className="w-full p-3 text-white border rounded-lg bg-white/20 border-white/30 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-400"
                                             placeholder="Zone ID"
                                         />
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className="block text-white/80 text-sm mb-2">Email</label>
+                                    <label className="block mb-2 text-sm text-white/80">Email</label>
                                     <input
                                         type="email"
                                         name="email"
                                         value={formData.email}
                                         onChange={handleInputChange}
-                                        className="w-full p-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                                        className="w-full p-3 text-white border rounded-lg bg-white/20 border-white/30 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-400"
                                         placeholder="email@example.com"
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="block text-white/80 text-sm mb-2">WhatsApp</label>
+                                    <label className="block mb-2 text-sm text-white/80">WhatsApp</label>
                                     <input
                                         type="tel"
                                         name="whatsapp"
                                         value={formData.whatsapp}
                                         onChange={handleInputChange}
-                                        className="w-full p-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                                        className="w-full p-3 text-white border rounded-lg bg-white/20 border-white/30 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-400"
                                         placeholder="08xxxxxxxxxx"
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="block text-white/80 text-sm mb-2">Username</label>
+                                    <label className="block mb-2 text-sm text-white/80">Username</label>
                                     <input
                                         type="text"
                                         name="customerName"
                                         value={formData.customerName}
                                         onChange={handleInputChange}
-                                        className="w-full p-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                                        className="w-full p-3 text-white border rounded-lg bg-white/20 border-white/30 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-400"
                                         placeholder="Username"
                                     />
                                 </div>
@@ -214,12 +214,12 @@ const Form = () => {
 
                         {/* Order Summary */}
                         {selectedPackage && (
-                            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
-                                <h3 className="text-xl font-bold text-white mb-4">Ringkasan Pesanan</h3>
+                            <div className="p-6 border bg-white/10 backdrop-blur-lg rounded-2xl border-white/20">
+                                <h3 className="mb-4 text-xl font-bold text-white">Ringkasan Pesanan</h3>
                                 <div className="space-y-3">
                                     <div className="flex justify-between">
                                         <span className="text-white/80">Diamond:</span>
-                                        <span className="text-white font-semibold">
+                                        <span className="font-semibold text-white">
                                             {selectedPackage.diamond}
                                             {selectedPackage.bonus && ` (+${selectedPackage.bonus})`}
                                         </span>
@@ -235,7 +235,7 @@ const Form = () => {
                                         </div>
                                     )}
                                     <hr className="border-white/20" />
-                                    <div className="flex justify-between font-bold text-lg">
+                                    <div className="flex justify-between text-lg font-bold">
                                         <span className="text-white">Total:</span>
                                         <span className="text-yellow-400">{formatPrice(getTotalPrice())}</span>
                                     </div>
@@ -246,13 +246,13 @@ const Form = () => {
 
                     {/* Package Selection */}
                     <div className="lg:col-span-1">
-                        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
-                            <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                        <div className="p-6 border bg-white/10 backdrop-blur-lg rounded-2xl border-white/20">
+                            <h3 className="flex items-center gap-2 mb-4 text-xl font-bold text-white">
                                 <Diamond className="w-5 h-5" />
                                 Pilih Paket Diamond
                             </h3>
 
-                            <div className="space-y-3 max-h-96 overflow-y-auto">
+                            <div className="space-y-3 overflow-y-auto max-h-96">
                                 {diamondPackages.map((pkg) => (
                                     <div
                                         key={pkg.id}
@@ -262,35 +262,35 @@ const Form = () => {
                                             : 'bg-white/5 border-white/20 hover:bg-white/10'
                                             } ${pkg.popular ? 'ring-2 ring-yellow-400/50' : ''}`}
                                     >
-                                        <div className="flex justify-between items-center">
+                                        <div className="flex items-center justify-between">
                                             <div>
                                                 <div className="flex items-center gap-2">
-                                                    <span className="text-white font-bold">
+                                                    <span className="font-bold text-white">
                                                         {pkg.diamond} 💎
                                                     </span>
                                                     {pkg.bonus && (
-                                                        <span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs">
+                                                        <span className="px-2 py-1 text-xs text-white bg-green-500 rounded-full">
                                                             +{pkg.bonus}
                                                         </span>
                                                     )}
                                                     {pkg.popular && (
-                                                        <span className="bg-yellow-500 text-black px-2 py-1 rounded-full text-xs font-bold">
+                                                        <span className="px-2 py-1 text-xs font-bold text-black bg-yellow-500 rounded-full">
                                                             Popular
                                                         </span>
                                                     )}
                                                 </div>
                                                 {pkg.bonus && (
-                                                    <div className="text-white/60 text-sm">
+                                                    <div className="text-sm text-white/60">
                                                         Total: {pkg.diamond + pkg.bonus} Diamond
                                                     </div>
                                                 )}
                                             </div>
                                             <div className="text-right">
-                                                <div className="text-white font-bold">
+                                                <div className="font-bold text-white">
                                                     {formatPrice(pkg.price)}
                                                 </div>
                                                 {selectedPackage?.id === pkg.id && (
-                                                    <Check className="w-5 h-5 text-green-400 ml-auto" />
+                                                    <Check className="w-5 h-5 ml-auto text-green-400" />
                                                 )}
                                             </div>
                                         </div>
@@ -302,8 +302,8 @@ const Form = () => {
 
                     {/* Payment Method */}
                     <div className="lg:col-span-1">
-                        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 mb-6">
-                            <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                        <div className="p-6 mb-6 border bg-white/10 backdrop-blur-lg rounded-2xl border-white/20">
+                            <h3 className="flex items-center gap-2 mb-4 text-xl font-bold text-white">
                                 <CreditCard className="w-5 h-5" />
                                 Metode Pembayaran
                             </h3>
@@ -318,14 +318,14 @@ const Form = () => {
                                             : 'bg-white/5 border-white/20 hover:bg-white/10'
                                             }`}
                                     >
-                                        <div className="flex justify-between items-center">
+                                        <div className="flex items-center justify-between">
                                             <div className="flex items-center gap-3">
                                                 <span className="text-xl">{method.icon}</span>
-                                                <span className="text-white font-medium">{method.name}</span>
+                                                <span className="font-medium text-white">{method.name}</span>
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 {method.fee > 0 && (
-                                                    <span className="text-white/60 text-sm">
+                                                    <span className="text-sm text-white/60">
                                                         +{formatPrice(method.fee)}
                                                     </span>
                                                 )}
@@ -343,7 +343,7 @@ const Form = () => {
                         <button
                             onClick={handleSubmit}
                             disabled={!selectedPackage || !paymentMethod || !formData.userId || !formData.customerName}
-                            className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-4 rounded-lg font-bold text-lg hover:from-green-600 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
+                            className="flex items-center justify-center w-full gap-2 py-4 text-lg font-bold text-white transition-all duration-300 transform rounded-lg bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                         >
                             <Zap className="w-5 h-5" />
                             Buat Pesanan Sekarang
@@ -351,25 +351,25 @@ const Form = () => {
 
                         {/* Konfirmasi Pembayaran */}
                         {showConfirmation && (
-                            <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50">
-                                <div className="bg-white p-8 rounded-2xl shadow-lg text-center max-w-md w-full">
-                                    <h2 className="text-xl font-bold mb-4">Pembayaran</h2>
+                            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md">
+                                <div className="w-full max-w-md p-8 text-center bg-white shadow-lg rounded-2xl">
+                                    <h2 className="mb-4 text-xl font-bold">Pembayaran</h2>
                                     {['bca', 'bni', 'bri', 'mandiri'].includes(paymentMethod) ? (
                                         <div>
                                             <p className="mb-2">Silakan bayar ke nomor VA berikut:</p>
-                                            <div className="bg-gray-100 text-lg font-mono p-3 rounded-md mb-4">
+                                            <div className="p-3 mb-4 font-mono text-lg bg-gray-100 rounded-md">
                                                 {vaNumber}
                                             </div>
                                         </div>
                                     ) : (
                                         <div>
                                             <p className="mb-2">Scan QR berikut untuk melakukan pembayaran:</p>
-                                            <div className="w-40 h-40 mx-auto bg-gray-300 rounded-md flex items-center justify-center text-sm">
+                                            <div className="flex items-center justify-center w-40 h-40 mx-auto text-sm bg-gray-300 rounded-md">
                                                 QR Code
                                             </div>
                                         </div>
                                     )}
-                                    <p className="mt-4 text-green-600 font-semibold">Pembayaran berhasil!</p>
+                                    <p className="mt-4 font-semibold text-green-600">Pembayaran berhasil!</p>
                                 </div>
                             </div>
                         )}

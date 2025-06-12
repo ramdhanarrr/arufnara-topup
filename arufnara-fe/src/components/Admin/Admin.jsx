@@ -83,6 +83,7 @@ const Admin = ({ children }) => {
                     <span className='ml-2 text-sm tracking-wide truncate'>Order & Payment</span>
                   </a>
                 </li>
+                
                 <li>
                   <a href="/admin/user" className='relative flex flex-row items-center h-11 focus:outline-none'>
                     <span className='inline-flex justify-center items-center ml-4'>
@@ -93,6 +94,7 @@ const Admin = ({ children }) => {
                     <span className='ml-2 text-sm tracking-wide truncate'>User & Point</span>
                   </a>
                 </li>
+              
               </ul>
             </div>
           </div>
