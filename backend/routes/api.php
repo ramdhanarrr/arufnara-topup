@@ -55,9 +55,7 @@ Route::middleware('auth:sanctum')->group(function () {
 // Admin routes (require admin role)
     Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
         
-        // Admin authentication
-        Route::post('/login', [AuthController::class, 'login']);
-        
+       
         // Dashboard
         Route::get('/dashboard', [AdminController::class, 'dashboard']);
         
@@ -85,12 +83,8 @@ Route::get('/topup_options', [TopupOptionsController::class, 'index']);
 Route::get('/topup_options/{id}', [TopupOptionsController::class, 'show']);
 
 
-// Route Auth
-Route::prefix('auth')->group(function () {
-    Route::post('/login', [AuthController::class, 'login']);
-    
-});
 
+Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
