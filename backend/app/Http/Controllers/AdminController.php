@@ -162,6 +162,17 @@ class AdminController extends Controller
         ]);
     }
 
+    public function showTopupOption($id)
+{
+    $topup = TopupOption::find($id);
+
+    if (!$topup) {
+        return response()->json(['message' => 'Topup option not found'], 404);
+    }
+
+    return response()->json(['data' => $topup], 200);
+}
+
     public function deleteTopupOption($id)
     {
         $topupOption = TopupOption::findOrFail($id);

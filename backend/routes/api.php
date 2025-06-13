@@ -74,7 +74,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::prefix('topup-options')->group(function () {
             Route::post('/', [AdminController::class, 'createTopupOption']);
             Route::put('/{id}', [AdminController::class, 'updateTopupOption']);
+            Route::get('/{id}', [AdminController::class, 'showTopupOption']);
             Route::delete('/{id}', [AdminController::class, 'deleteTopupOption']);
+
         });
     });
 

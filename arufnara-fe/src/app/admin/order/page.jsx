@@ -1,10 +1,149 @@
-// app/admin/order.jsx
-import React from "react";
+'use client';
+
+import React, { useState, useEffect } from "react";
+import API from "../../../_api";
 
 const AdminOrder = () => {
+  const [orders, setOrders] = useState([]);
+  const [payments, setPayments] = useState([]);
+  const [ordersLoading, setOrdersLoading] = useState(true);
+  const [paymentsLoading, setPaymentsLoading] = useState(true);
+  const [ordersError, setOrdersError] = useState(null);
+  const [paymentsError, setPaymentsError] = useState(null);
+
+  useEffect(() => {
+    fetchOrders();
+    fetchPayments();
+  }, []);
+
+  const fetchOrders = async () => {
+    try {
+      setOrdersLoading(true);
+      const token = localStorage.getItem("token");
+      const response = await API.get("/admin/orders", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      // Cek berbagai kemungkinan struktur response
+      let orderData = response.data;
+      
+      if (orderData && orderData.data && Array.isArray(orderData.data)) {
+        orderData = orderData.data;
+      } else if (orderData && orderData.orders && Array.isArray(orderData.orders)) {
+        orderData = orderData.orders;
+      } else if (orderData && orderData.result && Array.isArray(orderData.result)) {
+        orderData = orderData.result;
+      } else if (orderData && orderData.success && orderData.data) {
+        orderData = orderData.data;
+      }
+      
+      setOrders(Array.isArray(orderData) ? orderData : []);
+      setOrdersError(null);
+    } catch (err) {
+      setOrdersError(`Gagal mengambil data order: ${err.message}`);
+      setOrders([]);
+    } finally {
+      setOrdersLoading(false);
+    }
+  };
+
+  const fetchPayments = async () => {
+    try {
+      setPaymentsLoading(true);
+      const token = localStorage.getItem("token");
+      const response = await API.get("/admin/payments", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      // Cek berbagai kemungkinan struktur response
+      let paymentData = response.data;
+      
+      if (paymentData && paymentData.data && Array.isArray(paymentData.data)) {
+        paymentData = paymentData.data;
+      } else if (paymentData && paymentData.payments && Array.isArray(paymentData.payments)) {
+        paymentData = paymentData.payments;
+      } else if (paymentData && paymentData.result && Array.isArray(paymentData.result)) {
+        paymentData = paymentData.result;
+      } else if (paymentData && paymentData.success && paymentData.data) {
+        paymentData = paymentData.data;
+      }
+      
+      setPayments(Array.isArray(paymentData) ? paymentData : []);
+      setPaymentsError(null);
+    } catch (err) {
+      setPaymentsError(`Gagal mengambil data payment: ${err.message}`);
+      setPayments([]);
+    } finally {
+      setPaymentsLoading(false);
+    }
+  };
+
+  // Event handlers untuk Orders
+  const handleEditOrder = (orderId) => {
+    console.log("Edit order:", orderId);
+  };
+
+  const handleDeleteOrder = (orderId) => {
+    if (window.confirm("Apakah Anda yakin ingin menghapus order ini?")) {
+      console.log("Delete order:", orderId);
+    }
+  };
+
+  // Event handlers untuk Payments
+  const handleEditPayment = (paymentId) => {
+    console.log("Edit payment:", paymentId);
+  };
+
+  const handleDeletePayment = (paymentId) => {
+    if (window.confirm("Apakah Anda yakin ingin menghapus payment ini?")) {
+      console.log("Delete payment:", paymentId);
+    }
+  };
+
+  // Format currency
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0
+    }).format(amount);
+  };
+
+  // Format date
+  const formatDate = (dateString) => {
+    if (!dateString) return 'N/A';
+    return new Date(dateString).toLocaleDateString('id-ID');
+  };
+
+  // Status styling
+  const getStatusColor = (status) => {
+    switch (status?.toLowerCase()) {
+      case 'pending':
+        return 'text-yellow-600 bg-yellow-100 px-2 py-1 rounded-full text-sm';
+      case 'success':
+      case 'completed':
+      case 'paid':
+        return 'text-green-600 bg-green-100 px-2 py-1 rounded-full text-sm';
+      case 'failed':
+      case 'cancelled':
+        return 'text-red-600 bg-red-100 px-2 py-1 rounded-full text-sm';
+      default:
+        return 'text-gray-600 bg-gray-100 px-2 py-1 rounded-full text-sm';
+    }
+  };
+
   return (
-    <section>
+    <section className="p-4 space-y-8">
+      {/* Orders Table */}
+      <div>
         <h2 className="text-xl font-semibold mb-4">Transaksi Table</h2>
+        
+        {ordersError && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            {ordersError}
+          </div>
+        )}
+
         <div className="overflow-x-auto">
           <table className="min-w-full border rounded-lg shadow-md">
             <thead className="bg-yellow-100 text-left">
@@ -22,27 +161,66 @@ const AdminOrder = () => {
               </tr>
             </thead>
             <tbody className="bg-white">
-              <tr className="border-t">
-                <td className="p-3">1</td>
-                <td className="p-3">Diamond 86</td>
-                <td className="p-3">1</td>
-                <td className="p-3">101</td>
-                <td className="p-3">123456789</td>
-                <td className="p-3">2201</td>
-                <td className="p-3">QRIS</td>
-                <td className="p-3 text-yellow-600 font-medium">Pending</td>
-                <td className="p-3">2025-06-11</td>
-                <td className="p-3 space-x-2">
-                  <button className="bg-green-500 text-white px-3 py-1 rounded">Edit</button>
-                  <button className="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
-                </td>
-              </tr>
-              {/* Tambah data lainnya di sini */}
+              {ordersLoading ? (
+                <tr>
+                  <td colSpan="10" className="p-8 text-center text-gray-500">
+                    Loading orders...
+                  </td>
+                </tr>
+              ) : orders.length > 0 ? (
+                orders.map((order) => (
+                  <tr key={order.id} className="border-t hover:bg-gray-50">
+                    <td className="p-3">{String(order.id || '')}</td>
+                    <td className="p-3">{String(order.topup_option || order.package_name || 'N/A')}</td>
+                    <td className="p-3">{String(order.jumlah_topup || order.quantity || 1)}</td>
+                    <td className="p-3">{String(order.user_id || order.userId || 'N/A')}</td>
+                    <td className="p-3">{String(order.ml_user_id || order.game_id || 'N/A')}</td>
+                    <td className="p-3">{String(order.server_id || order.serverId || 'N/A')}</td>
+                    <td className="p-3">{String(order.payment_method || order.paymentMethod || 'N/A')}</td>
+                    <td className="p-3">
+                      <span className={getStatusColor(order.status)}>
+                        {String(order.status || 'Unknown')}
+                      </span>
+                    </td>
+                    <td className="p-3">{formatDate(order.created_at || order.tanggal)}</td>
+                    <td className="p-3 space-x-2">
+                      <button 
+                        onClick={() => handleEditOrder(order.id)}
+                        className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded transition-colors"
+                      >
+                        Edit
+                      </button>
+                      <button 
+                        onClick={() => handleDeleteOrder(order.id)}
+                        className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded transition-colors"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="10" className="p-8 text-center text-gray-500">
+                    {ordersError ? "Tidak dapat memuat data order" : "Tidak ada data order"}
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
+      </div>
 
+      {/* Payments Table */}
+      <div>
         <h2 className="text-xl font-semibold mb-4">Payment Table</h2>
+        
+        {paymentsError && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            {paymentsError}
+          </div>
+        )}
+
         <div className="overflow-x-auto">
           <table className="min-w-full border rounded-lg shadow-md">
             <thead className="bg-yellow-100 text-left">
@@ -56,23 +234,59 @@ const AdminOrder = () => {
               </tr>
             </thead>
             <tbody className="bg-white">
-              <tr className="border-t">
-                <td className="p-3">1</td>
-                <td className="p-3">ORD001</td>
-                <td className="p-3">Rp 150.000</td>
-                <td className="p-3">Succes</td>
-                <td className="p-3">2025-06-11</td>
-                <td className="p-3 space-x-2">
-                  <button className="bg-green-500 text-white px-3 py-1 rounded">Edit</button>
-                  <button className="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
-                </td>
-              </tr>
-              {/* Tambah data lainnya di sini */}
+              {paymentsLoading ? (
+                <tr>
+                  <td colSpan="6" className="p-8 text-center text-gray-500">
+                    Loading payments...
+                  </td>
+                </tr>
+              ) : payments.length > 0 ? (
+                payments.map((payment) => (
+                  <tr key={payment.id} className="border-t hover:bg-gray-50">
+                    <td className="p-3">{String(payment.id || '')}</td>
+                    <td className="p-3">{String(payment.order_id || payment.orderId || 'N/A')}</td>
+                    <td className="p-3">
+                      <span className="font-semibold text-gray-800">
+                        {typeof payment.amount === 'number' 
+                          ? formatCurrency(payment.amount)
+                          : payment.amount || payment.jumlah || 'N/A'
+                        }
+                      </span>
+                    </td>
+                    <td className="p-3">
+                      <span className={getStatusColor(payment.status || payment.payment_status)}>
+                        {String(payment.status || payment.payment_status || 'Unknown')}
+                      </span>
+                    </td>
+                    <td className="p-3">{formatDate(payment.created_at || payment.tanggal)}</td>
+                    <td className="p-3 space-x-2">
+                      <button 
+                        onClick={() => handleEditPayment(payment.id)}
+                        className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded transition-colors"
+                      >
+                        Edit
+                      </button>
+                      <button 
+                        onClick={() => handleDeletePayment(payment.id)}
+                        className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded transition-colors"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6" className="p-8 text-center text-gray-500">
+                    {paymentsError ? "Tidak dapat memuat data payment" : "Tidak ada data payment"}
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
-      </section>
-      
+      </div>
+    </section>
   );
 };
 
