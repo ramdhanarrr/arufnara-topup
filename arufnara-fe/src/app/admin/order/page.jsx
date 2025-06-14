@@ -100,6 +100,67 @@ const AdminOrder = () => {
     }
   };
 
+  // Function untuk menangani object display
+  const safeDisplayValue = (value, fallback = 'N/A') => {
+    if (value === null || value === undefined) {
+      return fallback;
+    }
+    
+    if (typeof value === 'object') {
+      // Jika object memiliki properti 'code', ambil code-nya
+      if (value.code) {
+        return String(value.code);
+      }
+      // Jika object memiliki properti 'id', ambil id-nya
+      if (value.id) {
+        return String(value.id);
+      }
+      // Jika object memiliki properti 'name', ambil name-nya
+      if (value.name) {
+        return String(value.name);
+      }
+      // Jika tidak ada properti yang dikenal, tampilkan JSON string
+      try {
+        return JSON.stringify(value);
+      } catch (e) {
+        return fallback;
+      }
+    }
+    
+    return String(value);
+  };
+
+  // Function khusus untuk topup option
+  const getTopupOptionDisplay = (order) => {
+    const topupOption = order.topup_option || order.package_name || order.topup_id;
+    
+    if (!topupOption) return 'N/A';
+    
+    // Jika topupOption adalah object
+    if (typeof topupOption === 'object') {
+      // Coba ambil code terlebih dahulu
+      if (topupOption.code) {
+        return topupOption.code;
+      }
+      // Kemudian coba ambil name
+      if (topupOption.name) {
+        return topupOption.name;
+      }
+      // Kemudian coba ambil id
+      if (topupOption.id) {
+        return topupOption.id;
+      }
+      // Jika tidak ada, tampilkan JSON
+      try {
+        return JSON.stringify(topupOption);
+      } catch (e) {
+        return 'Invalid Object';
+      }
+    }
+    
+    return String(topupOption);
+  };
+
   // Format currency
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('id-ID', {
@@ -136,7 +197,7 @@ const AdminOrder = () => {
     <section className="p-4 space-y-8">
       {/* Orders Table */}
       <div>
-        <h2 className="text-xl font-semibold mb-4">Transaksi Table</h2>
+        <h2 className="text-xl font-semibold mb-4">Orders</h2>
         
         {ordersError && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
@@ -170,16 +231,16 @@ const AdminOrder = () => {
               ) : orders.length > 0 ? (
                 orders.map((order) => (
                   <tr key={order.id} className="border-t hover:bg-gray-50">
-                    <td className="p-3">{String(order.id || '')}</td>
-                    <td className="p-3">{String(order.topup_option || order.package_name || 'N/A')}</td>
-                    <td className="p-3">{String(order.jumlah_topup || order.quantity || 1)}</td>
-                    <td className="p-3">{String(order.user_id || order.userId || 'N/A')}</td>
-                    <td className="p-3">{String(order.ml_user_id || order.game_id || 'N/A')}</td>
-                    <td className="p-3">{String(order.server_id || order.serverId || 'N/A')}</td>
-                    <td className="p-3">{String(order.payment_method || order.paymentMethod || 'N/A')}</td>
+                    <td className="p-3">{safeDisplayValue(order.id)}</td>
+                    <td className="p-3">{getTopupOptionDisplay(order)}</td>
+                    <td className="p-3">{safeDisplayValue(order.jumlah_topup || order.quantity, '1')}</td>
+                    <td className="p-3">{safeDisplayValue(order.user_id || order.userId)}</td>
+                    <td className="p-3">{safeDisplayValue(order.ml_user_id || order.game_id)}</td>
+                    <td className="p-3">{safeDisplayValue(order.server_id || order.serverId)}</td>
+                    <td className="p-3">{safeDisplayValue(order.payment_method || order.paymentMethod)}</td>
                     <td className="p-3">
                       <span className={getStatusColor(order.status)}>
-                        {String(order.status || 'Unknown')}
+                        {safeDisplayValue(order.status, 'Unknown')}
                       </span>
                     </td>
                     <td className="p-3">{formatDate(order.created_at || order.tanggal)}</td>
@@ -243,19 +304,19 @@ const AdminOrder = () => {
               ) : payments.length > 0 ? (
                 payments.map((payment) => (
                   <tr key={payment.id} className="border-t hover:bg-gray-50">
-                    <td className="p-3">{String(payment.id || '')}</td>
-                    <td className="p-3">{String(payment.order_id || payment.orderId || 'N/A')}</td>
+                    <td className="p-3">{safeDisplayValue(payment.id)}</td>
+                    <td className="p-3">{safeDisplayValue(payment.order_id || payment.orderId)}</td>
                     <td className="p-3">
                       <span className="font-semibold text-gray-800">
                         {typeof payment.amount === 'number' 
                           ? formatCurrency(payment.amount)
-                          : payment.amount || payment.jumlah || 'N/A'
+                          : safeDisplayValue(payment.amount || payment.jumlah)
                         }
                       </span>
                     </td>
                     <td className="p-3">
                       <span className={getStatusColor(payment.status || payment.payment_status)}>
-                        {String(payment.status || payment.payment_status || 'Unknown')}
+                        {safeDisplayValue(payment.status || payment.payment_status, 'Unknown')}
                       </span>
                     </td>
                     <td className="p-3">{formatDate(payment.created_at || payment.tanggal)}</td>
