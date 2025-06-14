@@ -1,10 +1,7 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Diamond, User, CreditCard, Check, ArrowLeft, Zap } from "lucide-react";
-import { getTopup } from "../../../_services/topup";
-import { getOrderUser, createOrder } from "../../../_services/orders";
-import { createPayment } from "../../../_services/payments";
 
 export default function OrderPage() {
   const router = useRouter();
@@ -14,6 +11,7 @@ export default function OrderPage() {
     userId: "",
     zoneId: "",
     email: "",
+    whatsapp: "",
     customerName: "",
   });
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -22,49 +20,33 @@ export default function OrderPage() {
   const [paymentFile, setPaymentFile] = useState(null);
   const [isPaying, setIsPaying] = useState(false);
 
-  const [diamondPackages, setDiamondPackages] = useState([]);
-  const [paymentMethods, setPaymentMethods] = useState([]);
-  const [createdOrder, setCreatedOrder] = useState(null);
+  // Data paket diamond ML
+  const diamondPackages = [
+    { id: 1, diamond: 86, price: 20000, popular: false },
+    { id: 2, diamond: 172, price: 40000, popular: false },
+    { id: 3, diamond: 257, price: 60000, popular: false },
+    { id: 4, diamond: 344, price: 80000, popular: false },
+    { id: 5, diamond: 429, price: 100000, popular: false },
+    { id: 6, diamond: 514, price: 120000, popular: false },
+    { id: 7, diamond: 600, price: 140000, popular: true, bonus: 50 },
+    { id: 8, diamond: 706, price: 160000, popular: false, bonus: 60 },
+    { id: 9, diamond: 878, price: 200000, popular: false, bonus: 90 },
+    { id: 10, diamond: 963, price: 220000, popular: false, bonus: 100 },
+    { id: 11, diamond: 1412, price: 320000, popular: false, bonus: 150 },
+    { id: 12, diamond: 2195, price: 500000, popular: false, bonus: 250 },
+  ];
 
-  useEffect(() => {
-    getTopup()
-      .then((data) => {
-        if (!Array.isArray(data)) {
-          console.error("Data topup bukan array:", data);
-          setDiamondPackages([]);
-          return;
-        }
-        setDiamondPackages(
-          data.map((item) => ({
-            id: item.id,
-            diamond_amount: item.diamond_amount,
-            bonus_diamond: item.bonus_diamond,
-            price: item.price,
-          }))
-        );
-      })
-      .catch((err) => {
-        console.error("Gagal fetch topup:", err);
-        setDiamondPackages([]);
-      });
-    getOrderUser()
-      .then((orders) => {
-        const uniqueMethods = [
-          ...new Set(
-            orders
-              .map((order) => order.payment_method)
-              .filter((pm) => pm && pm !== "")
-          ),
-        ].map((pm) => ({
-          id: pm,
-          name: pm.toUpperCase(),
-          icon: "💳",
-          fee: 0,
-        }));
-        setPaymentMethods(uniqueMethods);
-      })
-      .catch(() => setPaymentMethods([]));
-  }, []);
+  // Metode pembayaran
+  const paymentMethods = [
+    { id: "dana", name: "DANA", icon: "💳", fee: 0 },
+    { id: "ovo", name: "OVO", icon: "🟣", fee: 0 },
+    { id: "gopay", name: "GoPay", icon: "🟢", fee: 0 },
+    { id: "shopeepay", name: "ShopeePay", icon: "🟠", fee: 0 },
+    { id: "bca", name: "BCA Virtual Account", icon: "🏦", fee: 4000 },
+    { id: "bni", name: "BNI Virtual Account", icon: "🏦", fee: 4000 },
+    { id: "bri", name: "BRI Virtual Account", icon: "🏦", fee: 4000 },
+    { id: "mandiri", name: "Mandiri Virtual Account", icon: "🏦", fee: 4000 },
+  ];
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat("id-ID", {
@@ -84,48 +66,29 @@ export default function OrderPage() {
   const getTotalPrice = () => {
     if (!selectedPackage) return 0;
     const method = paymentMethods.find((p) => p.id === paymentMethod);
-    return selectedPackage.price + (method ? (method.fee || 0) : 0);
+    return selectedPackage.price + (method ? method.fee : 0);
   };
 
   const handleFileChange = (e) => {
     setPaymentFile(e.target.files[0]);
   };
 
-  // Ubah handlePay untuk createPayment
-  const handlePay = async () => {
+  const handlePay = () => {
     if (!paymentFile) {
       alert("Silakan upload bukti pembayaran terlebih dahulu!");
       return;
     }
-    if (!createdOrder) {
-      alert("Pesanan belum dibuat!");
-      return;
-    }
     setIsPaying(true);
-
-    // Simulasi upload file, jika backend support FormData, gunakan FormData
-    // Untuk sekarang, proof_of_payment dikirim null atau string dummy
-    const paymentData = {
-      order_id: createdOrder.id,
-      amount: createdOrder.total || selectedPackage.price,
-      payment_status: "success", // atau "pending" jika perlu approval
-      transaction_date: new Date().toISOString().slice(0, 19).replace("T", " "),
-      proof_of_payment: null, // atau paymentFile jika backend support upload
-    };
-
-    try {
-      await createPayment(paymentData);
+    setTimeout(() => {
       setIsPaying(false);
       alert("Pembayaran berhasil.");
-      router.push(`/user/order/detail?orderId=${createdOrder.id}`);
-    } catch (err) {
-      setIsPaying(false);
-      alert("Gagal membuat pembayaran!");
-    }
+      const orderId = "ML" + Date.now();
+      router.push(`/user/order/detail?orderId=${orderId}`);
+    }, 2000);
   };
 
-  // Ubah handleSubmit untuk createOrder
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
+    // Validasi form
     if (!selectedPackage) {
       alert("Pilih paket diamond terlebih dahulu!");
       return;
@@ -134,8 +97,8 @@ export default function OrderPage() {
       alert("User ID dan Zone ID harus diisi!");
       return;
     }
-    if (!formData.email) {
-      alert("Email harus diisi!");
+    if (!formData.email || !formData.whatsapp) {
+      alert("Email dan WhatsApp harus diisi!");
       return;
     }
     if (!paymentMethod) {
@@ -149,36 +112,23 @@ export default function OrderPage() {
 
     setIsLoading(true);
 
-    // Siapkan data order sesuai tabel orders
-    const orderData = {
-      topup_option_id: selectedPackage.id,
-      ml_user_id: formData.userId,
-      server_id: formData.zoneId,
-      payment_method: paymentMethod,
-      status: "pending",
-    };
-
-    try {
-      const response = await createOrder(orderData);
+    setTimeout(() => {
       setIsLoading(false);
-      setCreatedOrder({
-        ...response.data,
-        total: selectedPackage.price,
-      });
 
-      if (
-        ["bca", "bni", "bri", "mandiri"].includes(paymentMethod)
-      ) {
-        setVaNumber(
-          "88" + Math.floor(1000000000 + Math.random() * 9000000000)
-        );
+      const orderData = {
+        package: selectedPackage,
+        userInfo: formData,
+        payment: paymentMethods.find((p) => p.id === paymentMethod),
+        total: getTotalPrice(),
+        orderId: "ML" + Date.now(),
+      };
+
+      if (["bca", "bni", "bri", "mandiri"].includes(paymentMethod)) {
+        setVaNumber("88" + Math.floor(1000000000 + Math.random() * 9000000000));
       }
 
       setShowConfirmation(true);
-    } catch (err) {
-      setIsLoading(false);
-      alert("Gagal membuat pesanan!");
-    }
+    }, 2000);
   };
 
   return (
@@ -212,39 +162,78 @@ export default function OrderPage() {
                 <User className="w-5 h-5" />
                 Data Akun Game
               </h3>
+
               <div className="space-y-4">
-                <input
-                  type="text"
-                  name="userId"
-                  value={formData.userId}
-                  onChange={handleInputChange}
-                  placeholder="User ID"
-                  className="w-full px-4 py-2 text-white border rounded-lg bg-white/10 border-white/20 focus:outline-none"
-                />
-                <input
-                  type="text"
-                  name="zoneId"
-                  value={formData.zoneId}
-                  onChange={handleInputChange}
-                  placeholder="Zone ID"
-                  className="w-full px-4 py-2 text-white border rounded-lg bg-white/10 border-white/20 focus:outline-none"
-                />
-                <input
-                  type="text"
-                  name="customerName"
-                  value={formData.customerName}
-                  onChange={handleInputChange}
-                  placeholder="Username"
-                  className="w-full px-4 py-2 text-white border rounded-lg bg-white/10 border-white/20 focus:outline-none"
-                />
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder="Email"
-                  className="w-full px-4 py-2 text-white border rounded-lg bg-white/10 border-white/20 focus:outline-none"
-                />
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block mb-2 text-sm text-white/80">
+                      User ID
+                    </label>
+                    <input
+                      type="text"
+                      name="userId"
+                      value={formData.userId}
+                      onChange={handleInputChange}
+                      className="w-full p-3 text-white border rounded-lg bg-white/20 border-white/30 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                      placeholder="User ID"
+                    />
+                  </div>
+                  <div>
+                    <label className="block mb-2 text-sm text-white/80">
+                      Zone ID
+                    </label>
+                    <input
+                      type="text"
+                      name="zoneId"
+                      value={formData.zoneId}
+                      onChange={handleInputChange}
+                      className="w-full p-3 text-white border rounded-lg bg-white/20 border-white/30 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                      placeholder="Zone ID"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block mb-2 text-sm text-white/80">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="w-full p-3 text-white border rounded-lg bg-white/20 border-white/30 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                    placeholder="email@example.com"
+                  />
+                </div>
+
+                <div>
+                  <label className="block mb-2 text-sm text-white/80">
+                    WhatsApp
+                  </label>
+                  <input
+                    type="tel"
+                    name="whatsapp"
+                    value={formData.whatsapp}
+                    onChange={handleInputChange}
+                    className="w-full p-3 text-white border rounded-lg bg-white/20 border-white/30 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                    placeholder="08xxxxxxxxxx"
+                  />
+                </div>
+
+                <div>
+                  <label className="block mb-2 text-sm text-white/80">
+                    Username
+                  </label>
+                  <input
+                    type="text"
+                    name="customerName"
+                    value={formData.customerName}
+                    onChange={handleInputChange}
+                    className="w-full p-3 text-white border rounded-lg bg-white/20 border-white/30 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                    placeholder="Username"
+                  />
+                </div>
               </div>
             </div>
 
@@ -258,8 +247,8 @@ export default function OrderPage() {
                   <div className="flex justify-between">
                     <span className="text-white/80">Diamond:</span>
                     <span className="font-semibold text-white">
-                      {selectedPackage.diamond_amount}
-                      {selectedPackage.bonus_diamond > 0 && ` (+${selectedPackage.bonus_diamond})`}
+                      {selectedPackage.diamond}
+                      {selectedPackage.bonus && ` (+${selectedPackage.bonus})`}
                     </span>
                   </div>
                   <div className="flex justify-between">
@@ -268,6 +257,19 @@ export default function OrderPage() {
                       {formatPrice(selectedPackage.price)}
                     </span>
                   </div>
+                  {paymentMethod &&
+                    paymentMethods.find((p) => p.id === paymentMethod)?.fee >
+                      0 && (
+                      <div className="flex justify-between">
+                        <span className="text-white/80">Biaya Admin:</span>
+                        <span className="text-white">
+                          {formatPrice(
+                            paymentMethods.find((p) => p.id === paymentMethod)
+                              .fee
+                          )}
+                        </span>
+                      </div>
+                    )}
                   <hr className="border-white/20" />
                   <div className="flex justify-between text-lg font-bold">
                     <span className="text-white">Total:</span>
@@ -287,49 +289,52 @@ export default function OrderPage() {
                 <Diamond className="w-5 h-5" />
                 Pilih Paket Diamond
               </h3>
+
               <div className="space-y-3 overflow-y-auto max-h-96">
-                {Array.isArray(diamondPackages) && diamondPackages.length > 0 ? (
-                  diamondPackages.map((pkg) => (
-                    <div
-                      key={pkg.id}
-                      onClick={() => setSelectedPackage(pkg)}
-                      className={`p-4 rounded-lg cursor-pointer transition-all border-2 ${selectedPackage?.id === pkg.id
-                          ? "bg-indigo-600/50 border-indigo-400"
-                          : "bg-white/5 border-white/20 hover:bg-white/10"
-                        }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <span className="font-bold text-white">
-                              {pkg.diamond_amount} 💎
+                {diamondPackages.map((pkg) => (
+                  <div
+                    key={pkg.id}
+                    onClick={() => setSelectedPackage(pkg)}
+                    className={`p-4 rounded-lg cursor-pointer transition-all border-2 ${
+                      selectedPackage?.id === pkg.id
+                        ? "bg-indigo-600/50 border-indigo-400"
+                        : "bg-white/5 border-white/20 hover:bg-white/10"
+                    } ${pkg.popular ? "ring-2 ring-yellow-400/50" : ""}`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-white">
+                            {pkg.diamond} 💎
+                          </span>
+                          {pkg.bonus && (
+                            <span className="px-2 py-1 text-xs text-white bg-green-500 rounded-full">
+                              +{pkg.bonus}
                             </span>
-                            {pkg.bonus_diamond > 0 && (
-                              <span className="px-2 py-1 text-xs text-white bg-green-500 rounded-full">
-                                +{pkg.bonus_diamond}
-                              </span>
-                            )}
-                          </div>
-                          {pkg.bonus_diamond > 0 && (
-                            <div className="text-sm text-white/60">
-                              Total: {pkg.diamond_amount + pkg.bonus_diamond} Diamond
-                            </div>
+                          )}
+                          {pkg.popular && (
+                            <span className="px-2 py-1 text-xs font-bold text-black bg-yellow-500 rounded-full">
+                              Popular
+                            </span>
                           )}
                         </div>
-                        <div className="text-right">
-                          <div className="font-bold text-white">
-                            {formatPrice(pkg.price)}
+                        {pkg.bonus && (
+                          <div className="text-sm text-white/60">
+                            Total: {pkg.diamond + pkg.bonus} Diamond
                           </div>
-                          {selectedPackage?.id === pkg.id && (
-                            <Check className="w-5 h-5 ml-auto text-green-400" />
-                          )}
+                        )}
+                      </div>
+                      <div className="text-right">
+                        <div className="font-bold text-white">
+                          {formatPrice(pkg.price)}
                         </div>
+                        {selectedPackage?.id === pkg.id && (
+                          <Check className="w-5 h-5 ml-auto text-green-400" />
+                        )}
                       </div>
                     </div>
-                  ))
-                ) : (
-                  <div className="text-white/70">Tidak ada paket diamond tersedia</div>
-                )}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -341,19 +346,21 @@ export default function OrderPage() {
                 <CreditCard className="w-5 h-5" />
                 Metode Pembayaran
               </h3>
+
               <div className="space-y-3">
                 {paymentMethods.map((method) => (
                   <div
                     key={method.id}
                     onClick={() => setPaymentMethod(method.id)}
-                    className={`p-3 rounded-lg cursor-pointer transition-all border-2 ${paymentMethod === method.id
+                    className={`p-3 rounded-lg cursor-pointer transition-all border-2 ${
+                      paymentMethod === method.id
                         ? "bg-indigo-600/50 border-indigo-400"
                         : "bg-white/5 border-white/20 hover:bg-white/10"
-                      }`}
+                    }`}
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <span className="text-xl">{method.icon || "💳"}</span>
+                        <span className="text-xl">{method.icon}</span>
                         <span className="font-medium text-white">
                           {method.name}
                         </span>
@@ -373,6 +380,7 @@ export default function OrderPage() {
                 ))}
               </div>
             </div>
+
             {/* Submit Button */}
             <button
               onClick={handleSubmit}

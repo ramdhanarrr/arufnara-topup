@@ -100,7 +100,7 @@ const TopUp = () => {
                     <p className="mb-6 text-sm duration-300 text-white/80 group-hover:text-white line-clamp-2">
                       {desc}
                     </p>
-                    <Link href="/auth/login">
+                    <Link href="/login">
                       <button className="px-4 py-2 text-white transition-colors duration-300 rounded-lg bg-black/80 hover:bg-indigo-800">
                         {button}
                       </button>
