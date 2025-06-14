@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import {
     History,
@@ -55,11 +55,19 @@ export default function UserDashboard() {
         },
     ])
 
+    // Proteksi halaman user
+    useEffect(() => {
+        const token = localStorage.getItem("token")
+        if (!token) {
+            router.replace("/auth/login")
+        }
+    }, [router])
+
     const handleLogout = () => {
         if (confirm("Apakah Anda yakin ingin keluar?")) {
             localStorage.removeItem("token");
             localStorage.removeItem("user");
-            router.push("/login")
+            router.push("/auth/login")
         }
     }
 
