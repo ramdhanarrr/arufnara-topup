@@ -6,10 +6,11 @@ import { useRouter } from "next/navigation"
 export default function RegisterPage() {
     const [showPassword, setShowPassword] = useState(false)
     const [formData, setFormData] = useState({
+        name: "",
+        username: "",
         email: "",
         password: "",
         confirmPassword: "",
-        username: "",
     })
     const router = useRouter()
 
@@ -18,33 +19,40 @@ export default function RegisterPage() {
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
-        if (formData.email && formData.password && formData.username) {
-            if (formData.password !== formData.confirmPassword) {
-                alert("Password tidak cocok!")
-                return
-            }
-            try {
-                const response = await fetch("http://localhost:8000/api/register", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        email: formData.email,
-                        password: formData.password,
-                        username: formData.username,
-                    }),
-                })
-                const data = await response.json()
-                if (!response.ok) throw new Error(data.message || "Registrasi gagal")
-                alert("Registrasi berhasil! Silakan login.")
-                router.push("/auth/login")
-            } catch (err) {
-                alert("Error: " + err.message)
-            }
-        } else {
-            alert("Mohon lengkapi semua data")
+    e.preventDefault()
+    if (formData.email && formData.password && formData.username && formData.name) {
+        if (formData.password !== formData.confirmPassword) {
+            alert("Password tidak cocok!")
+            return
         }
+        try {
+            const response = await fetch("http://localhost:8000/api/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: formData.name,
+                    username: formData.username,
+                    email: formData.email,
+                    password: formData.password,
+                }),
+            })
+            const data = await response.json()
+            if (!response.ok) {
+                let msg = data.message || "Registrasi gagal"
+                if (data.errors) {
+                    msg = Object.values(data.errors).flat().join("\n")
+                }
+                throw new Error(msg)
+            }
+            alert("Registrasi berhasil! Silakan login.")
+            router.push("/auth/login")
+        } catch (err) {
+            alert("Error: " + err.message)
+        }
+    } else {
+        alert("Mohon lengkapi semua data")
     }
+}
 
     return (
         <div className="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-800">
@@ -63,6 +71,20 @@ export default function RegisterPage() {
                         <p className="text-indigo-200">Daftar untuk mulai top up</p>
                     </div>
                     <form className="space-y-6" onSubmit={handleSubmit}>
+                        <div className="space-y-2">
+                            <label className="block font-medium text-white">Name</label>
+                            <div className="relative">
+                                <User className="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2 text-white/70" />
+                                <input
+                                    type="text"
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleInputChange}
+                                    className="w-full py-3 pl-12 pr-4 text-white border bg-white/20 border-white/30 rounded-xl placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent"
+                                    placeholder="Masukkan Nama Lengkap"
+                                />
+                            </div>
+                        </div>
                         <div className="space-y-2">
                             <label className="block font-medium text-white">Username</label>
                             <div className="relative">

@@ -2,47 +2,40 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { useEffect, useState } from "react";
+import { getOrderById } from "../../../../_services/orders"; // Perbaiki path import
 
 export default function OrderDetailPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
 
-  // Simulasi fetch data pesanan berdasarkan orderId
   const [order, setOrder] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulasi data, ganti dengan fetch ke backend jika sudah ada
     if (orderId) {
-      setOrder({
-        orderId,
-        userInfo: {
-          userId: "12345678",
-          zoneId: "1234",
-          email: "user@email.com",
-          whatsapp: "08123456789",
-          customerName: "UsernameML",
-        },
-        package: {
-          diamond: 600,
-          bonus: 50,
-          price: 140000,
-        },
-        payment: {
-          name: "DANA",
-          fee: 0,
-        },
-        total: 140000,
-        status: "Lunas",
-        tanggal: new Date().toLocaleString("id-ID"),
-      });
+      setLoading(true);
+      getOrderById(orderId)
+        .then((data) => {
+          setOrder(data);
+          setLoading(false);
+        })
+        .catch(() => setLoading(false));
     }
   }, [orderId]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-800">
+        <div className="text-lg text-white">Memuat detail pesanan...</div>
+      </div>
+    );
+  }
 
   if (!order) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-800">
-        <div className="text-lg text-white">Memuat detail pesanan...</div>
+        <div className="text-lg text-white">Pesanan tidak ditemukan.</div>
       </div>
     );
   }
@@ -60,10 +53,10 @@ export default function OrderDetailPage() {
         <div className="p-6 border shadow-lg bg-white/10 border-white/20 rounded-2xl backdrop-blur-lg">
           <h1 className="mb-2 text-2xl font-bold text-white">Detail Pesanan</h1>
           <div className="mb-4 text-sm text-white/80">
-            ID Pesanan: <span className="font-mono">{order.orderId}</span>
+            ID Pesanan: <span className="font-mono">{order.id}</span>
           </div>
           <div className="mb-4 text-sm text-white/80">
-            Tanggal: {order.tanggal}
+            Tanggal: {order.created_at ? new Date(order.created_at).toLocaleString("id-ID") : "-"}
           </div>
           <hr className="mb-4 border-white/20" />
 
@@ -73,48 +66,33 @@ export default function OrderDetailPage() {
               <div>
                 User ID:{" "}
                 <span className="font-semibold text-white">
-                  {order.userInfo.userId}
+                  {order.ml_user_id}
                 </span>
               </div>
               <div>
                 Zone ID:{" "}
                 <span className="font-semibold text-white">
-                  {order.userInfo.zoneId}
+                  {order.server_id}
                 </span>
               </div>
-              <div>
-                Email:{" "}
-                <span className="font-semibold text-white">
-                  {order.userInfo.email}
-                </span>
-              </div>
-              <div>
-                WhatsApp:{" "}
-                <span className="font-semibold text-white">
-                  {order.userInfo.whatsapp}
-                </span>
-              </div>
-              <div>
-                Username:{" "}
-                <span className="font-semibold text-white">
-                  {order.userInfo.customerName}
-                </span>
-              </div>
+              {/* Tambahkan email/username jika ada di order */}
             </div>
           </div>
 
           <div className="mb-4">
             <h2 className="mb-2 font-semibold text-white">Paket Diamond</h2>
             <div className="flex items-center gap-2 text-sm text-white/80">
-              <span>{order.package.diamond} 💎</span>
-              {order.package.bonus && (
+              <span>
+                {order.topup_option?.diamond_amount || "-"} 💎
+              </span>
+              {order.topup_option?.bonus_diamond > 0 && (
                 <span className="px-2 py-1 text-xs text-white bg-green-500 rounded-full">
-                  +{order.package.bonus}
+                  +{order.topup_option.bonus_diamond}
                 </span>
               )}
               <span className="ml-2 text-white">
                 Harga:{" "}
-                {order.package.price.toLocaleString("id-ID", {
+                {(order.topup_option?.price || 0).toLocaleString("id-ID", {
                   style: "currency",
                   currency: "IDR",
                   minimumFractionDigits: 0,
@@ -126,39 +104,16 @@ export default function OrderDetailPage() {
           <div className="mb-4">
             <h2 className="mb-2 font-semibold text-white">Metode Pembayaran</h2>
             <div className="text-sm text-white/80">
-              {order.payment.name}{" "}
-              {order.payment.fee > 0 && (
-                <span>
-                  ( +
-                  {order.payment.fee.toLocaleString("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                    minimumFractionDigits: 0,
-                  })}
-                  )
-                </span>
-              )}
+              {order.payment_method}
             </div>
           </div>
 
           <div className="mb-4">
-            <h2 className="mb-2 font-semibold text-white">Total</h2>
-            <div className="text-lg font-bold text-yellow-400">
-              {order.total.toLocaleString("id-ID", {
-                style: "currency",
-                currency: "IDR",
-                minimumFractionDigits: 0,
-              })}
-            </div>
-          </div>
-
-          <div className="mb-2">
             <h2 className="mb-2 font-semibold text-white">Status</h2>
             <div className="inline-block px-3 py-1 text-sm font-semibold text-black rounded-full bg-green-500/80">
               {order.status}
             </div>
           </div>
-          {/* Button ke halaman user di kanan bawah dalam form */}
           <div className="flex justify-end mt-8">
             <button
               onClick={() => router.push("/user")}
