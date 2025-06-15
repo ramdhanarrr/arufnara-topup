@@ -8,10 +8,12 @@ use Illuminate\Http\Request;
 class UsersController extends Controller
 {
     // GET /users
-    public function index()
+    public function profile(Request $request)
     {
-        $users = User::all();
-        return response()->json($users);
+        return response()->json([
+            'success' => true,
+            'data' => $request->user()
+        ]);
     }
 
     // POST /users
@@ -73,5 +75,24 @@ class UsersController extends Controller
 
         $user->delete();
         return response()->json(['message' => 'User deleted']);
+    }
+
+    // PUT /user/profile
+    public function updateProfile(Request $request)
+    {
+        $user = $request->user();
+
+        $validated = $request->validate([
+            'name' => 'sometimes|required|string|max:100',
+            'username' => 'sometimes|required|string|max:50|unique:users,username,' . $user->id,
+            'email' => 'sometimes|required|email|max:100|unique:users,email,' . $user->id,
+        ]);
+
+        $user->update($validated);
+
+        return response()->json([
+            'success' => true,
+            'data' => $user
+        ]);
     }
 }

@@ -10,7 +10,12 @@ class TopupOptionsController extends Controller
     // GET /api/topup-options
     public function index()
     {
-        return response()->json(TopupOption::all());
+        $topupOptions = TopupOption::all();
+
+        return response()->json([
+            'success' => true,
+            'data' => $topupOptions
+        ]);
     }
 
     public function show($id)
