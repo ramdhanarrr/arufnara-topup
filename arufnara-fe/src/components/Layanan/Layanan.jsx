@@ -68,7 +68,7 @@ const Layanan = () => {
                     <p className="text-sm text-white/80 group-hover:text-white line-clamp-3">
                       {desc}
                     </p>
-                    <Link href="/login">
+                    <Link href="/auth/login">
                       <button className="px-4 py-3 text-white transition-colors duration-300 rounded-lg bg-black/80 hover:bg-indigo-800">
                         {button}
                       </button>

@@ -100,9 +100,20 @@ const Admin = ({ children }) => {
                         <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d="M3 7h18M3 12h18M3 17h18" />
                       </svg>
                     </span>
-                    <span className='ml-2 text-sm tracking-wide truncate'>Order & Payment</span>
+                    <span className='ml-2 text-sm tracking-wide truncate'>Order</span>
                   </a>
                 </li>
+
+                <li>
+                <a href="/admin/payment" className='relative flex flex-row items-center h-11 focus:outline-none'>
+                  <span className='inline-flex justify-center items-center ml-4'>
+                    <svg className='w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+                      <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3zm0 10c4.418 0 8-1.79 8-4v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2c0 2.21 3.582 4 8 4z" />
+                    </svg>
+                  </span>
+                  <span className='ml-2 text-sm tracking-wide truncate'>Payment</span>
+                </a>
+              </li>
                 
                 <li>
                   <a href="/admin/user" className='relative flex flex-row items-center h-11 focus:outline-none'>
