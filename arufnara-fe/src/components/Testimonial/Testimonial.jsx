@@ -13,32 +13,29 @@ const TestimonialData = [
   {
     id: 1,
     name: "John Doe",
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    img: "https://picsum.photos/101-101",
+    text: "Proses top up sangat cepat dan mudah! Harga juga bersaing, saya pasti akan order lagi di sini.",
   },
   {
     id: 2,
     name: "Jane Smith",
-    text: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    img: "https://picsum.photos/102-102",
+    text: "Pelayanan adminnya ramah dan responsif. Diamond langsung masuk ke akun saya tanpa kendala.",
   },
   {
     id: 3,
     name: "Alice Johnson",
-    text: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-    img: "https://picsum.photos/103-103",
+    text: "Sudah beberapa kali transaksi di sini, selalu aman dan terpercaya. Recommended banget buat top up game!"
   },
   {
     id: 4,
     name: "Bob Brown",
-    text: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    img: "https://picsum.photos/104-104",
+    text: "Top up di Arufnara selalu lancar, tidak pernah ada masalah. Terima kasih atas pelayanannya!",
+    
   },
   {
     id: 5,
     name: "Charlie Green",
-    text: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.",
-    img: "https://picsum.photos/105-105",
+    text: "Sistem pembayaran lengkap dan prosesnya instan. Cocok buat yang suka main game online.",
+    
   },
 ];
 
@@ -94,7 +91,7 @@ const Testimonial = () => {
           {/* Testimonials cards Section */}
           <div data-aos="zoom-in">
             <Slider {...settings}>
-              {TestimonialData.map(({ id, name, text, img }) => {
+              {TestimonialData.map(({ id, name, text}) => {
                 return (
                   <div key={id} className="my-6">
                     <div className="flex flex-col gap-6 px-6 py-8 mx-4 border shadow-lg rounded-3xl bg-white/30 dark:bg-dark/60 border-white/20 backdrop-blur-md">
@@ -104,11 +101,6 @@ const Testimonial = () => {
                       </div>
                       {/* image section */}
                       <div className="flex items-center gap-4">
-                        <img
-                          src={img}
-                          alt={name}
-                          className="w-16 h-16 border-2 rounded-full border-white/40"
-                        />
                         <div className="space-y-2">
                           <h1 className="text-xl font-bold text-white font-cursive">
                             {name}
