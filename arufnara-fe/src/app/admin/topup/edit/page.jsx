@@ -17,19 +17,50 @@ export default function EditTopup() {
 
   const [loading, setLoading] = useState(false);
 
+  // Fungsi untuk mendapatkan config dengan authorization header
+  const getAuthConfig = () => {
+    const token = localStorage.getItem('token'); // atau sessionStorage.getItem('token')
+    
+    if (!token) {
+      alert('Token tidak ditemukan. Silakan login kembali.');
+      router.push('/login');
+      return null;
+    }
+
+    return {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    };
+  };
+
   useEffect(() => {
     const fetchTopup = async () => {
       try {
-        const response = await API.get(`/admin/topup-options/${id}`);
+        const config = getAuthConfig();
+        if (!config) return;
+
+        const response = await API.get(`/admin/topup-options/${id}`, config);
         const data = response.data?.data ?? response.data;
+        
         setForm({
           diamond_amount: data.diamond_amount,
           bonus_diamond: data.bonus_diamond,
           price: data.price,
         });
       } catch (err) {
-        alert("Gagal mengambil data: " + err.message);
-        router.push("/admin/topup");
+        console.error('Error fetching topup:', err);
+        
+        // Handle specific error cases
+        if (err.response?.status === 401) {
+          alert("Session expired. Silakan login kembali.");
+          localStorage.removeItem('token'); // Clear invalid token
+          router.push('/login');
+        } else {
+          alert("Gagal mengambil data: " + (err.response?.data?.message || err.message));
+          router.push("/admin/topup");
+        }
       }
     };
 
@@ -47,16 +78,30 @@ export default function EditTopup() {
     setLoading(true);
 
     try {
+      const config = getAuthConfig();
+      if (!config) {
+        setLoading(false);
+        return;
+      }
+
       await API.put(`/admin/topup-options/${id}`, {
         diamond_amount: parseInt(form.diamond_amount),
         bonus_diamond: parseInt(form.bonus_diamond),
         price: parseFloat(form.price),
-      });
+      }, config);
 
       alert("Topup berhasil diperbarui.");
       router.push("/admin/topup");
     } catch (err) {
-      alert("Gagal memperbarui topup: " + err.message);
+      console.error('Error updating topup:', err);
+      
+      if (err.response?.status === 401) {
+        alert("Session expired. Silakan login kembali.");
+        localStorage.removeItem('token');
+        router.push('/login');
+      } else {
+        alert("Gagal memperbarui topup: " + (err.response?.data?.message || err.message));
+      }
     } finally {
       setLoading(false);
     }
