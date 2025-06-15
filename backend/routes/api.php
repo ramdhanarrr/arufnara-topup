@@ -69,12 +69,16 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
     // User management
     Route::get('/users', [AdminController::class, 'users']);
     Route::get('/users/{id}/points', [AdminController::class, 'getUserPoints']);
-
+    Route::post('/users', [AdminController::class, 'createUser']);
+    Route::put('/users/{id}', [AdminController::class, 'updateUser']);
+    Route::delete('/users/{id}', [AdminController::class, 'deleteUser']);
+    
     // Payment management
     Route::get('/payments', [AdminController::class, 'payments']);
 
     // Topup options management
     Route::prefix('topup-options')->group(function () {
+        Route::get('/', [AdminController::class, 'getTopupOptions']);
         Route::post('/', [AdminController::class, 'createTopupOption']);
         Route::put('/{id}', [AdminController::class, 'updateTopupOption']);
         Route::get('/{id}', [AdminController::class, 'showTopupOption']);
