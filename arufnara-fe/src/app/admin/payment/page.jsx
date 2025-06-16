@@ -1,5 +1,5 @@
 // app/admin/payment/page.jsx
-'use client';
+"use client";
 
 import React, { useState, useEffect } from 'react';
 import { Eye, Download, CheckCircle, Search, Filter, X, Package, Edit, Save } from 'lucide-react';
@@ -9,8 +9,8 @@ const AdminPayment = () => {
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,7 +23,8 @@ const AdminPayment = () => {
     fetchPayments();
   }, []);
 
-  const getToken = () => localStorage.getItem('token') || sessionStorage.getItem('token');
+  const getToken = () =>
+    localStorage.getItem("token") || sessionStorage.getItem("token");
 
   const getAuthConfig = () => ({
     headers: {
@@ -181,7 +182,7 @@ const AdminPayment = () => {
       : 'bg-gray-100 text-gray-800';
   };
 
-  const filteredPayments = payments.filter(payment => {
+  const filteredPayments = payments.filter((payment) => {
     const term = searchTerm.toLowerCase();
     const statusMatch = statusFilter === 'all' || payment.payment_status === statusFilter;
     const searchString = `${payment.id || payment._id || ''}${payment.order_id || ''}${payment.amount || ''}${payment.transaction_date || ''}`.toLowerCase();
@@ -233,7 +234,7 @@ const AdminPayment = () => {
       {error && (
         <div className="p-4 mb-6 border-l-4 border-red-400 rounded-r-lg bg-red-50">
           <p className="text-red-700">{error}</p>
-          <button 
+          <button
             onClick={() => setError(null)}
             className="mt-1 text-sm text-red-600 underline"
           >
@@ -310,7 +311,10 @@ const AdminPayment = () => {
       <div className="p-4 mb-6 bg-white rounded-lg shadow-sm">
         <div className="flex flex-col gap-4 sm:flex-row">
           <div className="relative flex-1">
-            <Search className="absolute text-gray-400 -translate-y-1/2 left-3 top-1/2" size={20} />
+            <Search
+              className="absolute text-gray-400 -translate-y-1/2 left-3 top-1/2"
+              size={20}
+            />
             <input
               type="text"
               placeholder="Cari berdasarkan ID, order, tanggal..."
@@ -337,16 +341,30 @@ const AdminPayment = () => {
       {/* Payments Table */}
       <div className="overflow-hidden bg-white rounded-lg shadow">
         <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="px-6 py-3 text-sm font-medium text-left text-gray-500">ID</th>
-                <th className="px-6 py-3 text-sm font-medium text-left text-gray-500">Order ID</th>
-                <th className="px-6 py-3 text-sm font-medium text-left text-gray-500">Amount</th>
-                <th className="px-6 py-3 text-sm font-medium text-left text-gray-500">Tanggal</th>
-                <th className="px-6 py-3 text-sm font-medium text-left text-gray-500">Status</th>
-                <th className="px-6 py-3 text-sm font-medium text-left text-gray-500">Bukti</th>
-                <th className="px-6 py-3 text-sm font-medium text-left text-gray-500">Aksi</th>
+          <table className="w-full min-w-[900px] border-collapse">
+            <thead>
+              <tr className="bg-gradient-to-r from-blue-100 via-blue-50 to-blue-100">
+                <th className="px-6 py-4 text-xs font-bold text-left text-blue-900 uppercase tracking-widest border-b border-blue-200">
+                  ID
+                </th>
+                <th className="px-6 py-4 text-xs font-bold text-left text-blue-900 uppercase tracking-widest border-b border-blue-200">
+                  Order ID
+                </th>
+                <th className="px-6 py-4 text-xs font-bold text-left text-blue-900 uppercase tracking-widest border-b border-blue-200">
+                  Amount
+                </th>
+                <th className="px-6 py-4 text-xs font-bold text-left text-blue-900 uppercase tracking-widest border-b border-blue-200">
+                  Tanggal
+                </th>
+                <th className="px-6 py-4 text-xs font-bold text-left text-blue-900 uppercase tracking-widest border-b border-blue-200">
+                  Status
+                </th>
+                <th className="px-6 py-4 text-xs font-bold text-left text-blue-900 uppercase tracking-widest border-b border-blue-200">
+                  Bukti
+                </th>
+                <th className="px-6 py-4 text-xs font-bold text-left text-blue-900 uppercase tracking-widest border-b border-blue-200">
+                  Aksi
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
@@ -398,11 +416,18 @@ const AdminPayment = () => {
                 </tr>
               )) : (
                 <tr>
-                  <td colSpan="7" className="px-6 py-12 text-center text-gray-500">
+                  <td
+                    colSpan="7"
+                    className="px-6 py-12 text-center text-blue-400"
+                  >
                     <div className="flex flex-col items-center">
-                      <Package className="w-12 h-12 mb-4 text-gray-300" />
-                      <p className="text-lg font-medium">Tidak ada pembayaran ditemukan</p>
-                      <p className="text-sm">Cobalah ubah pencarian atau filter</p>
+                      <Package className="w-12 h-12 mb-4 text-blue-200" />
+                      <p className="text-lg font-semibold">
+                        Tidak ada pembayaran ditemukan
+                      </p>
+                      <p className="text-sm">
+                        Cobalah ubah pencarian atau filter
+                      </p>
                     </div>
                   </td>
                 </tr>

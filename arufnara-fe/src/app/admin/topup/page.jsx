@@ -475,74 +475,89 @@ export default function AdminTopUp() {
       </div>
 
       {/* Diamond Packages Table */}
-      <div className="overflow-hidden bg-white rounded-lg shadow-sm">
+      <div className="overflow-hidden bg-white rounded-2xl shadow-xl border border-gray-100">
         <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="border-b border-gray-200 bg-gray-50">
-              <tr>
-                <th className="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">ID</th>
-                <th className="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Diamond</th>
-                <th className="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Bonus</th>
-                <th className="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Harga</th>
-                <th className="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Total Diamond</th>
-                <th className="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Actions</th>
+          <table className="w-full min-w-[900px] border-collapse">
+            <thead>
+              <tr className="bg-gradient-to-r from-blue-100 via-blue-50 to-blue-100">
+                <th className="px-6 py-4 text-xs font-bold text-left text-blue-900 uppercase tracking-widest border-b border-blue-200">
+                  ID
+                </th>
+                <th className="px-6 py-4 text-xs font-bold text-left text-blue-900 uppercase tracking-widest border-b border-blue-200">
+                  Diamond
+                </th>
+                <th className="px-6 py-4 text-xs font-bold text-left text-blue-900 uppercase tracking-widest border-b border-blue-200">
+                  Bonus
+                </th>
+                <th className="px-6 py-4 text-xs font-bold text-left text-blue-900 uppercase tracking-widest border-b border-blue-200">
+                  Harga
+                </th>
+                <th className="px-6 py-4 text-xs font-bold text-left text-blue-900 uppercase tracking-widest border-b border-blue-200">
+                  Total Diamond
+                </th>
+                <th className="px-6 py-4 text-xs font-bold text-left text-blue-900 uppercase tracking-widest border-b border-blue-200">
+                  Actions
+                </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody>
               {filteredTopups.length > 0 ? (
-                filteredTopups.map((topup) => {
+                filteredTopups.map((topup, idx) => {
                   const diamondAmount = topup.diamond_amount || topup.jumlah_diamond || topup.amount || 0;
                   const bonusDiamond = topup.bonus_diamond || topup.bonus || 0;
                   const price = topup.price || topup.harga || 0;
                   const totalDiamond = diamondAmount + bonusDiamond;
-                  
+
                   return (
-                    <tr key={topup.id || topup._id} className="transition-colors hover:bg-gray-50">
-                      <td className="px-6 py-4 text-sm text-gray-900">
-                        {topup.id || topup._id}
+                    <tr
+                      key={topup.id || topup._id}
+                      className={`transition-colors duration-150 ${
+                        idx % 2 === 0 ? "bg-white" : "bg-blue-50/60"
+                      } hover:bg-blue-100/60`}
+                    >
+                      <td className="px-6 py-4 font-semibold text-blue-900 border-b border-blue-100 whitespace-nowrap">
+                        <span className="inline-block px-2 py-1 bg-blue-200 text-blue-800 rounded-lg text-xs font-mono tracking-wider shadow-sm">
+                          {topup.id || topup._id}
+                        </span>
                       </td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center">
-                          <div className="flex-shrink-0 w-10 h-10">
-                            <div className="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full">
-                              <Diamond className="w-6 h-6 text-blue-600" />
-                            </div>
+                      <td className="px-6 py-4 text-blue-900 border-b border-blue-100 whitespace-nowrap">
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-300 to-blue-500 flex items-center justify-center text-white font-bold text-base shadow">
+                            <Diamond className="w-5 h-5" />
                           </div>
-                          <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900">
-                              {diamondAmount.toLocaleString()} Diamond
-                            </div>
-                          </div>
+                          <span className="font-semibold">
+                            {diamondAmount.toLocaleString()} Diamond
+                          </span>
                         </div>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-6 py-4 border-b border-blue-100 whitespace-nowrap">
                         {bonusDiamond > 0 ? (
                           <span className="inline-flex px-2 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full">
                             +{bonusDiamond.toLocaleString()}
                           </span>
                         ) : (
-                          <span className="text-gray-400">-</span>
+                          <span className="text-blue-300">-</span>
                         )}
                       </td>
-                      <td className="px-6 py-4 text-sm font-semibold text-gray-900">
+                      <td className="px-6 py-4 text-blue-900 border-b border-blue-100 whitespace-nowrap font-semibold">
                         {typeof price === 'number' ? formatCurrency(price) : price}
                       </td>
-                      <td className="px-6 py-4">
-                        <span className="inline-flex px-2 py-1 text-xs font-semibold text-blue-800 bg-blue-100 rounded-full">
+                      <td className="px-6 py-4 border-b border-blue-100 whitespace-nowrap">
+                        <span className="inline-block px-2 py-1 bg-blue-50 border border-blue-100 rounded-lg text-xs font-semibold text-blue-800">
                           {totalDiamond.toLocaleString()} Total
                         </span>
                       </td>
-                      <td className="px-6 py-4 space-x-2 text-sm">
+                      <td className="px-6 py-4 border-b border-blue-100 whitespace-nowrap space-x-2 text-sm">
                         <button
                           onClick={() => openEditModal(topup)}
-                          className="inline-flex items-center px-3 py-1 text-blue-700 transition-colors bg-blue-100 rounded-md hover:bg-blue-200"
+                          className="inline-flex items-center px-3 py-1 text-blue-700 transition-colors bg-blue-100 rounded-lg hover:bg-blue-200 shadow"
                         >
                           <Edit size={14} className="mr-1" />
                           Edit
                         </button>
                         <button
                           onClick={() => handleDelete(topup)}
-                          className="inline-flex items-center px-3 py-1 text-red-700 transition-colors bg-red-100 rounded-md hover:bg-red-200"
+                          className="inline-flex items-center px-3 py-1 text-red-700 transition-colors bg-red-100 rounded-lg hover:bg-red-200 shadow"
                         >
                           <Trash2 size={14} className="mr-1" />
                           Delete
@@ -553,10 +568,10 @@ export default function AdminTopUp() {
                 })
               ) : (
                 <tr>
-                  <td colSpan="6" className="px-6 py-12 text-center text-gray-500">
+                  <td colSpan="6" className="px-6 py-12 text-center text-blue-400">
                     <div className="flex flex-col items-center">
-                      <Diamond className="w-12 h-12 mb-4 text-gray-300" />
-                      <p className="text-lg font-medium">Tidak ada paket diamond ditemukan</p>
+                      <Diamond className="w-12 h-12 mb-4 text-blue-200" />
+                      <p className="text-lg font-semibold">Tidak ada paket diamond ditemukan</p>
                       <p className="text-sm">Cobalah mengubah filter pencarian atau tambah paket baru</p>
                     </div>
                   </td>
