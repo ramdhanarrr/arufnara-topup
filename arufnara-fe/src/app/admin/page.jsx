@@ -15,22 +15,6 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-// Contoh data statis
-const data = [
-  { month: 'Jan', users: 400, orders: 240 },
-  { month: 'Feb', users: 300, orders: 139 },
-  { month: 'Mar', users: 500, orders: 380 },
-  { month: 'Apr', users: 700, orders: 390 },
-  { month: 'May', users: 1000, orders: 600 },
-  { month: 'Jun', users: 1200, orders: 800 },
-  { month: 'Jul', users: 1200, orders: 800 },
-  { month: 'Aug', users: 1200, orders: 800 },
-  { month: 'Sep', users: 1200, orders: 800 },
-  { month: 'Oct', users: 1200, orders: 800 },
-  { month: 'Nov', users: 1200, orders: 800 },
-  { month: 'Dec', users: 1200, orders: 800 },
-];
-
 const AdminDashboard = () => {
 
   const [orders, setOrders] = useState([]);
