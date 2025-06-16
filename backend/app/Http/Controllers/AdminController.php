@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -29,24 +30,140 @@ class AdminController extends Controller
         });
     }
 
-    public function dashboard()
-    {
-        $stats = [
-            'total_users' => User::where('role', 'user')->count(),
-            'total_orders' => Order::count(),
-            'total_revenue' => Payment::where('payment_status', 'success')->sum('amount'),
-            'pending_orders' => Order::where('status', 'pending')->count(),
-            'recent_orders' => Order::with(['user', 'topupOption'])
-                ->orderBy('created_at', 'desc')
-                ->limit(10)
-                ->get(),
-        ];
+public function dashboard()
+{
+    try {
+        $now = Carbon::now();
+        Carbon::setLocale('id');
+
+        // Total statistik
+        $totalUsers = User::count();
+        $totalOrders = Order::count();
+        $pendingOrders = Order::where('status', 'pending')->count();
+        $totalRevenue = Order::where('status', 'completed')->sum('jumlah_topup');
+
+        // Recent orders (10 terbaru) - Diperbaiki mapping
+        $recentOrders = Order::with(['user', 'topupOption'])
+            ->orderBy('created_at', 'desc')
+            ->limit(10)
+            ->get()
+            ->map(function ($order) {
+                return [
+                    'id' => $order->id,
+                    'topup_option_id' => $order->topup_option_id,
+                    'topup_option' => $order->topupOption->name ?? 'N/A', // Tambahkan nama topup option
+                    'amount' => $order->jumlah_topup, // Konsisten dengan frontend
+                    'jumlah_topup' => $order->jumlah_topup, // Fallback
+                    'user_id' => $order->user_id,
+                    'payment_method' => $order->payment_method,
+                    'status' => $order->status,
+                    'created_at' => $order->created_at->format('Y-m-d H:i:s'),
+                    'tanggal' => $order->created_at->format('d/m/Y'), // Format tanggal Indonesia
+                    'user_name' => $order->user->name ?? 'N/A',
+                    'user_email' => $order->user->email ?? 'N/A',
+                ];
+            });
 
         return response()->json([
             'success' => true,
-            'data' => $stats
+            'data' => [
+                'stats' => [ // Wrap statistik dalam object 'stats'
+                    'totalUsers' => $totalUsers,
+                    'totalOrders' => $totalOrders,
+                    'pendingOrders' => $pendingOrders,
+                    'totalRevenue' => $totalRevenue,
+                ],
+                'recent_orders' => $recentOrders, // Konsisten dengan frontend
+            ],
         ]);
+    } catch (\Exception $e) {
+        Log::error('Dashboard Error: ' . $e->getMessage());
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Error fetching dashboard data',
+            'error' => $e->getMessage(),
+        ], 500);
     }
+}
+
+public function getMonthlyStats(Request $request)
+{
+    try {
+        $year = $request->get('year', Carbon::now()->year);
+        Carbon::setLocale('id');
+
+        $monthlyData = [];
+        
+        // Loop untuk 12 bulan dalam tahun yang dipilih
+        for ($month = 1; $month <= 12; $month++) {
+            $date = Carbon::create($year, $month, 1);
+            $monthName = $date->translatedFormat('M'); // Jan, Feb, Mar, dst
+            
+            // Hitung users yang dibuat pada bulan tersebut
+            $users = User::whereYear('created_at', $year)
+                        ->whereMonth('created_at', $month)
+                        ->count();
+
+            // Hitung orders yang dibuat pada bulan tersebut
+            $orders = Order::whereYear('created_at', $year)
+                          ->whereMonth('created_at', $month)
+                          ->count();
+
+            // Hitung revenue pada bulan tersebut (hanya yang completed)
+            $revenue = Order::whereYear('created_at', $year)
+                           ->whereMonth('created_at', $month)
+                           ->where('status', 'completed')
+                           ->sum('jumlah_topup');
+
+            $monthlyData[] = [
+                'month' => $monthName,
+                'month_name' => $monthName,
+                'month_number' => $month,
+                'users' => $users,
+                'orders' => $orders,
+                'revenue' => (int) $revenue,
+            ];
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $monthlyData,
+        ]);
+    } catch (\Exception $e) {
+        Log::error('Monthly Stats Error: ' . $e->getMessage());
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Error fetching monthly statistics',
+            'error' => $e->getMessage(),
+        ], 500);
+    }
+}
+
+public function getTopupOptions()
+{
+    try {
+        $topupOptions = TopupOption::select('id', 'name', 'price', 'description')
+            ->where('is_active', true) // Asumsi ada field is_active
+            ->orderBy('price', 'asc')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $topupOptions,
+        ]);
+    } catch (\Exception $e) {
+        Log::error('Topup Options Error: ' . $e->getMessage());
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Error fetching topup options',
+            'error' => $e->getMessage(),
+        ], 500);
+    }
+}
+
 
     public function orders()
     {
