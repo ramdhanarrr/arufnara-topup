@@ -9,8 +9,7 @@ export const Navlinks = [
   { id: 1, name: "Home", link: "/" },
   { id: 2, name: "Top Up", link: "/topup" },
   { id: 3, name: "Promo", link: "/features" },
-  { id: 4, name: "Contact", link: "/contact" },
-  { id: 5, name: "Login", link: "/auth/login" },
+  { id: 4, name: "Login", link: "/auth/login" },
 ];
 
 const Navbar = () => {

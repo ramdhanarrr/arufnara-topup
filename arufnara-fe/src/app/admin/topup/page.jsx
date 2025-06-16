@@ -1,3 +1,5 @@
+
+// app/admin/topup.jsx 
 'use client';
 
 import React, { useState, useEffect } from "react";
@@ -397,25 +399,26 @@ export default function AdminTopUp() {
   if (loading) {
     return (
       <div className="p-6">
-        <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="flex items-center justify-center h-64">
+          <div className="w-12 h-12 border-b-2 border-blue-600 rounded-full animate-spin"></div>
         </div>
       </div>
     );
   }
 
+
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="min-h-screen p-6 bg-gray-50">
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Diamond Package Management</h1>
+            <h1 className="mb-2 text-3xl font-bold text-gray-900">Diamond Package Management</h1>
             <p className="text-gray-600">Kelola paket diamond</p>
           </div>
           <button
             onClick={openCreateModal}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors shadow-md"
+            className="flex items-center gap-2 px-4 py-2 text-white transition-colors bg-blue-600 rounded-lg shadow-md hover:bg-blue-700"
           >
             <Plus size={20} />
             Tambah Paket
@@ -425,8 +428,8 @@ export default function AdminTopUp() {
 
       {/* Error Alert */}
       {error && (
-        <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-6 rounded-r-lg">
-          <div className="flex justify-between items-start">
+        <div className="p-4 mb-6 border-l-4 border-red-400 rounded-r-lg bg-red-50">
+          <div className="flex items-start justify-between">
             <div className="ml-3">
               <p className="text-red-700">{error}</p>
             </div>
@@ -441,17 +444,17 @@ export default function AdminTopUp() {
       )}
 
       {/* Filters */}
-      <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
-        <div className="flex flex-col sm:flex-row gap-4">
+      <div className="p-4 mb-6 bg-white rounded-lg shadow-sm">
+        <div className="flex flex-col gap-4 sm:flex-row">
           <div className="flex-1">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+              <Search className="absolute text-gray-400 transform -translate-y-1/2 left-3 top-1/2" size={20} />
               <input
                 type="text"
                 placeholder="Cari berdasarkan jumlah diamond, harga, atau deskripsi..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full py-2 pl-10 pr-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
           </div>
@@ -472,17 +475,17 @@ export default function AdminTopUp() {
       </div>
 
       {/* Diamond Packages Table */}
-      <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+      <div className="overflow-hidden bg-white rounded-lg shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-200">
+            <thead className="border-b border-gray-200 bg-gray-50">
               <tr>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Diamond</th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bonus</th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Harga</th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Diamond</th>
-                <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                <th className="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">ID</th>
+                <th className="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Diamond</th>
+                <th className="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Bonus</th>
+                <th className="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Harga</th>
+                <th className="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Total Diamond</th>
+                <th className="px-6 py-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Actions</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -494,15 +497,15 @@ export default function AdminTopUp() {
                   const totalDiamond = diamondAmount + bonusDiamond;
                   
                   return (
-                    <tr key={topup.id || topup._id} className="hover:bg-gray-50 transition-colors">
+                    <tr key={topup.id || topup._id} className="transition-colors hover:bg-gray-50">
                       <td className="px-6 py-4 text-sm text-gray-900">
                         {topup.id || topup._id}
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center">
-                          <div className="flex-shrink-0 h-10 w-10">
-                            <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
-                              <Diamond className="h-6 w-6 text-blue-600" />
+                          <div className="flex-shrink-0 w-10 h-10">
+                            <div className="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full">
+                              <Diamond className="w-6 h-6 text-blue-600" />
                             </div>
                           </div>
                           <div className="ml-4">
@@ -514,7 +517,7 @@ export default function AdminTopUp() {
                       </td>
                       <td className="px-6 py-4">
                         {bonusDiamond > 0 ? (
-                          <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                          <span className="inline-flex px-2 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full">
                             +{bonusDiamond.toLocaleString()}
                           </span>
                         ) : (
@@ -525,21 +528,21 @@ export default function AdminTopUp() {
                         {typeof price === 'number' ? formatCurrency(price) : price}
                       </td>
                       <td className="px-6 py-4">
-                        <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                        <span className="inline-flex px-2 py-1 text-xs font-semibold text-blue-800 bg-blue-100 rounded-full">
                           {totalDiamond.toLocaleString()} Total
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-sm space-x-2">
+                      <td className="px-6 py-4 space-x-2 text-sm">
                         <button
                           onClick={() => openEditModal(topup)}
-                          className="inline-flex items-center px-3 py-1 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-md transition-colors"
+                          className="inline-flex items-center px-3 py-1 text-blue-700 transition-colors bg-blue-100 rounded-md hover:bg-blue-200"
                         >
                           <Edit size={14} className="mr-1" />
                           Edit
                         </button>
                         <button
                           onClick={() => handleDelete(topup)}
-                          className="inline-flex items-center px-3 py-1 bg-red-100 hover:bg-red-200 text-red-700 rounded-md transition-colors"
+                          className="inline-flex items-center px-3 py-1 text-red-700 transition-colors bg-red-100 rounded-md hover:bg-red-200"
                         >
                           <Trash2 size={14} className="mr-1" />
                           Delete
@@ -552,7 +555,7 @@ export default function AdminTopUp() {
                 <tr>
                   <td colSpan="6" className="px-6 py-12 text-center text-gray-500">
                     <div className="flex flex-col items-center">
-                      <Diamond className="h-12 w-12 text-gray-300 mb-4" />
+                      <Diamond className="w-12 h-12 mb-4 text-gray-300" />
                       <p className="text-lg font-medium">Tidak ada paket diamond ditemukan</p>
                       <p className="text-sm">Cobalah mengubah filter pencarian atau tambah paket baru</p>
                     </div>
@@ -577,7 +580,7 @@ export default function AdminTopUp() {
                 </h3>
                 <button
                   onClick={closeModal}
-                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                  className="text-gray-400 transition-colors hover:text-gray-600"
                 >
                   <X size={24} />
                 </button>
@@ -585,14 +588,14 @@ export default function AdminTopUp() {
 
               {/* Modal Error Display */}
               {error && (
-                <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-4">
-                  <p className="text-red-700 text-sm">{error}</p>
+                <div className="p-3 mb-4 border border-red-200 rounded-lg bg-red-50">
+                  <p className="text-sm text-red-700">{error}</p>
                 </div>
               )}
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block mb-1 text-sm font-medium text-gray-700">
                     Jumlah Diamond <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -608,7 +611,7 @@ export default function AdminTopUp() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block mb-1 text-sm font-medium text-gray-700">
                     Bonus Diamond
                   </label>
                   <input
@@ -623,7 +626,7 @@ export default function AdminTopUp() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block mb-1 text-sm font-medium text-gray-700">
                     Harga <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -636,13 +639,13 @@ export default function AdminTopUp() {
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="Masukkan harga dalam Rupiah"
                   />
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="mt-1 text-xs text-gray-500">
                     Preview: {formData.price > 0 ? formatCurrency(formData.price) : 'Rp 0'}
                   </p>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block mb-1 text-sm font-medium text-gray-700">
                     Deskripsi
                   </label>
                   <textarea
@@ -656,7 +659,7 @@ export default function AdminTopUp() {
                 </div>
 
                 {/* Summary */}
-                <div className="bg-blue-50 p-3 rounded-lg">
+                <div className="p-3 rounded-lg bg-blue-50">
                   <p className="text-sm font-medium text-blue-900">Ringkasan Paket:</p>
                   <p className="text-sm text-blue-700">
                     {formData.diamond_amount.toLocaleString()} Diamond 
@@ -668,12 +671,12 @@ export default function AdminTopUp() {
                   </p>
                 </div>
 
-                <div className="flex justify-end space-x-3 pt-4">
+                <div className="flex justify-end pt-4 space-x-3">
                   <button
                     type="button"
                     onClick={closeModal}
                     disabled={isSubmitting}
-                    className="px-4 py-2 text-gray-700 bg-gray-200 hover:bg-gray-300 rounded-lg transition-colors disabled:opacity-50"
+                    className="px-4 py-2 text-gray-700 transition-colors bg-gray-200 rounded-lg hover:bg-gray-300 disabled:opacity-50"
                   >
                     Batal
                   </button>
@@ -681,10 +684,10 @@ export default function AdminTopUp() {
                     type="button"
                     onClick={handleSubmit}
                     disabled={isSubmitting}
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors disabled:opacity-50"
+                    className="flex items-center gap-2 px-4 py-2 text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50"
                   >
                     {isSubmitting ? (
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                      <div className="w-4 h-4 border-b-2 border-white rounded-full animate-spin"></div>
                     ) : (
                       <Save size={16} />
                     )}

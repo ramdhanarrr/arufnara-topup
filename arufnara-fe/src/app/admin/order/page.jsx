@@ -210,24 +210,24 @@ const AdminOrder = () => {
   });
 
   if (loading) return (
-    <div className="p-6 flex justify-center items-center h-64">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+    <div className="flex items-center justify-center h-64 p-6">
+      <div className="w-12 h-12 border-b-2 border-blue-600 rounded-full animate-spin"></div>
     </div>
   );
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="min-h-screen p-6 bg-gray-50">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-1">Order Management</h1>
+        <h1 className="mb-1 text-3xl font-bold text-gray-900">Order Management</h1>
         <p className="text-sm text-gray-600">Kelola data pemesanan pengguna</p>
       </div>
 
       {error && (
-        <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-6 rounded-r-lg">
+        <div className="p-4 mb-6 border-l-4 border-red-400 rounded-r-lg bg-red-50">
           <p className="text-red-700">{error}</p>
           <button 
             onClick={() => setError(null)}
-            className="text-red-600 underline text-sm mt-1"
+            className="mt-1 text-sm text-red-600 underline"
           >
             Tutup
           </button>
@@ -236,9 +236,9 @@ const AdminOrder = () => {
 
       {/* Edit Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
           <div className="bg-white p-6 rounded-lg w-full max-w-lg max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-semibold">Edit Order</h2>
               <button onClick={closeModal} className="text-gray-500 hover:text-gray-700">
                 <X size={24} />
@@ -246,8 +246,8 @@ const AdminOrder = () => {
             </div>
             
             <div className="space-y-4">
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <h3 className="font-medium text-gray-900 mb-2">Informasi Order</h3>
+              <div className="p-4 rounded-lg bg-gray-50">
+                <h3 className="mb-2 font-medium text-gray-900">Informasi Order</h3>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
                     <span className="text-gray-600">Order ID:</span>
@@ -269,11 +269,11 @@ const AdminOrder = () => {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Status *</label>
+                <label className="block mb-1 text-sm font-medium text-gray-700">Status *</label>
                 <select 
                   value={formData.status} 
                   onChange={(e) => setFormData({ ...formData, status: e.target.value })} 
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 >
                   <option value="pending">Pending</option>
@@ -285,14 +285,14 @@ const AdminOrder = () => {
               <div className="flex justify-end gap-2 pt-4">
                 <button 
                   onClick={closeModal} 
-                  className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg transition-colors"
+                  className="px-4 py-2 text-gray-700 transition-colors bg-gray-200 rounded-lg hover:bg-gray-300"
                   disabled={loading}
                 >
                   Batal
                 </button>
                 <button 
                   onClick={handleUpdate} 
-                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center gap-2 transition-colors disabled:opacity-50"
+                  className="flex items-center gap-2 px-4 py-2 text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50"
                   disabled={loading}
                 >
                   <Save size={16} /> 
@@ -305,16 +305,16 @@ const AdminOrder = () => {
       )}
 
       {/* Search and Filter */}
-      <div className="bg-white p-4 rounded-lg shadow-sm mb-6">
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+      <div className="p-4 mb-6 bg-white rounded-lg shadow-sm">
+        <div className="flex flex-col gap-4 sm:flex-row">
+          <div className="relative flex-1">
+            <Search className="absolute text-gray-400 -translate-y-1/2 left-3 top-1/2" size={20} />
             <input
               type="text"
               placeholder="Cari berdasarkan ID, user, metode..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full py-2 pl-10 pr-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div className="flex items-center gap-2">
@@ -334,18 +334,18 @@ const AdminOrder = () => {
       </div>
 
       {/* Orders Table */}
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="overflow-hidden bg-white rounded-lg shadow">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-gray-100">
               <tr>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">ID</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">User</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">ML Account</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Topup</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Metode</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Status</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Aksi</th>
+                <th className="px-6 py-3 text-sm font-medium text-left text-gray-500">ID</th>
+                <th className="px-6 py-3 text-sm font-medium text-left text-gray-500">User</th>
+                <th className="px-6 py-3 text-sm font-medium text-left text-gray-500">ML Account</th>
+                <th className="px-6 py-3 text-sm font-medium text-left text-gray-500">Topup</th>
+                <th className="px-6 py-3 text-sm font-medium text-left text-gray-500">Metode</th>
+                <th className="px-6 py-3 text-sm font-medium text-left text-gray-500">Status</th>
+                <th className="px-6 py-3 text-sm font-medium text-left text-gray-500">Aksi</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
@@ -375,7 +375,7 @@ const AdminOrder = () => {
                     <div className="flex gap-2">
                       <button 
                         onClick={() => openEditModal(order)}
-                        className="bg-blue-100 text-blue-700 hover:bg-blue-200 px-3 py-1 rounded-md text-sm inline-flex items-center transition-colors"
+                        className="inline-flex items-center px-3 py-1 text-sm text-blue-700 transition-colors bg-blue-100 rounded-md hover:bg-blue-200"
                         disabled={loading}
                       >
                         <Edit size={14} className="mr-1" /> Edit
@@ -387,7 +387,7 @@ const AdminOrder = () => {
                 <tr>
                   <td colSpan="7" className="px-6 py-12 text-center text-gray-500">
                     <div className="flex flex-col items-center">
-                      <Package className="h-12 w-12 text-gray-300 mb-4" />
+                      <Package className="w-12 h-12 mb-4 text-gray-300" />
                       <p className="text-lg font-medium">Tidak ada order ditemukan</p>
                       <p className="text-sm">Cobalah ubah pencarian atau filter</p>
                     </div>

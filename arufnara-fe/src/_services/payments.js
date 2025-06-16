@@ -64,3 +64,19 @@ export const createPayment = async (paymentData) => {
     throw error;
   }
 }
+
+export const putPayment = async (paymentId, paymentData) => {
+  try {
+    const token = localStorage.getItem('token');
+    const { data } = await API.put(`http://localhost:8000/api/payments/${paymentId}`, paymentData, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    return data.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
