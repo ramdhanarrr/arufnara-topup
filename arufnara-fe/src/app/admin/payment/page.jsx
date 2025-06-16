@@ -325,14 +325,15 @@ const AdminPayment = () => {
           </div>
           <div className="flex items-center gap-2">
             <Filter size={20} className="text-gray-400" />
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            <select 
+            value={formData.payment_status} 
+            onChange={(e) => setFormData({ ...formData, payment_status: e.target.value })} 
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
             >
-              <option value="all">Semua Status</option>
-              <option value="success">Success</option>
-              <option value="failed">Failed</option>
+            <option value="pending">Pending</option>
+            <option value="success">Success</option>
+            <option value="failed">Failed</option>
             </select>
           </div>
         </div>
