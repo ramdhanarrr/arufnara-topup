@@ -13,7 +13,7 @@ const AdminPayment = () => {
   const [statusFilter, setStatusFilter] = useState('all');
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState(null);
-
+  
   useEffect(() => {
     fetchPayments();
   }, []);
@@ -25,6 +25,7 @@ const AdminPayment = () => {
       Authorization: `Bearer ${getToken()}`,
     },
   });
+
 
   const fetchPayments = async () => {
     try {
@@ -77,43 +78,43 @@ const AdminPayment = () => {
   if (loading) 
   
   return (
-    <div className="p-6 flex justify-center items-center h-64">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+    <div className="flex items-center justify-center h-64 p-6">
+      <div className="w-12 h-12 border-b-2 border-blue-600 rounded-full animate-spin"></div>
     </div>
   );
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <div className="mb-8 flex items-center justify-between">
+    <div className="min-h-screen p-6 bg-gray-50">
+      <div className="flex items-center justify-between mb-8">
         <div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-1">Payment Management</h1>
+        <h1 className="mb-1 text-3xl font-bold text-gray-900">Payment Management</h1>
         <p className="text-sm text-gray-600">Kelola data pembayaran pengguna</p>
         </div>
         
       </div>
 
       {error && (
-        <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-6 rounded-r-lg">
+        <div className="p-4 mb-6 border-l-4 border-red-400 rounded-r-lg bg-red-50">
           <p className="text-red-700">{error}</p>
           <button 
             onClick={() => setError(null)}
-            className="text-red-600 underline text-sm mt-1"
+            className="mt-1 text-sm text-red-600 underline"
           >
             Tutup
           </button>
         </div>
       )}
 
-      <div className="bg-white p-4 rounded-lg shadow-sm mb-6">
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+      <div className="p-4 mb-6 bg-white rounded-lg shadow-sm">
+        <div className="flex flex-col gap-4 sm:flex-row">
+          <div className="relative flex-1">
+            <Search className="absolute text-gray-400 -translate-y-1/2 left-3 top-1/2" size={20} />
             <input
               type="text"
               placeholder="Cari berdasarkan ID, order, tanggal..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full py-2 pl-10 pr-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div className="flex items-center gap-2">
@@ -132,18 +133,18 @@ const AdminPayment = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="overflow-hidden bg-white rounded-lg shadow">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-gray-100">
               <tr>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">ID</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Order ID</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Amount</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Tanggal</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Status</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Bukti</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Aksi</th>
+                <th className="px-6 py-3 text-sm font-medium text-left text-gray-500">ID</th>
+                <th className="px-6 py-3 text-sm font-medium text-left text-gray-500">Order ID</th>
+                <th className="px-6 py-3 text-sm font-medium text-left text-gray-500">Amount</th>
+                <th className="px-6 py-3 text-sm font-medium text-left text-gray-500">Tanggal</th>
+                <th className="px-6 py-3 text-sm font-medium text-left text-gray-500">Status</th>
+                <th className="px-6 py-3 text-sm font-medium text-left text-gray-500">Bukti</th>
+                <th className="px-6 py-3 text-sm font-medium text-left text-gray-500">Aksi</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
@@ -170,21 +171,13 @@ const AdminPayment = () => {
                     <button onClick={() => openDetail(p)} className="text-blue-600 hover:underline">
                       <Eye size={16} className="inline mr-1" /> Detail
                     </button>
-                    {p.payment_status === 'pending' && (
-                      <button
-                        onClick={() => handleStatusChange(p.id, 'confirmed')}
-                        className="text-green-600 hover:underline"
-                      >
-                        <CheckCircle size={16} className="inline mr-1" /> Konfirmasi
-                      </button>
-                    )}
                   </td>
                 </tr>
               )) : (
                 <tr>
                   <td colSpan="7" className="px-6 py-12 text-center text-gray-500">
                     <div className="flex flex-col items-center">
-                      <Package className="h-12 w-12 text-gray-300 mb-4" />
+                      <Package className="w-12 h-12 mb-4 text-gray-300" />
                       <p className="text-lg font-medium">Tidak ada pembayaran ditemukan</p>
                       <p className="text-sm">Cobalah ubah pencarian atau filter</p>
                     </div>
@@ -197,12 +190,12 @@ const AdminPayment = () => {
       </div>
 
       {isDetailOpen && selectedPayment && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-lg relative">
-            <button onClick={closeDetail} className="absolute top-4 right-4 text-gray-500 hover:text-black">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+          <div className="relative w-full max-w-lg p-6 bg-white rounded-lg">
+            <button onClick={closeDetail} className="absolute text-gray-500 top-4 right-4 hover:text-black">
               <X size={20} />
             </button>
-            <h2 className="text-xl font-bold mb-4">Detail Pembayaran</h2>
+            <h2 className="mb-4 text-xl font-bold">Detail Pembayaran</h2>
             <div className="space-y-2 text-sm">
               <div><strong>ID:</strong> {selectedPayment.id}</div>
               <div><strong>Order ID:</strong> {selectedPayment.order_id}</div>
@@ -216,7 +209,7 @@ const AdminPayment = () => {
                     href={selectedPayment.proof_of_payment}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block text-blue-600 underline mt-1"
+                    className="block mt-1 text-blue-600 underline"
                   >
                     Lihat Bukti Pembayaran
                   </a>

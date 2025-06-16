@@ -26,6 +26,15 @@ export default function OrderPage() {
   const [paymentMethods, setPaymentMethods] = useState([]);
   const [createdOrder, setCreatedOrder] = useState(null);
 
+  const staticPaymentMethods = [
+  { id: "bca", name: "BCA", icon: "🏦", fee: 0 },
+  { id: "bni", name: "BNI", icon: "🏦", fee: 0 },
+  { id: "bri", name: "BRI", icon: "🏦", fee: 0 },
+  { id: "mandiri", name: "Mandiri", icon: "🏦", fee: 0 },
+  { id: "qris", name: "QRIS", icon: "🔳", fee: 0 },
+  // Tambahkan metode lain sesuai kebutuhan
+];
+
   useEffect(() => {
     getTopup()
       .then((data) => {
@@ -61,7 +70,7 @@ export default function OrderPage() {
           icon: "💳",
           fee: 0,
         }));
-        setPaymentMethods(uniqueMethods);
+        setPaymentMethods(staticPaymentMethods);
       })
       .catch(() => setPaymentMethods([]));
   }, []);

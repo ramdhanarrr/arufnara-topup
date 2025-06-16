@@ -1,7 +1,8 @@
 import axios from "axios"
 
 const API = axios.create({
-  baseURL: "https://arunfara.karyakreasi.id",
+  baseURL: "http://127.0.0.1:8000/api",
+  // baseURL: "https://arunfara.karyakreasi.id/", // Replace with public API
   headers: {
     "Content-Type": "application/json",
   },
@@ -20,6 +21,15 @@ API.interceptors.request.use(
     return Promise.reject(error)
   }
 )
+
+API.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 
 // Add a response interceptor to handle common errors
 API.interceptors.response.use(
