@@ -1,9 +1,19 @@
 // app/admin/payment/page.jsx
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { Eye, Download, CheckCircle, Search, Filter, X, Package, Edit, Save } from 'lucide-react';
-import API from '../../../_api';
+import React, { useState, useEffect } from "react";
+import {
+  Eye,
+  Download,
+  CheckCircle,
+  Search,
+  Filter,
+  X,
+  Package,
+  Edit,
+  Save,
+} from "lucide-react";
+import API from "../../../_api";
 
 const AdminPayment = () => {
   const [payments, setPayments] = useState([]);
@@ -16,9 +26,9 @@ const AdminPayment = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPaymentId, setSelectedPaymentId] = useState(null);
   const [formData, setFormData] = useState({
-    payment_status: 'success'
+    payment_status: "success",
   });
-    
+
   useEffect(() => {
     fetchPayments();
   }, []);
@@ -44,11 +54,11 @@ const AdminPayment = () => {
   const fetchPayments = async () => {
     try {
       setLoading(true);
-      const res = await API.get('/admin/payments', getAuthConfig());
+      const res = await API.get("/admin/payments", getAuthConfig());
       setPayments(extractData(res));
     } catch (err) {
-      setError('Gagal memuat data pembayaran.');
-      console.error('Error fetching payments:', err);
+      setError("Gagal memuat data pembayaran.");
+      console.error("Error fetching payments:", err);
     } finally {
       setLoading(false);
     }
@@ -56,7 +66,7 @@ const AdminPayment = () => {
 
   const openEditModal = (payment) => {
     setFormData({
-      payment_status: payment.payment_status || 'success'
+      payment_status: payment.payment_status || "success",
     });
     setSelectedPaymentId(payment.id || payment._id);
     setIsModalOpen(true);
@@ -66,109 +76,116 @@ const AdminPayment = () => {
     setIsModalOpen(false);
     setSelectedPaymentId(null);
     setFormData({
-      payment_status: 'success'
+      payment_status: "success",
     });
     setError(null);
   };
 
   const handleUpdate = async () => {
     if (!selectedPaymentId) {
-      setError('ID payment tidak ditemukan.');
+      setError("ID payment tidak ditemukan.");
       return;
     }
 
     try {
       setLoading(true);
-      
+
       // Validasi form data
-      if (!formData.payment_status || !['success', 'failed'].includes(formData.payment_status)) {
-        setError('Status harus success atau failed.');
+      if (
+        !formData.payment_status ||
+        !["success", "failed"].includes(formData.payment_status)
+      ) {
+        setError("Status harus success atau failed.");
         return;
       }
 
-      console.log('Updating payment with:', {
+      console.log("Updating payment with:", {
         id: selectedPaymentId,
         payment_status: formData.payment_status,
         url: `/admin/payments/${selectedPaymentId}/status`,
-        method: 'PATCH'
+        method: "PATCH",
       });
 
       // Use the exact endpoint that matches your route
-      const response = await API.patch(`/admin/payments/${selectedPaymentId}/status`, 
-        { 
-          payment_status: formData.payment_status 
-        }, 
+      const response = await API.patch(
+        `/admin/payments/${selectedPaymentId}/status`,
+        {
+          payment_status: formData.payment_status,
+        },
         {
           ...getAuthConfig(),
           headers: {
             ...getAuthConfig().headers,
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          }
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
         }
       );
-      
-      console.log('Update response:', response.data);
-      
+
+      console.log("Update response:", response.data);
+
       // Check if response is successful
       if (response.data && response.data.success) {
         // Update state langsung untuk performa lebih baik
-        setPayments(prevPayments => 
-          prevPayments.map(payment => 
-            (payment.id || payment._id) === selectedPaymentId 
+        setPayments((prevPayments) =>
+          prevPayments.map((payment) =>
+            (payment.id || payment._id) === selectedPaymentId
               ? { ...payment, payment_status: formData.payment_status }
               : payment
           )
         );
-        
+
         setIsModalOpen(false);
         setError(null);
-        
+
         // Show success message
-        alert('Payment status berhasil diupdate!');
-        
+        alert("Payment status berhasil diupdate!");
+
         // Refresh data dari server untuk memastikan sinkronisasi
         await fetchPayments();
       } else {
-        throw new Error(response.data?.message || 'Response tidak valid');
+        throw new Error(response.data?.message || "Response tidak valid");
       }
-      
     } catch (err) {
-      console.error('=== Error Details ===');
-      console.error('Payment ID:', selectedPaymentId);
-      console.error('Request data:', { payment_status: formData.payment_status });
-      console.error('Full error:', err);
-      console.error('Error response:', err.response);
-      console.error('Error response data:', err.response?.data);
-      console.error('Error status:', err.response?.status);
-      
-      let errorMessage = 'Terjadi kesalahan tidak diketahui';
-      
+      console.error("=== Error Details ===");
+      console.error("Payment ID:", selectedPaymentId);
+      console.error("Request data:", {
+        payment_status: formData.payment_status,
+      });
+      console.error("Full error:", err);
+      console.error("Error response:", err.response);
+      console.error("Error response data:", err.response?.data);
+      console.error("Error status:", err.response?.status);
+
+      let errorMessage = "Terjadi kesalahan tidak diketahui";
+
       if (err.response) {
         // Server responded with error status
         const { status, data } = err.response;
-        
+
         if (status === 422) {
           // Validation error
           const validationErrors = data.errors || {};
           const errorMessages = Object.values(validationErrors).flat();
-          errorMessage = `Validation Error: ${errorMessages.join(', ')}`;
+          errorMessage = `Validation Error: ${errorMessages.join(", ")}`;
         } else if (status === 404) {
-          errorMessage = 'Payment tidak ditemukan';
+          errorMessage = "Payment tidak ditemukan";
         } else if (status === 403) {
-          errorMessage = 'Tidak memiliki akses untuk mengupdate payment';
+          errorMessage = "Tidak memiliki akses untuk mengupdate payment";
         } else if (status === 401) {
-          errorMessage = 'Sesi login telah berakhir, silakan login ulang';
+          errorMessage = "Sesi login telah berakhir, silakan login ulang";
         } else {
-          errorMessage = data.message || data.error || `Server error (${status})`;
+          errorMessage =
+            data.message || data.error || `Server error (${status})`;
         }
       } else if (err.request) {
         // Network error
-        errorMessage = 'Gagal terhubung ke server. Periksa koneksi internet Anda.';
+        errorMessage =
+          "Gagal terhubung ke server. Periksa koneksi internet Anda.";
       } else {
         errorMessage = err.message;
       }
-      
+
       setError(`Gagal mengupdate payment status: ${errorMessage}`);
     } finally {
       setLoading(false);
@@ -177,34 +194,39 @@ const AdminPayment = () => {
 
   const getPaymentStatusClass = (status) => {
     const s = status?.toLowerCase();
-    return s === 'success' ? 'bg-green-100 text-green-800'
-      : s === 'failed' ? 'bg-red-100 text-red-800'
-      : 'bg-gray-100 text-gray-800';
+    return s === "success"
+      ? "bg-green-100 text-green-800"
+      : s === "failed"
+      ? "bg-red-100 text-red-800"
+      : "bg-gray-100 text-gray-800";
   };
 
   const filteredPayments = payments.filter((payment) => {
     const term = searchTerm.toLowerCase();
-    const statusMatch = statusFilter === 'all' || payment.payment_status === statusFilter;
-    const searchString = `${payment.id || payment._id || ''}${payment.order_id || ''}${payment.amount || ''}${payment.transaction_date || ''}`.toLowerCase();
+    const statusMatch =
+      statusFilter === "all" || payment.payment_status === statusFilter;
+    const searchString = `${payment.id || payment._id || ""}${
+      payment.order_id || ""
+    }${payment.amount || ""}${payment.transaction_date || ""}`.toLowerCase();
     return searchString.includes(term) && statusMatch;
   });
 
   const formatCurrency = (amount) => {
-    if (!amount) return 'Rp 0';
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency', 
-      currency: 'IDR', 
-      minimumFractionDigits: 0
+    if (!amount) return "Rp 0";
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
     }).format(amount);
   };
 
   const formatDate = (dateStr) => {
-    if (!dateStr) return '-';
+    if (!dateStr) return "-";
     const d = new Date(dateStr);
-    return d.toLocaleDateString('id-ID', { 
-      year: 'numeric', 
-      month: 'short', 
-      day: 'numeric' 
+    return d.toLocaleDateString("id-ID", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
     });
   };
 
@@ -218,16 +240,19 @@ const AdminPayment = () => {
     setIsDetailOpen(false);
   };
 
-  if (loading) return (
-    <div className="flex items-center justify-center h-64 p-6">
-      <div className="w-12 h-12 border-b-2 border-blue-600 rounded-full animate-spin"></div>
-    </div>
-  );
+  if (loading)
+    return (
+      <div className="flex items-center justify-center h-64 p-6">
+        <div className="w-12 h-12 border-b-2 border-blue-600 rounded-full animate-spin"></div>
+      </div>
+    );
 
   return (
     <div className="min-h-screen p-6 bg-gray-50">
       <div className="mb-8">
-        <h1 className="mb-1 text-3xl font-bold text-gray-900">Payment Management</h1>
+        <h1 className="mb-1 text-3xl font-bold text-gray-900">
+          Payment Management
+        </h1>
         <p className="text-sm text-gray-600">Kelola data pembayaran pengguna</p>
       </div>
 
@@ -249,31 +274,44 @@ const AdminPayment = () => {
           <div className="bg-white p-6 rounded-lg w-full max-w-lg max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-semibold">Edit Payment Status</h2>
-              <button onClick={closeModal} className="text-gray-500 hover:text-gray-700">
+              <button
+                onClick={closeModal}
+                className="text-gray-500 hover:text-gray-700"
+              >
                 <X size={24} />
               </button>
             </div>
-            
+
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-gray-50">
-                <h3 className="mb-2 font-medium text-gray-900">Informasi Payment</h3>
+                <h3 className="mb-2 font-medium text-gray-900">
+                  Informasi Payment
+                </h3>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
                     <span className="text-gray-600">Payment ID:</span>
-                    <span className="ml-2 font-medium">#{selectedPaymentId}</span>
+                    <span className="ml-2 font-medium">
+                      #{selectedPaymentId}
+                    </span>
                   </div>
                   <div>
                     <span className="text-gray-600">Current Status:</span>
-                    <span className="ml-2 font-medium">{formData.payment_status}</span>
+                    <span className="ml-2 font-medium">
+                      {formData.payment_status}
+                    </span>
                   </div>
                 </div>
               </div>
-              
+
               <div>
-                <label className="block mb-1 text-sm font-medium text-gray-700">Payment Status *</label>
-                <select 
-                  value={formData.payment_status} 
-                  onChange={(e) => setFormData({ ...formData, payment_status: e.target.value })} 
+                <label className="block mb-1 text-sm font-medium text-gray-700">
+                  Payment Status *
+                </label>
+                <select
+                  value={formData.payment_status}
+                  onChange={(e) =>
+                    setFormData({ ...formData, payment_status: e.target.value })
+                  }
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 >
@@ -281,25 +319,26 @@ const AdminPayment = () => {
                   <option value="failed">Failed</option>
                 </select>
                 <p className="mt-1 text-xs text-gray-500">
-                  Pilih status pembayaran: Success (berhasil) atau Failed (gagal)
+                  Pilih status pembayaran: Success (berhasil) atau Failed
+                  (gagal)
                 </p>
               </div>
-              
+
               <div className="flex justify-end gap-2 pt-4">
-                <button 
-                  onClick={closeModal} 
+                <button
+                  onClick={closeModal}
                   className="px-4 py-2 text-gray-700 transition-colors bg-gray-200 rounded-lg hover:bg-gray-300"
                   disabled={loading}
                 >
                   Batal
                 </button>
-                <button 
-                  onClick={handleUpdate} 
+                <button
+                  onClick={handleUpdate}
                   className="flex items-center gap-2 px-4 py-2 text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50"
                   disabled={loading}
                 >
-                  <Save size={16} /> 
-                  {loading ? 'Menyimpan...' : 'Update Status'}
+                  <Save size={16} />
+                  {loading ? "Menyimpan..." : "Update Status"}
                 </button>
               </div>
             </div>
@@ -325,22 +364,22 @@ const AdminPayment = () => {
           </div>
           <div className="flex items-center gap-2">
             <Filter size={20} className="text-gray-400" />
-            <select 
-            value={formData.payment_status} 
-            onChange={(e) => setFormData({ ...formData, payment_status: e.target.value })} 
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-            <option value="pending">Pending</option>
-            <option value="success">Success</option>
-            <option value="failed">Failed</option>
+              <option value="all">Semua</option>
+              <option value="pending">Pending</option>
+              <option value="success">Success</option>
+              <option value="failed">Failed</option>
             </select>
           </div>
         </div>
       </div>
 
       {/* Payments Table */}
-      <div className="overflow-hidden bg-white rounded-lg shadow">
+      <div className="overflow-hidden bg-white rounded-2xl shadow-xl border border-gray-100">
         <div className="overflow-x-auto">
           <table className="w-full min-w-[900px] border-collapse">
             <thead>
@@ -368,54 +407,77 @@ const AdminPayment = () => {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200">
-              {filteredPayments.length > 0 ? filteredPayments.map(payment => (
-                <tr key={payment.id || payment._id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 font-medium text-gray-900">
-                    #{payment.id || payment._id}
-                  </td>
-                  <td className="px-6 py-4 text-gray-700">#{payment.order_id || '-'}</td>
-                  <td className="px-6 py-4 text-gray-700">{formatCurrency(payment.amount)}</td>
-                  <td className="px-6 py-4 text-gray-700">{formatDate(payment.transaction_date)}</td>
-                  <td className="px-6 py-4">
-                    <div className="space-y-1">
-                      <div className="text-sm text-gray-600">Order: {payment.order?.status || '-'}</div>
-                      <span className={`inline-flex px-2 py-1 rounded-full text-xs font-semibold ${getPaymentStatusClass(payment.payment_status)}`}>
-                        Payment: {payment.payment_status || 'unknown'}
+            <tbody>
+              {filteredPayments.length > 0 ? (
+                filteredPayments.map((payment, idx) => (
+                  <tr
+                    key={payment.id || payment._id}
+                    className={`transition-colors duration-150 ${
+                      idx % 2 === 0 ? "bg-white" : "bg-blue-50/60"
+                    } hover:bg-blue-100/60`}
+                  >
+                    <td className="px-6 py-4 font-semibold text-blue-900 border-b border-blue-100 whitespace-nowrap">
+                      <span className="inline-block px-2 py-1 bg-blue-200 text-blue-800 rounded-lg text-xs font-mono tracking-wider shadow-sm">
+                        {payment.id || payment._id}
                       </span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    {payment.proof_of_payment ? (
-                      <a
-                        href={payment.proof_of_payment}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:underline"
-                      >
-                        <Download size={16} className="inline mr-1" /> Lihat
-                      </a>
-                    ) : '-'}
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex gap-2">
-                      <button 
-                        onClick={() => openEditModal(payment)}
-                        className="inline-flex items-center px-3 py-1 text-sm text-blue-700 transition-colors bg-blue-100 rounded-md hover:bg-blue-200"
-                        disabled={loading}
-                      >
-                        <Edit size={14} className="mr-1" /> Edit
-                      </button>
-                      <button 
-                        onClick={() => openDetail(payment)} 
-                        className="inline-flex items-center px-3 py-1 text-sm text-green-700 transition-colors bg-green-100 rounded-md hover:bg-green-200"
-                      >
-                        <Eye size={14} className="mr-1" /> Detail
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              )) : (
+                    </td>
+                    <td className="px-6 py-4 text-blue-900 border-b border-blue-100 whitespace-nowrap">
+                      TRX00{payment.order_id || "-"}
+                    </td>
+                    <td className="px-6 py-4 text-blue-900 border-b border-blue-100 whitespace-nowrap font-semibold">
+                      {formatCurrency(payment.amount)}
+                    </td>
+                    <td className="px-6 py-4 text-blue-900 border-b border-blue-100 whitespace-nowrap">
+                      {formatDate(payment.transaction_date)}
+                    </td>
+                    <td className="px-6 py-4 border-b border-blue-100 whitespace-nowrap">
+                      <div className="space-y-1">
+                        <div className="text-xs text-blue-400">
+                          Order: {payment.order?.status || "-"}
+                        </div>
+                        <span
+                          className={`inline-flex px-2 py-1 rounded-full text-xs font-bold shadow-sm ${getPaymentStatusClass(
+                            payment.payment_status
+                          )}`}
+                        >
+                          Payment: {payment.payment_status || "unknown"}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 border-b border-blue-100 whitespace-nowrap">
+                      {payment.proof_of_payment ? (
+                        <a
+                          href={payment.proof_of_payment}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:underline flex items-center gap-1"
+                        >
+                          <Download size={16} /> Lihat
+                        </a>
+                      ) : (
+                        <span className="text-blue-300">-</span>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 border-b border-blue-100 whitespace-nowrap">
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => openEditModal(payment)}
+                          className="inline-flex items-center px-3 py-1 text-blue-700 transition-colors bg-blue-100 rounded-lg hover:bg-blue-200 shadow"
+                          disabled={loading}
+                        >
+                          <Edit size={14} className="mr-1" /> Edit
+                        </button>
+                        <button
+                          onClick={() => openDetail(payment)}
+                          className="inline-flex items-center px-3 py-1 text-green-700 transition-colors bg-green-100 rounded-lg hover:bg-green-200 shadow"
+                        >
+                          <Eye size={14} className="mr-1" /> Detail
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
                 <tr>
                   <td
                     colSpan="7"
@@ -444,35 +506,50 @@ const AdminPayment = () => {
           <div className="bg-white p-6 rounded-lg w-full max-w-lg max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-semibold">Detail Pembayaran</h2>
-              <button onClick={closeDetail} className="text-gray-500 hover:text-gray-700">
+              <button
+                onClick={closeDetail}
+                className="text-gray-500 hover:text-gray-700"
+              >
                 <X size={24} />
               </button>
             </div>
-            
+
             <div className="space-y-3">
               <div className="p-4 rounded-lg bg-gray-50">
                 <div className="grid grid-cols-1 gap-3 text-sm">
                   <div>
                     <span className="text-gray-600">Payment ID:</span>
-                    <span className="ml-2 font-medium">#{selectedPayment.id || selectedPayment._id}</span>
+                    <span className="ml-2 font-medium">
+                      {selectedPayment.id || selectedPayment._id}
+                    </span>
                   </div>
                   <div>
                     <span className="text-gray-600">Order ID:</span>
-                    <span className="ml-2 font-medium">#{selectedPayment.order_id || '-'}</span>
+                    <span className="ml-2 font-medium">
+                      TRX00{selectedPayment.order_id || "-"}
+                    </span>
                   </div>
                   <div>
                     <span className="text-gray-600">Amount:</span>
-                    <span className="ml-2 font-medium">{formatCurrency(selectedPayment.amount)}</span>
+                    <span className="ml-2 font-medium">
+                      {formatCurrency(selectedPayment.amount)}
+                    </span>
                   </div>
                   <div>
                     <span className="text-gray-600">Payment Status:</span>
-                    <span className={`ml-2 inline-flex px-2 py-1 rounded-full text-xs font-semibold ${getPaymentStatusClass(selectedPayment.payment_status)}`}>
-                      {selectedPayment.payment_status || 'unknown'}
+                    <span
+                      className={`ml-2 inline-flex px-2 py-1 rounded-full text-xs font-semibold ${getPaymentStatusClass(
+                        selectedPayment.payment_status
+                      )}`}
+                    >
+                      {selectedPayment.payment_status || "unknown"}
                     </span>
                   </div>
                   <div>
                     <span className="text-gray-600">Tanggal Transaksi:</span>
-                    <span className="ml-2 font-medium">{formatDate(selectedPayment.transaction_date)}</span>
+                    <span className="ml-2 font-medium">
+                      {formatDate(selectedPayment.transaction_date)}
+                    </span>
                   </div>
                   {selectedPayment.proof_of_payment && (
                     <div>
