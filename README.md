@@ -1,0 +1,3 @@
+<h1>Arufnara Store</h1>
+
+<p>Proyek ini bertujuan mengembangkan Arufnara Store, sebuah platform digital untuk pembelian dan top-up voucher game secara cepat, aman, dan efisien. Website dikembangkan menggunakan React.js untuk frontend dan Laravel sebagai backend dengan pendekatan REST API. Sistem mencakup fitur login, register, dashboard user dan admin, serta pengelolaan transaksi. Proyek ini mengedepankan desain antarmuka yang responsif dan pengalaman pengguna yang optimal. Dengan penggunaan database terstruktur dan pengujian sistematis, Arufnara Store diharapkan menjadi solusi lokal yang praktis bagi para gamer dalam melakukan transaksi digital harian mereka.</p>
