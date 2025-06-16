@@ -153,7 +153,10 @@ const AdminPayment = () => {
                   <td className="px-6 py-4">{p.order_id}</td>
                   <td className="px-6 py-4">{formatCurrency(p.amount)}</td>
                   <td className="px-6 py-4">{formatDate(p.transaction_date)}</td>
-                  <td className="px-6 py-4 capitalize">{p.payment_status}</td>
+                  <td className="px-6 py-4 capitalize">
+                        Order: {p.order?.status || '-'}<br />
+                        Payment: {p.payment_status}
+                </td>
                   <td className="px-6 py-4">
                     {p.proof_of_payment ? (
                       <a
@@ -170,14 +173,6 @@ const AdminPayment = () => {
                     <button onClick={() => openDetail(p)} className="text-blue-600 hover:underline">
                       <Eye size={16} className="inline mr-1" /> Detail
                     </button>
-                    {p.payment_status === 'pending' && (
-                      <button
-                        onClick={() => handleStatusChange(p.id, 'confirmed')}
-                        className="text-green-600 hover:underline"
-                      >
-                        <CheckCircle size={16} className="inline mr-1" /> Konfirmasi
-                      </button>
-                    )}
                   </td>
                 </tr>
               )) : (
