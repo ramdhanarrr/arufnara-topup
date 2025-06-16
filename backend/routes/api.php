@@ -75,6 +75,7 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
     
     // Payment management
     Route::get('/payments', [AdminController::class, 'payments']);
+    Route::patch('/payments/{id}/status', [AdminController::class, 'updateStatus']);
 
     // Topup options management
     Route::prefix('topup-options')->group(function () {

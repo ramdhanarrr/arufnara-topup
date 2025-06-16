@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Order;
@@ -102,6 +103,97 @@ class AdminController extends Controller
             'data' => $payments
         ]);
     }
+
+     public function show($id)
+    {
+        try {
+            // Gunakan model yang sesuai dengan aplikasi Anda
+            $payment = Payment::findOrFail($id);
+            
+            return response()->json([
+                'success' => true,
+                'data' => $payment
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Payment not found: ' . $e->getMessage()
+            ], 404);
+        }
+    }
+
+    public function updateStatus(Request $request, $id): JsonResponse
+{
+    try {
+        // Validasi input - hanya allow success dan failed
+        $validatedData = $request->validate([
+            'payment_status' => 'required|string|in:success,failed',
+        ]);
+
+        // Cari payment berdasarkan ID
+        $payment = Payment::findOrFail($id);
+
+        // Update payment status
+        $payment->update([
+            'payment_status' => $validatedData['payment_status'],
+            'updated_at' => now()
+        ]);
+
+        // Load relationships untuk response
+        $payment->load(['order.user']);
+
+        // Log untuk debugging
+        \Log::info('Payment status updated successfully', [
+            'payment_id' => $id,
+            'old_status' => $payment->getOriginal('payment_status'),
+            'new_status' => $validatedData['payment_status'],
+            'updated_by' => $request->user()->id ?? 'unknown'
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Payment status updated successfully',
+            'data' => $payment
+        ]);
+
+    } catch (ValidationException $e) {
+        \Log::error('Validation error in updateStatus', [
+            'payment_id' => $id,
+            'errors' => $e->errors(),
+            'input' => $request->all()
+        ]);
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Validation failed',
+            'errors' => $e->errors()
+        ], 422);
+
+    } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+        \Log::error('Payment not found', [
+            'payment_id' => $id,
+            'error' => $e->getMessage()
+        ]);
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Payment not found'
+        ], 404);
+
+    } catch (\Exception $e) {
+        \Log::error('Error updating payment status', [
+            'payment_id' => $id,
+            'error' => $e->getMessage(),
+            'trace' => $e->getTraceAsString(),
+            'input' => $request->all()
+        ]);
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Failed to update payment status: ' . $e->getMessage()
+        ], 500);
+    }
+}
 
     public function getUserPoints($userId)
     {
