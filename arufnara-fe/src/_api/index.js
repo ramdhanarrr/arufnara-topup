@@ -1,8 +1,8 @@
 import axios from "axios"
 
 const API = axios.create({
-  baseURL: "http://127.0.0.1:8000/api",
-  // baseURL: "https://arunfara.karyakreasi.id/", // Replace with public API
+  baseURL: "https://arunfara.karyakreasi.id/",
+  // baseURL: "", // Replace with public API
   headers: {
     "Content-Type": "application/json",
   },

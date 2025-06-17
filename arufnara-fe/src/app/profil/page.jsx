@@ -1,3 +1,4 @@
+'use client';
 import Profil from "@/components/Profil/Profil";
 import React from "react";
 
